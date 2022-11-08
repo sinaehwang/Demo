@@ -17,4 +17,6 @@ public interface MemberRepository {
 
 	public int getDuplecateEmailAndName(String name, String email);
 
+	public Member FoundMemberByLoginId(String loginId);
+
 }

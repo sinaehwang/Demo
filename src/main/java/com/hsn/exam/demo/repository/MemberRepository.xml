@@ -40,5 +40,10 @@
 		WHERE name = #{name}
 		AND email = #{email}
 	</select>
+	
+	<select id="FoundMemberByLoginId" resultType="Member">
+		SELECT*FROM `member`
+		WHERE `member`.loginId = #{loginId}
+	</select>
 
 </mapper>

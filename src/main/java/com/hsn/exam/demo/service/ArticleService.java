@@ -28,16 +28,17 @@ public class ArticleService {
 			return ResultData.from("F-1", Ut.f("%d번게시글은 존재하지않습니다.", id));
 		}
 
-		return ResultData.from("S-1", "성공", article);
+
+		return ResultData.from("S-1", "성공", "article", article);
 	}
 
-	public ResultData writeArticle(String title, String body) {
+	public ResultData writeArticle(String title, String body, int loginedMemberId) {
 
-		articleRepository.writeArticle(title, body);
+		articleRepository.writeArticle(title, body ,loginedMemberId);
 
 		int id =  articleRepository.getLastInsertId();
 		
-		return ResultData.from("S-1", Ut.f("%d번째 게시글생성완료", id),id);
+		return ResultData.from("S-1", Ut.f("%d번째 게시글생성완료", id),"id", id);
 
 	}
 

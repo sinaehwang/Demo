@@ -58,7 +58,7 @@ public class MemberService {
 			return ResultData.from("F-2","입력하신 비밀번호가 일치하지 않습니다.");
 		}
 		
-		return ResultData.from("S-1","로그인 성공",FoundMemberByLoginId);
+		return ResultData.from("S-1","로그인 성공","FoundMemberByLoginId", FoundMemberByLoginId);
 	}
 
 

@@ -62,7 +62,7 @@ public class UsrMemberController {
 		
 		Member member = memberService.getMember(id);
 		
-		return ResultData.from("S-1",Ut.f("%s님 회원가입완료되었습니다.", nickname),member);
+		return ResultData.from("S-1",Ut.f("%s님 회원가입완료되었습니다.", nickname),"member", member);
 		
 		
 	}
@@ -100,8 +100,10 @@ public class UsrMemberController {
 		
 		httpSession.setAttribute("LoginedMember", LoginedMember.getData1());
 		
+		httpSession.setAttribute("loginedMemberId", LoginedMember.getData1());
 		
-		return ResultData.from(LoginedMember.getResultCode() , LoginedMember.getMsg(),LoginedMember.getData1());//로그인 성공시 코드,메세지,로그인 정보까지보여주기
+		
+		return ResultData.from(LoginedMember.getResultCode() , LoginedMember.getMsg(),"LoginedMember", LoginedMember.getData1());//로그인 성공시 코드,메세지,로그인 정보까지보여주기
 		
 	}
 	

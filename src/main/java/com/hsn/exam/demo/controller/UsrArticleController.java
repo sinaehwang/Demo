@@ -106,7 +106,7 @@ public class UsrArticleController {
 		req.setAttribute("totalItemsCount", totalItemsCount);
 
 		// 한 페이지에 보여줄 수 있는 게시물 최대 개수
-		int itemsCountInAPage = 20;
+		int itemsCountInAPage = 6;
 		// 총 페이지 수
 		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsCountInAPage);
 

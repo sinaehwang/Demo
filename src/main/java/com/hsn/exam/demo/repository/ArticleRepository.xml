@@ -6,19 +6,23 @@
 	<!-- @쿼리로 실행하던 SQL문을 xml파일로 이전시킴 -->
 
 	<select id="getArticle" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE 1
-		AND id = #{id}
+		SELECT A.*,
+		IFNULL(M.name, "삭제된_회원") AS extra__writerName
+		FROM article AS A
+		LEFT JOIN member AS M
+		ON A.memberId = M.id
+		WHERE A.id = #{id}
+		AND A.delStatus = 0
 	</select>
 
 	<insert id="writeArticle">
 		INSERT INTO article SET
 		regDate = NOW(),
 		updateDate =NOW(),
+		boardId =#{boardId},
 		title = #{title},
 		`body` = #{body},
-		memberId = #{memberId}
+		memberId = #{loginedMemberId}
 	</insert>
 
 	<select id="getLastInsertId" resultType="int">

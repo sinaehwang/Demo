@@ -1,5 +1,7 @@
  package com.hsn.exam.demo.vo;
 
+import java.util.Map;
+
 import lombok.Getter;
 
 public class ResultData {

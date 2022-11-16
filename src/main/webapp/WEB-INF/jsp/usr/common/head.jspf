@@ -30,6 +30,9 @@
 <!-- vue -->
 <script src="https://unpkg.com/vue@next"></script>
 
+<!-- 폰트어썸의 CDN 스크립트 주소 -->
+<script src="https://kit.fontawesome.com/a52f8bd9a8.js" crossorigin="anonymous"></script>
+
 <link rel="stylesheet" href="/resource/common.css" />
 <script src="/resource/common.js" defer="defer"></script>
 <title>${pageTitle }</title>
@@ -136,7 +139,7 @@
       </div>
     </header>
     <div class="title-bar" >
-        <div class="mx-auto container mt-10">
+        <div class="mx-auto container mt-20">
           ${pageTitle}
         </div>
     </div>

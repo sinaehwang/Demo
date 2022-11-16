@@ -12,7 +12,7 @@ public interface ArticleRepository {
 	
 	public Article getArticle(int id);
 
-	public void writeArticle(String title, String body,int loginedMemberId);
+	public void writeArticle(int boardId, String title, String body,int loginedMemberId);
 
 	public int getLastInsertId();
 

@@ -16,8 +16,17 @@ public class Article {
 	private String body;
 	private int memberId;
 	private int boardId;
+	private boolean delStatus;
 	
 	private String extra__writerName;
+	
+	public String getBodyForPrint() {
+	        String bodyForPrint = body.replaceAll("\r\n", "<br>");
+	        bodyForPrint = bodyForPrint.replaceAll("\r", "<br>");
+	        bodyForPrint = bodyForPrint.replaceAll("\n", "<br>");
+
+	        return bodyForPrint;
+	}
 
 	
 

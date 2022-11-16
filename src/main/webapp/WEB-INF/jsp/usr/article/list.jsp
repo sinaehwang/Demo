@@ -1,15 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="게시판리스트" />
+<c:set var="pageTitle" value="${board.name }" />
 <%@ include file="../common/head.jspf" %>
 
 <div class="section-article-list">
   <div class="container mx-auto">
   <!-- 게시글갯수 -->
-  <!-- 전체페이지수 -->
+  <!-- 전체페이지수 >--
   <!-- 현재페이지수 -->
   <!-- 글작성 -->
+      <div class="total-items" >
+          <span>전체 게시글수 : </span>
+          <span>${totalItemsCount}</span>
+      </div>
+      
+      <div class="total-pages">
+          <span>전체 페이지수 : </span>
+          <span>${totalPage}</span>
+    </div>
+
+    <div class="page">
+          <span>현재페이지 : </span>
+          <span>${page}</span>
+    </div>
+
+    <hr />
+    <hr />
   
   
     <div class="card bordered shadow-lg item-bt-1-not-last-child">
@@ -40,7 +57,7 @@
 
               <a href="#" class="cursor-pointer hover:underline">
                 <span class="badge badge-accent">작성자</span>
-                <span>홍길동</span>
+                <span>${article.extra__writerName}</span>
               </a>
 
               <a href="#" class="hover:underline">

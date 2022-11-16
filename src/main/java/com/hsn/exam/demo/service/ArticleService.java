@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.hsn.exam.demo.repository.ArticleRepository;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
+import com.hsn.exam.demo.vo.Board;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Service
@@ -42,9 +43,13 @@ public class ArticleService {
 
 	}
 
-	public List<Article> getArticles() {
+	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page) {
+		
+		int limitFrom = (page - 1) * itemsCountInAPage;
+		int limitTake = itemsCountInAPage;
+		
 
-		return articleRepository.getArticles();
+		return articleRepository.getArticles(boardId,limitFrom,limitTake);
 	}
 
 	public void doDelete(int id) {
@@ -58,6 +63,16 @@ public class ArticleService {
 		
 		return getArticle(id);//수정후의 data1을 넘겨줌
 		
+	}
+
+	public Board getBoardbyId(int boardId) {
+		
+		return articleRepository.getBoardbyId(boardId);
+	}
+
+	public int getArticlesTotalCount(int boardId) {
+
+		return articleRepository.getArticlesTotalCount(boardId);
 	}
 
 }

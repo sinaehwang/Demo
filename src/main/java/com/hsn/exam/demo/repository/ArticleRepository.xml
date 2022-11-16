@@ -27,9 +27,19 @@
 	</select>
 
 	<select id="getArticles" resultType="Article">
-		SELECT * FROM article
-		ORDER
-		BY id DESC;
+		SELECT A.*, M.nickname AS
+		extra__writerName
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId= M.id
+		WHERE 1
+		<if test="boardId != 0">
+			AND A.boardId = #{boardId}
+		</if>
+		ORDER BY A.id DESC
+		<if test="limitTake != -1">
+		LIMIT #{limitFrom}, #{limitTake};
+		</if>
 	</select>
 
 	<delete id="doDelete">
@@ -46,5 +56,19 @@
 		</set>
 			WHERE id = #{id}
 	</update>
+	
+	<select id="getBoardbyId" resultType="Board">
+		SELECT *
+		FROM board
+		WHERE board.id = #{id}
+		AND board.delStatus = 0
+	</select>
+	
+		<select id="getArticlesTotalCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS A
+		WHERE A.boardId = #{boardId}
+		
+	</select>
 
 </mapper>

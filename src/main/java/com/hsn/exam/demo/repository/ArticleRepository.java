@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hsn.exam.demo.vo.Article;
+import com.hsn.exam.demo.vo.Board;
 
 @Mapper
 public interface ArticleRepository {
@@ -15,11 +16,15 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 
-	public List<Article> getArticles();
+	public List<Article> getArticles(int boardId, int limitFrom, int limitTake);
 
 	public void doDelete(int id);
 
 	public void doModify(int id, String title, String body);
+
+	public Board getBoardbyId(int boardId);
+
+	public int getArticlesTotalCount(int boardId);
 
 
 }

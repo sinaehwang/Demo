@@ -39,7 +39,7 @@
   <div class="site-wrap">
     <header class="top-bar h-10 top-bar--fly">
       <div class="container mx-auto flex h-full">
-        <a href="#" class="px-3 flex items-center">
+        <a href="/" class="px-3 flex items-center">
           <span>
             <i class="fas fa-lemon"></i>
           </span>
@@ -51,7 +51,7 @@
         <nav class="menu-box-1">
           <ul class="flex h-full">
             <li>
-              <a href="#" class="h-full flex items-center px-5">
+              <a href="/" class="h-full flex items-center px-5">
                 <span>
                   <i class="fas fa-house-user"></i>
                 </span>
@@ -60,7 +60,7 @@
               <div></div>
             </li>
             <li>
-              <a href="#" class="h-full flex items-center px-5">
+              <a href="/" class="h-full flex items-center px-5">
                 <span>
                   <i class="fas fa-home"></i>
                 </span>
@@ -69,11 +69,20 @@
               <div></div>
             </li>
             <li>
-              <a href="#" class="h-full flex items-center px-5">
+              <a href="/" class="h-full flex items-center px-5">
                 <span>
                   <i class="fas fa-user"></i>
                 </span>
                 <span class="hidden sm:block">&nbsp;회원관리</span>
+              </a>
+              <div></div>
+            </li>
+            <li>
+              <a href="/usr/article/getArticles?boardId=1" class="h-full flex items-center px-5">
+                <span>
+                  <i class="far fa-clipboard"></i>
+                </span>
+                <span class="hidden sm:block">&nbsp;공지사항</span>
               </a>
               <div></div>
             </li>
@@ -87,16 +96,34 @@
               <div></div>
             </li>
             <li>
-              <a href="#" class="h-full flex items-center px-5">
+              <a href="/usr/article/getArticles?boardId=2" class="h-full flex items-center px-5">
                 <span>
                   <i class="far fa-newspaper"></i>
                 </span>
-                <span class="hidden sm:block">&nbsp;게시물 관리</span>
+                <span class="hidden sm:block">&nbsp;커뮤니티게시판</span>
               </a>
               <div></div>
             </li>
             <li>
-              <a href="#" class="h-full flex items-center px-5">
+              <a href="/usr/article/getArticles?boardId=3" class="h-full flex items-center px-5">
+                <span>
+                  <i class="far fa-newspaper"></i>
+                </span>
+                <span class="hidden sm:block">&nbsp;레시피공유방</span>
+              </a>
+              <div></div>
+            </li>
+            <li>
+              <a href="/usr/article/getArticles" class="h-full flex items-center px-5">
+                <span>
+                  <i class="far fa-newspaper"></i>
+                </span>
+                <span class="hidden sm:block">&nbsp;회원가입</span>
+              </a>
+              <div></div>
+            </li>
+            <li>
+              <a href="/usr/member/Logout" class="h-full flex items-center px-5">
                 <span>
                   <i class="fas fa-sign-out-alt"></i>
                 </span>

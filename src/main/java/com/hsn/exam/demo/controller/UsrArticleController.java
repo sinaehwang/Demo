@@ -2,17 +2,20 @@ package com.hsn.exam.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hsn.exam.demo.service.ArticleService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
+import com.hsn.exam.demo.vo.Board;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Controller
@@ -59,20 +62,42 @@ public class UsrArticleController {
 			return ResultData.from(article.getResultCode(), article.getMsg());
 		}
 
-		return ResultData.newData(writeArticlerd, "article", article.getData1());// 기존ResultData 코드와 메세지유지하고 data1만 변경해서 사용하는
-																		// newData
+		return ResultData.newData(writeArticlerd, "article", article.getData1());// 기존ResultData 코드와 메세지유지하고 data1만 변경해서
+																					// 사용하는
+		// newData
 
 	}
 
 	@RequestMapping("/usr/article/getArticles")
-	public String getArticles(Model model) {
+	public String getArticles(HttpServletRequest req, int boardId, @RequestParam(defaultValue = "1") int page) {
 
-		List<Article> articles = articleService.getArticles();
-		
-		model.addAttribute("articles", articles); //jsp로 전달하는주체
+		Board board = articleService.getBoardbyId(boardId);
+
+		if (board == null) {
+
+			return ("존재하지않는 게시판입니다.");
+		}
+
+		req.setAttribute("board", board);
+
+		int totalItemsCount = articleService.getArticlesTotalCount(boardId);
+
+		req.setAttribute("totalItemsCount", totalItemsCount);
+
+		// 한 페이지에 보여줄 수 있는 게시물 최대 개수
+		int itemsCountInAPage = 20;
+		// 총 페이지 수
+		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsCountInAPage);
+
+		// 현재 페이지(임시)
+		req.setAttribute("page", page);
+		req.setAttribute("totalPage", totalPage);
+
+		List<Article> articles = articleService.getArticles(boardId,itemsCountInAPage,page);
 
 		
-		
+		req.setAttribute("articles",articles);
+
 		return "usr/article/list";
 
 	}
@@ -162,7 +187,8 @@ public class UsrArticleController {
 
 		ResultData ModifyArticlerd = articleService.doModify(id, title, body);
 
-		return ResultData.from(ModifyArticlerd.getResultCode(), ModifyArticlerd.getMsg(), "ModifyArticlerd", ModifyArticlerd.getData1());
+		return ResultData.from(ModifyArticlerd.getResultCode(), ModifyArticlerd.getMsg(), "ModifyArticlerd",
+				ModifyArticlerd.getData1());
 
 	}
 

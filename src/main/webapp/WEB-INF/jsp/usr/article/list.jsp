@@ -6,10 +6,6 @@
 
 <div class="section-article-list">
   <div class="container mx-auto">
-  <!-- 게시글갯수 -->
-  <!-- 전체페이지수 >--
-  <!-- 현재페이지수 -->
-  <!-- 글작성 -->
       <div class="total-items" >
           <span>전체 게시글수 : </span>
           <span>${totalItemsCount}</span>
@@ -18,18 +14,56 @@
       <div class="total-pages">
           <span>전체 페이지수 : </span>
           <span>${totalPage}</span>
-    </div>
+      </div>
 
-    <div class="page">
-          <span>현재페이지 : </span>
-          <span>${page}</span>
-    </div>
+      <div class="page">
+            <span>현재페이지 : </span>
+            <span>${page}</span>
+      </div>
 
     <hr />
     <hr />
   
-  
-    <div class="card bordered shadow-lg item-bt-1-not-last-child">
+      <div class="search-form-box mt-2 px-4">
+        <form action="" class="grid gap-2">
+                <input type="hidden" name="boardId" value="${board.id}" />
+                <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">옵션</span>
+                      </label>
+                      <select class="select select-bordered" name="searchKeywordType">
+                        <option value="titleAndBody">제목+내용</option>
+                        <option value="title">제목</option>
+                        <option value="body">내용</option>
+                      </select>
+                      <script>
+                        const param__searchKeywordType = '${param.searchKeywordType}';
+                        if ( param__searchKeywordType.length > 0 ) {
+                          $('.search-form-box form [name="searchKeywordType"]')
+                          .val('${param.searchKeywordType}');             
+                        }
+                      </script>
+            </div>
+    
+            <div class="form-control">
+                  <label class="label">
+                    <span class="label-text">검색어</span>
+                  </label>
+                  <input value="${param.searchKeyword}" class="input input-bordered"
+                    name="searchKeyword" type="text" placeholder="검색어를 입력해주세요."
+                    maxlength="10" />
+            </div>
+    
+            <div class="form-control">
+
+                  <input type="submit" class="btn btn-sm btn-primary" value="검색" />
+            </div>
+        
+        </form>
+      </div>
+         
+<!-- 리스트자리 -->  
+          <div class="card bordered shadow-lg item-bt-1-not-last-child">
       <div class="card-title">
         <a href="javascript:history.back();" class="cursor-pointer">
           <i class="fas fa-chevron-left"></i>
@@ -103,8 +137,8 @@
           </div>
         </c:forEach>
       </div>
-      
     </div>
+<!-- 리스트자리 -->  
   </div>
 </div>
 <%@ include file="../common/foot.jspf" %>

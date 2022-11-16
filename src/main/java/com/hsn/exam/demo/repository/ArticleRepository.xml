@@ -36,6 +36,21 @@
 		<if test="boardId != 0">
 			AND A.boardId = #{boardId}
 		</if>
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<if test="searchKeywordType == 'titleAndBody'">
+				AND (
+					A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					OR
+					A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+			)
+			</if>
+			<if test="searchKeywordType == 'title'">
+				AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchKeywordType == 'body'">
+				AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+		</if>
 		ORDER BY A.id DESC
 		<if test="limitTake != -1">
 		LIMIT #{limitFrom}, #{limitTake};
@@ -68,7 +83,21 @@
 		SELECT COUNT(*) AS cnt
 		FROM article AS A
 		WHERE A.boardId = #{boardId}
-		
+		<if test="searchKeyword != null">
+			<if test="searchKeywordType == 'titleAndBody'">
+				AND (
+				A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				OR
+				A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					)
+			</if>
+			<if test="searchKeywordType == 'title'">
+				AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchKeywordType == 'body'">
+				AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+		</if>
 	</select>
 
 </mapper>

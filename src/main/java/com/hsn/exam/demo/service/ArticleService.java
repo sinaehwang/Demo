@@ -43,13 +43,17 @@ public class ArticleService {
 
 	}
 
-	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page) {
+	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page, String searchKeyword, String searchKeywordType) {
+		
+		if(searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
+		}
 		
 		int limitFrom = (page - 1) * itemsCountInAPage;
 		int limitTake = itemsCountInAPage;
 		
 
-		return articleRepository.getArticles(boardId,limitFrom,limitTake);
+		return articleRepository.getArticles(boardId,limitFrom,limitTake,searchKeyword,searchKeywordType);
 	}
 
 	public void doDelete(int id) {
@@ -70,9 +74,13 @@ public class ArticleService {
 		return articleRepository.getBoardbyId(boardId);
 	}
 
-	public int getArticlesTotalCount(int boardId) {
+	public int getArticlesTotalCount(int boardId, String searchKeyword, String searchKeywordType) {
+		
+		if(searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
+		}
 
-		return articleRepository.getArticlesTotalCount(boardId);
+		return articleRepository.getArticlesTotalCount(boardId,searchKeyword,searchKeywordType);
 	}
 
 }

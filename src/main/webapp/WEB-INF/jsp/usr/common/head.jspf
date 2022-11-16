@@ -78,7 +78,7 @@
               <div></div>
             </li>
             <li>
-              <a href="/usr/article/getArticles?boardId=1" class="h-full flex items-center px-5">
+              <a href="/usr/article/list?boardId=1" class="h-full flex items-center px-5">
                 <span>
                   <i class="far fa-clipboard"></i>
                 </span>
@@ -96,7 +96,7 @@
               <div></div>
             </li>
             <li>
-              <a href="/usr/article/getArticles?boardId=2" class="h-full flex items-center px-5">
+              <a href="/usr/article/list?boardId=2" class="h-full flex items-center px-5">
                 <span>
                   <i class="far fa-newspaper"></i>
                 </span>
@@ -105,7 +105,7 @@
               <div></div>
             </li>
             <li>
-              <a href="/usr/article/getArticles?boardId=3" class="h-full flex items-center px-5">
+              <a href="/usr/article/list?boardId=3" class="h-full flex items-center px-5">
                 <span>
                   <i class="far fa-newspaper"></i>
                 </span>
@@ -114,7 +114,7 @@
               <div></div>
             </li>
             <li>
-              <a href="/usr/article/getArticles" class="h-full flex items-center px-5">
+              <a href="/" class="h-full flex items-center px-5">
                 <span>
                   <i class="far fa-newspaper"></i>
                 </span>

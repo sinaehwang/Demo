@@ -16,7 +16,7 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 
-	public List<Article> getArticles(int boardId, int limitFrom, int limitTake);
+	public List<Article> getArticles(int boardId, int limitFrom, int limitTake, String searchKeyword, String searchKeywordType);
 
 	public void doDelete(int id);
 
@@ -24,7 +24,7 @@ public interface ArticleRepository {
 
 	public Board getBoardbyId(int boardId);
 
-	public int getArticlesTotalCount(int boardId);
+	public int getArticlesTotalCount(int boardId, String searchKeyword, String searchKeywordType);
 
 
 }

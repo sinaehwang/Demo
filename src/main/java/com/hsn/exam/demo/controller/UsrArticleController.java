@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +24,20 @@ public class UsrArticleController {
 
 	@Autowired
 	private ArticleService articleService;// Service랑 연결됨
+	
+	private String msgAndBack(HttpServletRequest req, String msg) { //실패시 메세지 보여주고 뒤로가기
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		return "common/redirect";
+	}
+	
+	private String msgAndReplace(HttpServletRequest req, String msg, String replaceUrl) { //성공시 메세지 보여주고 돌아가기
+		
+		req.setAttribute("msg", msg);
+		req.setAttribute("replaceUrl", replaceUrl);
+		
+		return "common/redirect";
+	}
 
 	@RequestMapping("/usr/article/doAdd") // 브라우저요청으로 글을 추가하는경우
 	@ResponseBody()
@@ -68,19 +81,27 @@ public class UsrArticleController {
 
 	}
 
-	@RequestMapping("/usr/article/getArticles")
-	public String getArticles(HttpServletRequest req, int boardId, @RequestParam(defaultValue = "1") int page) {
+	@RequestMapping("/usr/article/list")
+	public String getArticles(HttpServletRequest req, int boardId, @RequestParam(defaultValue = "1") int page,String searchKeywordType , String searchKeyword) {
 
 		Board board = articleService.getBoardbyId(boardId);
+		
+		if(Ut.empty(searchKeywordType)) {
+			searchKeywordType = "titleAndBody";
+		}
 
 		if (board == null) {
-
-			return ("존재하지않는 게시판입니다.");
+			
+			return msgAndBack(req, boardId+"번 게시판은 존재하지 않습니다.");
 		}
 
 		req.setAttribute("board", board);
 
-		int totalItemsCount = articleService.getArticlesTotalCount(boardId);
+		int totalItemsCount = articleService.getArticlesTotalCount(boardId,searchKeyword,searchKeywordType);
+		
+		if ( searchKeyword == null || searchKeyword.trim().length() == 0 ) {
+
+		}
 
 		req.setAttribute("totalItemsCount", totalItemsCount);
 
@@ -93,7 +114,7 @@ public class UsrArticleController {
 		req.setAttribute("page", page);
 		req.setAttribute("totalPage", totalPage);
 
-		List<Article> articles = articleService.getArticles(boardId,itemsCountInAPage,page);
+		List<Article> articles = articleService.getArticles(boardId,itemsCountInAPage,page,searchKeyword,searchKeywordType);
 
 		
 		req.setAttribute("articles",articles);
@@ -118,8 +139,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doDelete")
-	@ResponseBody()
-	public ResultData doDelete(int id, HttpSession httpSession) {
+	public String doDelete(int id, HttpSession httpSession, HttpServletRequest req) {
 
 		boolean isLogined = false;
 
@@ -131,26 +151,37 @@ public class UsrArticleController {
 		}
 
 		if (isLogined == false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요");
+			//return ResultData.from("F-A", "로그인 후 이용해주세요");
+			return msgAndBack(req, "로그인 후 이용해주세요");
 		}
 
 		ResultData Foundarticle = articleService.getArticle(id);
 
 		if (Foundarticle.isFail()) {
 
-			return ResultData.from(Foundarticle.getResultCode(), Foundarticle.getMsg());
+			//return ResultData.from(Foundarticle.getResultCode(), Foundarticle.getMsg());
+			
+			return msgAndBack(req,Foundarticle.getMsg());
+			
 		}
 
 		Article article = (Article) Foundarticle.getData1();
 
 		if (article.getMemberId() != loginedMemberId) {
 
-			return ResultData.from("F-1", "해당 게시글에 대해 삭제권한이 없습니다.");
+			//return ResultData.from("F-1", "해당 게시글에 대해 삭제권한이 없습니다.");
+			
+			return msgAndBack(req,"해당 게시글에 대해 삭제권한이 없습니다.");
+			
 		}
 
 		articleService.doDelete(id);
+		
+		String redirectUrl = "../article/list?boardId=" + article.getBoardId();
 
-		return ResultData.from("S-1", Ut.f("%d번게시글 삭제완료.", id));
+		//return ResultData.from("S-1", Ut.f("%d번게시글 삭제완료.", id));
+		
+		return msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUrl);
 
 	}
 

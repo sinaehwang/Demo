@@ -19,6 +19,7 @@ import com.hsn.exam.demo.service.GenFileService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
+import com.hsn.exam.demo.vo.GenFile;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Controller
@@ -28,36 +29,37 @@ public class UsrArticleController {
 
 	@Autowired
 	private ArticleService articleService;// Service랑 연결됨
-	
+
 	@Autowired
 	private GenFileService genFileService;
-	
-	private String msgAndBack(HttpServletRequest req, String msg) { //실패시 메세지 보여주고 뒤로가기
+
+	private String msgAndBack(HttpServletRequest req, String msg) { // 실패시 메세지 보여주고 뒤로가기
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
 		return "common/redirect";
 	}
-	
-	private String msgAndReplace(HttpServletRequest req, String msg, String replaceUrl) { //성공시 메세지 보여주고 돌아가기
-		
+
+	private String msgAndReplace(HttpServletRequest req, String msg, String replaceUrl) { // 성공시 메세지 보여주고 돌아가기
+
 		req.setAttribute("msg", msg);
 		req.setAttribute("replaceUrl", replaceUrl);
-		
+
 		return "common/redirect";
 	}
-	
+
 	@RequestMapping("/usr/article/write")
 	public String write(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId) {
-		
+
 		Board board = articleService.getBoardbyId(boardId);
-		
+
 		req.setAttribute("board", board);
-		
+
 		return "usr/article/write";
 	}
 
 	@RequestMapping("/usr/article/doWrite") // 브라우저요청으로 글을 추가하는경우
-	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,MultipartRequest multipartRequest) {
+	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			MultipartRequest multipartRequest) {
 
 		/*
 		 * boolean isLogined = false; int loginedMemberId = 0;
@@ -68,21 +70,21 @@ public class UsrArticleController {
 		 * loginedMemberId = (int) httpSession.getAttribute("loginedMemberId"); }
 		 */
 
-		if (param.get("title")==null) {
-			//return ResultData.from("F-1", "title을 입력해주세요");
+		if (param.get("title") == null) {
+			// return ResultData.from("F-1", "title을 입력해주세요");
 			return msgAndBack(req, "제목을 입력해주세요");
 		}
 
-		if (param.get("body")==null) {
-			//return ResultData.from("F-2", "body을 입력해주세요");
+		if (param.get("body") == null) {
+			// return ResultData.from("F-2", "body을 입력해주세요");
 			return msgAndBack(req, "내용을 입력해주세요");
 		}
 
-		//임시
+		// 임시
 		int loginedMemberId = 1;
-		
+
 		param.put("memberId", loginedMemberId);
-		
+
 		ResultData writeArticlerd = articleService.writeArticle(param);// data1에 id를 저장해서 리턴해준상태
 
 		// Article article =
@@ -92,73 +94,73 @@ public class UsrArticleController {
 		ResultData article = articleService.getArticle((int) writeArticlerd.getData1());
 
 		if (article.isFail()) {
-			//return ResultData.from(article.getResultCode(), article.getMsg());
+			// return ResultData.from(article.getResultCode(), article.getMsg());
 			return msgAndBack(req, article.getMsg());
 		}
-		
+
 		Article writearticle = (Article) article.getData1();
-		
+
 		int newArticleId = writearticle.getId();
-		
-		
+
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-		
+
 		for (String fileInputName : fileMap.keySet()) {
 			MultipartFile multipartFile = fileMap.get(fileInputName);
-			
-			if ( multipartFile.isEmpty() == false ) {
-				ResultData saverd = genFileService.save(multipartFile, newArticleId);				
+
+			if (multipartFile.isEmpty() == false) {
+				ResultData saverd = genFileService.save(multipartFile, newArticleId);
 			}
 		}
 
 		String replaceUrl = "detail?id=" + newArticleId;
-		
+
 		return msgAndReplace(req, "게시글 작성완료했습니다.", replaceUrl);
-		
-		//return msgAndBack(req, "성공");
-		
-		//return ResultData.newData(writeArticlerd, "article", article.getData1());
+
+		// return msgAndBack(req, "성공");
+
+		// return ResultData.newData(writeArticlerd, "article", article.getData1());
 
 	}
-	
+
 	@RequestMapping("/usr/article/detail")
 	public String detail(HttpServletRequest req, int id) {
-		
+
 		ResultData articlerd = articleService.getArticle(id);
-		
-		if(articlerd.isFail()) {
+
+		if (articlerd.isFail()) {
 			return msgAndBack(req, articlerd.getMsg());
 		}
-		
+
 		Article article = (Article) articlerd.getData1();
-		
+
 		Board board = articleService.getBoardbyId(article.getBoardId());
-		
+
 		req.setAttribute("article", article);
 		req.setAttribute("board", board);
-		
+
 		return "usr/article/detail";
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId, @RequestParam(defaultValue = "1") int page,String searchKeywordType , String searchKeyword) {
+	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
+			@RequestParam(defaultValue = "1") int page, String searchKeywordType, String searchKeyword) {
 
 		Board board = articleService.getBoardbyId(boardId);
-		
-		if(Ut.empty(searchKeywordType)) {
+
+		if (Ut.empty(searchKeywordType)) {
 			searchKeywordType = "titleAndBody";
 		}
 
 		if (board == null) {
-			
-			return msgAndBack(req, boardId+"번 게시판은 존재하지 않습니다.");
+
+			return msgAndBack(req, boardId + "번 게시판은 존재하지 않습니다.");
 		}
 
 		req.setAttribute("board", board);
 
-		int totalItemsCount = articleService.getArticlesTotalCount(boardId,searchKeyword,searchKeywordType);
-		
-		if ( searchKeyword == null || searchKeyword.trim().length() == 0 ) {
+		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeyword, searchKeywordType);
+
+		if (searchKeyword == null || searchKeyword.trim().length() == 0) {
 
 		}
 
@@ -173,10 +175,20 @@ public class UsrArticleController {
 		req.setAttribute("page", page);
 		req.setAttribute("totalPage", totalPage);
 
-		List<Article> articles = articleService.getArticles(boardId,itemsCountInAPage,page,searchKeyword,searchKeywordType);
+		List<Article> articles = articleService.getArticles(boardId, itemsCountInAPage, page, searchKeyword,
+				searchKeywordType);
 
-		
-		req.setAttribute("articles",articles);
+		for (Article article : articles) {
+			GenFile genFile = genFileService.getGenFile("article", article.getId(), "common", "attachment", 1);
+
+			if (genFile != null) {
+
+				article.setExtra__thumbImg(genFile.getForPrintUrl());
+
+			}
+		}
+
+		req.setAttribute("articles", articles);
 
 		return "usr/article/list";
 
@@ -210,7 +222,7 @@ public class UsrArticleController {
 		}
 
 		if (isLogined == false) {
-			//return ResultData.from("F-A", "로그인 후 이용해주세요");
+			// return ResultData.from("F-A", "로그인 후 이용해주세요");
 			return msgAndBack(req, "로그인 후 이용해주세요");
 		}
 
@@ -218,28 +230,28 @@ public class UsrArticleController {
 
 		if (Foundarticle.isFail()) {
 
-			//return ResultData.from(Foundarticle.getResultCode(), Foundarticle.getMsg());
-			
-			return msgAndBack(req,Foundarticle.getMsg());
-			
+			// return ResultData.from(Foundarticle.getResultCode(), Foundarticle.getMsg());
+
+			return msgAndBack(req, Foundarticle.getMsg());
+
 		}
 
 		Article article = (Article) Foundarticle.getData1();
 
 		if (article.getMemberId() != loginedMemberId) {
 
-			//return ResultData.from("F-1", "해당 게시글에 대해 삭제권한이 없습니다.");
-			
-			return msgAndBack(req,"해당 게시글에 대해 삭제권한이 없습니다.");
-			
+			// return ResultData.from("F-1", "해당 게시글에 대해 삭제권한이 없습니다.");
+
+			return msgAndBack(req, "해당 게시글에 대해 삭제권한이 없습니다.");
+
 		}
 
 		articleService.doDelete(id);
-		
+
 		String redirectUrl = "../article/list?boardId=" + article.getBoardId();
 
-		//return ResultData.from("S-1", Ut.f("%d번게시글 삭제완료.", id));
-		
+		// return ResultData.from("S-1", Ut.f("%d번게시글 삭제완료.", id));
+
 		return msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUrl);
 
 	}

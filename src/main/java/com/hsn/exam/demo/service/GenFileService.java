@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hsn.exam.demo.vo.GenFile;
 import com.hsn.exam.demo.repository.GenFileRepository;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.ResultData;
@@ -96,6 +97,11 @@ public class GenFileService {
 		}
 
 		return ResultData.from("S-1", "파일이 생성되었습니다.");
+	}
+
+	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
+
+		return genFileRepository.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 	}
 
 }

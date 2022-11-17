@@ -19,6 +19,7 @@ public class Article {
 	private boolean delStatus;
 	
 	private String extra__writerName;
+	private String extra__thumbImg;
 	
 	public String getBodyForPrint() {
 	        String bodyForPrint = body.replaceAll("\r\n", "<br>");

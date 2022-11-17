@@ -83,10 +83,27 @@
                   </a>
                   
                   <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-                    <a href="#" class="row-span-7">
-                      <img class="rounded" src="https://i.pravatar.cc/250?img=37" alt=""> <!-- 본문의 이미지불러오기 -->
+                      <c:if test="${article.extra__thumbImg != null}">
+                          <img src="${article.extra__thumbImg}" alt="" /> <!-- 본문의 이미지불러오기 -->
+                      </c:if>
+                      <c:if test="${article.extra__thumbImg == null}">
+                          <img src="https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif" alt="" /> <!-- 본문의 이미지불러오기 -->
+                      </c:if>
+      
+                   <a href="#" class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
+                        <span class="badge badge-outline">본문</span>
+                        <div class="line-clamp-3">
+                          ${article.body}
+                        </div>
                     </a>
       
+                    <a href="#" class="hover:underline">
+                      <span class="badge">수정날짜</span>
+                      <span class="text-gray-600 text-light">${article.updateDate}</span>
+                    </a>
+      
+ 
+                    
                     <a href="#" class="hover:underline">
                       <span class="badge badge-primary">번호</span>
                       <span>${article.id}</span>
@@ -101,18 +118,8 @@
                       <span class="badge">등록날짜</span>
                       <span class="text-gray-600 text-light">${article.regDate}</span>
                     </a>
-      
-                    <a href="#" class="hover:underline">
-                      <span class="badge">수정날짜</span>
-                      <span class="text-gray-600 text-light">${article.updateDate}</span>
-                    </a>
-      
-                    <a href="#" class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
-                        <span class="badge badge-outline">본문</span>
-                        <div class="line-clamp-3">
-                          ${article.body}
-                        </div>
-                    </a>
+                    
+                    
                   </div>
       
                   <div class="plain-link-wrap gap-3 mt-4">

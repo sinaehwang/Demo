@@ -1,6 +1,7 @@
 package com.hsn.exam.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,9 @@ public class ArticleService {
 		return ResultData.from("S-1", "성공", "article", article);
 	}
 
-	public ResultData writeArticle(int boardId, String title, String body, int loginedMemberId) {
+	public ResultData writeArticle(Map<String, Object> param) {
 
-		articleRepository.writeArticle(boardId,title, body ,loginedMemberId);
+		articleRepository.writeArticle(param);
 
 		int id =  articleRepository.getLastInsertId();
 		

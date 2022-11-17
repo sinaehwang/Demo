@@ -31,7 +31,7 @@ function ArticleWrite__submitForm(form) {
 
   <div class="section-article-write">
   <div class="container mx-auto">
-  <form method="POST" action="../article/doWrite" onsubmit="ArticleWrite__submitForm(this); return false;">
+  <form method="POST" action="../article/doWrite" enctype="multipart/form-data" onsubmit="ArticleWrite__submitForm(this); return false;">
   <input type="hidden" name="boardId" value="${board.id}" />
     <div class="card bordered shadow-lg item-bt-1-not-last-child">
       <div class="card-title">
@@ -65,30 +65,26 @@ function ArticleWrite__submitForm(form) {
             <textarea placeholder="내용을 입력해주세요" name="body" class="h-80 textarea textarea-bordered"></textarea>
           </div>
 
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">본문 이미지 1</span>
-            </label>
-            <div>
-              <input class="thumb-available" data-thumb-selector="next().next()" type="file" name="file" placeholder="본문 이미지 1" accept="image/png, image/jpeg, image/png">
-              <div class="mt-2">
-
-              </div>
-            </div>
-          </div>
-
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">본문 이미지 2</span>
-            </label>
-            <div>
-              <input class="thumb-available" data-thumb-selector="next()" data-thumb-selector="" class="" type="file" name="file" placeholder="본문 이미지 2" accept="image/png, image/jpeg, image/png">
-              <div class="mt-2">
-
-              </div>
-            </div>
-          </div>
-
+    		<div class="form-control">
+    				<div class="lg:flex lg:items-center lg:w-28">
+    					<span>첨부파일 1</span>
+    				</div>
+    				<div class="lg:flex-grow">
+    					<input type="file" name="file__article__0__common__attachment__1"
+    						class="form-row-input w-full rounded-sm" />
+    				</div>
+    		</div>
+        
+    		<div class="form-control">
+    				<div class="lg:flex lg:items-center lg:w-28">
+    					<span>첨부파일 2</span>
+    				</div>
+    				<div class="lg:flex-grow">
+    					<input type="file" name="file__article__0__common__attachment__2"
+    						class="form-row-input w-full rounded-sm" />
+    				</div>
+    		</div>
+        
           <div class="mt-4 btn-wrap gap-1">
                 <button type="submit"  class="btn btn-primary btn-sm mb-1">
                     <span><i class="fas fa-save"></i></span>

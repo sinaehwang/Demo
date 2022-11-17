@@ -1,6 +1,7 @@
 package com.hsn.exam.demo.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,7 +13,7 @@ public interface ArticleRepository {
 	
 	public Article getArticle(int id);
 
-	public void writeArticle(int boardId, String title, String body,int loginedMemberId);
+	public void writeArticle(Map<String, Object> param);
 
 	public int getLastInsertId();
 

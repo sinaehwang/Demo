@@ -15,14 +15,14 @@
 		AND A.delStatus = 0
 	</select>
 
-	<insert id="writeArticle">
+	<insert id="writeArticle" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO article SET
 		regDate = NOW(),
 		updateDate =NOW(),
 		boardId =#{boardId},
 		title = #{title},
 		`body` = #{body},
-		memberId = #{loginedMemberId}
+		memberId = #{memberId}
 	</insert>
 
 	<select id="getLastInsertId" resultType="int">

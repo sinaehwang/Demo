@@ -57,7 +57,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doWrite") // 브라우저요청으로 글을 추가하는경우
-	public String doWrite(HttpServletRequest req, int boardId, String title, String body, HttpSession httpSession,MultipartRequest multipartRequest) {
+	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,MultipartRequest multipartRequest) {
 
 		/*
 		 * boolean isLogined = false; int loginedMemberId = 0;
@@ -68,12 +68,12 @@ public class UsrArticleController {
 		 * loginedMemberId = (int) httpSession.getAttribute("loginedMemberId"); }
 		 */
 
-		if (Ut.empty(title)) {
+		if (param.get("title")==null) {
 			//return ResultData.from("F-1", "title을 입력해주세요");
 			return msgAndBack(req, "제목을 입력해주세요");
 		}
 
-		if (Ut.empty(body)) {
+		if (param.get("body")==null) {
 			//return ResultData.from("F-2", "body을 입력해주세요");
 			return msgAndBack(req, "내용을 입력해주세요");
 		}
@@ -81,7 +81,9 @@ public class UsrArticleController {
 		//임시
 		int loginedMemberId = 1;
 		
-		ResultData writeArticlerd = articleService.writeArticle(boardId,title, body, loginedMemberId);// data1에 id를 저장해서 리턴해준상태
+		param.put("memberId", loginedMemberId);
+		
+		ResultData writeArticlerd = articleService.writeArticle(param);// data1에 id를 저장해서 리턴해준상태
 
 		// Article article =
 		// articleService.getArticle((int)writeArticlerd.getData1());//data1으로 새로운 data를
@@ -95,6 +97,9 @@ public class UsrArticleController {
 		}
 		
 		Article writearticle = (Article) article.getData1();
+		
+		int newArticleId = writearticle.getId();
+		
 		
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		
@@ -113,7 +118,7 @@ public class UsrArticleController {
 			}
 
 			String relTypeCode = fileInputNameBits[1];
-			int relId = writearticle.getId();
+			int relId = newArticleId;
 			String typeCode = fileInputNameBits[3];
 			String type2Code = fileInputNameBits[4];
 			int fileNo = Integer.parseInt(fileInputNameBits[5]);
@@ -123,14 +128,16 @@ public class UsrArticleController {
 			String fileExt = Ut.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
 			String fileDir = Ut.getNowYearMonthDateStr();
 
-			//여기서부터
-			genFileService.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode,
-					fileExtType2Code, fileExt, fileSize, fileDir);
+			
+			genFileService.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode,fileExtType2Code, fileExt, fileSize, fileDir);
+			
 		}
 
-		String replaceUrl = "detail?id=" + writearticle.getId();
+		//String replaceUrl = "detail?id=" + writearticle.getId();
 		
-		return msgAndReplace(req, "게시글 작성완료했습니다.", replaceUrl);
+		//return msgAndReplace(req, "게시글 작성완료했습니다.", replaceUrl);
+		
+		return msgAndBack(req, "테스트");
 		
 		//return ResultData.newData(writeArticlerd, "article", article.getData1());
 

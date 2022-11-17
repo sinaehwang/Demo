@@ -29,40 +29,96 @@ function ArticleWrite__submitForm(form) {
 </script>
 
 
-  <div class="section section-article-list">
+  <div class="section-article-write">
   <div class="container mx-auto">
-      <form method="POST" action="doWrite" onsubmit="ArticleWrite__submitForm(this); return false;">
-        <input type="hidden" name="boardId" value="${board.id}" />
+  <form method="POST" action="../article/doWrite" onsubmit="ArticleWrite__submitForm(this); return false;">
+  <input type="hidden" name="boardId" value="${board.id}" />
+    <div class="card bordered shadow-lg item-bt-1-not-last-child">
+      <div class="card-title">
+        <a href="javascript:history.back();" class="cursor-pointer">
+          <i class="fas fa-chevron-left"></i>
+        </a>
+        <span>게시물 작성</span>
+      </div>
+      <div class="px-4 py-8">
+        <form class="grid form-type-1">
           <div class="form-control">
-                <label class="label">
-                    제목
-                </label>
-                <input class="input input-bordered w-full" type="text" maxlength="100" name="title" placeholder="제목을 입력해주세요." />
+            <label class="cursor-pointer label">
+              작성자
+            </label>
+            <div class="plain-text">
+              홍길동
             </div>
+          </div>
 
-            <div class="form-control">
-                <label class="label">
-                    내용
-                </label>
-                <textarea class="textarea textarea-bordered w-full h-24" placeholder="내용을 입력해주세요." name="body" maxlength="2000"></textarea>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">제목</span>
+            </label>
+            <input type="text" placeholder="제목을 입력해주세요" name="title" class="input input-bordered">
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">본문</span>
+            </label>
+            <textarea placeholder="내용을 입력해주세요" name="body" class="h-80 textarea textarea-bordered"></textarea>
+          </div>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">본문 이미지 1</span>
+            </label>
+            <div>
+              <input class="thumb-available" data-thumb-selector="next().next()" type="file" name="file" placeholder="본문 이미지 1" accept="image/png, image/jpeg, image/png">
+              <div class="mt-2">
+
+              </div>
             </div>
+          </div>
 
-            <div class="mt-4 btn-wrap gap-1">
-                <button type="submit" href="#" class="btn btn-primary btn-sm mb-1">
-                    <span><i class="fa-solid fa-pen-to-square"></i></span>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">본문 이미지 2</span>
+            </label>
+            <div>
+              <input class="thumb-available" data-thumb-selector="next()" data-thumb-selector="" class="" type="file" name="file" placeholder="본문 이미지 2" accept="image/png, image/jpeg, image/png">
+              <div class="mt-2">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 btn-wrap gap-1">
+                <button type="submit"  class="btn btn-primary btn-sm mb-1">
+                    <span><i class="fas fa-save"></i></span>
                     &nbsp;
                     <span>작성</span>
                 </button>
-
-                <a href="#" class="btn btn-sm mb-1" title="자세히 보기">
-                    <span><i class="fas fa-list"></i></span>
-                    &nbsp;
-                    <span>리스트</span>
-                </a>
-            </div>
-      </form>
+            
+            <a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="#"  class="btn btn-error btn-sm mb-1">
+              <span><i class="fas fa-trash"></i></span>
+              &nbsp;
+              <span>삭제</span>
+            </a>
+            <a href="#" class="btn btn-sm mb-1" title="자세히 보기">
+              <span><i class="fas fa-list"></i></span>
+              &nbsp;
+              <span>리스트</span>
+            </a>
+            <a href="#" class="btn btn-sm mb-1" title="자세히 보기">
+              <span><i class="fas fa-list"></i></span>
+              &nbsp;
+              <span>상세페이지</span>
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+    </form>
   </div>
 </div>
+
 
 </body>
 <%@ include file="../common/foot.jspf" %>

@@ -1,6 +1,7 @@
 package com.hsn.exam.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.hsn.exam.demo.service.ArticleService;
+import com.hsn.exam.demo.service.GenFileService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
@@ -24,6 +28,9 @@ public class UsrArticleController {
 
 	@Autowired
 	private ArticleService articleService;// Service랑 연결됨
+	
+	@Autowired
+	private GenFileService genFileService;
 	
 	private String msgAndBack(HttpServletRequest req, String msg) { //실패시 메세지 보여주고 뒤로가기
 		req.setAttribute("msg", msg);
@@ -50,7 +57,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doWrite") // 브라우저요청으로 글을 추가하는경우
-	public String doWrite(HttpServletRequest req, int boardId, String title, String body, HttpSession httpSession) {
+	public String doWrite(HttpServletRequest req, int boardId, String title, String body, HttpSession httpSession,MultipartRequest multipartRequest) {
 
 		/*
 		 * boolean isLogined = false; int loginedMemberId = 0;
@@ -88,6 +95,38 @@ public class UsrArticleController {
 		}
 		
 		Article writearticle = (Article) article.getData1();
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+		
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+			String[] fileInputNameBits = fileInputName.split("__");
+
+			if (fileInputNameBits[0].equals("file") == false) {
+				continue;
+			}
+
+			int fileSize = (int) multipartFile.getSize();
+
+			if (fileSize <= 0) {
+				continue;
+			}
+
+			String relTypeCode = fileInputNameBits[1];
+			int relId = writearticle.getId();
+			String typeCode = fileInputNameBits[3];
+			String type2Code = fileInputNameBits[4];
+			int fileNo = Integer.parseInt(fileInputNameBits[5]);
+			String originFileName = multipartFile.getOriginalFilename();
+			String fileExtTypeCode = Ut.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
+			String fileExtType2Code = Ut.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
+			String fileExt = Ut.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
+			String fileDir = Ut.getNowYearMonthDateStr();
+
+			//여기서부터
+			genFileService.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode,
+					fileExtType2Code, fileExt, fileSize, fileDir);
+		}
 
 		String replaceUrl = "detail?id=" + writearticle.getId();
 		

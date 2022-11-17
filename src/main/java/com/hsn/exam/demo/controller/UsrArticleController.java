@@ -105,39 +105,17 @@ public class UsrArticleController {
 		
 		for (String fileInputName : fileMap.keySet()) {
 			MultipartFile multipartFile = fileMap.get(fileInputName);
-			String[] fileInputNameBits = fileInputName.split("__");
-
-			if (fileInputNameBits[0].equals("file") == false) {
-				continue;
-			}
-
-			int fileSize = (int) multipartFile.getSize();
-
-			if (fileSize <= 0) {
-				continue;
-			}
-
-			String relTypeCode = fileInputNameBits[1];
-			int relId = newArticleId;
-			String typeCode = fileInputNameBits[3];
-			String type2Code = fileInputNameBits[4];
-			int fileNo = Integer.parseInt(fileInputNameBits[5]);
-			String originFileName = multipartFile.getOriginalFilename();
-			String fileExtTypeCode = Ut.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
-			String fileExtType2Code = Ut.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
-			String fileExt = Ut.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
-			String fileDir = Ut.getNowYearMonthDateStr();
-
 			
-			genFileService.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode,fileExtType2Code, fileExt, fileSize, fileDir);
-			
+			if ( multipartFile.isEmpty() == false ) {
+				ResultData saverd = genFileService.save(multipartFile, newArticleId);				
+			}
 		}
 
-		//String replaceUrl = "detail?id=" + writearticle.getId();
+		String replaceUrl = "detail?id=" + newArticleId;
 		
-		//return msgAndReplace(req, "게시글 작성완료했습니다.", replaceUrl);
+		return msgAndReplace(req, "게시글 작성완료했습니다.", replaceUrl);
 		
-		return msgAndBack(req, "테스트");
+		//return msgAndBack(req, "성공");
 		
 		//return ResultData.newData(writeArticlerd, "article", article.getData1());
 

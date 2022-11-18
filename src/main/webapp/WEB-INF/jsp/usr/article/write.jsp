@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${board.name } 글쓰기" />
 <%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
+
 <body>
 
 <script>
@@ -62,6 +64,7 @@ function ArticleWrite__submitForm(form) {
             <label class="label">
               <span class="label-text">본문</span>
             </label>
+            
             <textarea placeholder="내용을 입력해주세요" name="body" class="h-80 textarea textarea-bordered"></textarea>
           </div>
 

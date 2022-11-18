@@ -33,5 +33,24 @@
 		AND type2Code = #{type2Code}
 		AND fileNo = #{fileNo}
 	</select>
+	
+	<select id="getGenFiles" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</select>
+	
+	<delete id="deleteFile">
+		DELETE FROM genFile
+		WHERE id = #{id}
+	</delete>
+	
+		<delete id="deleteFiles">
+		DELETE FROM genFile
+		WHERE relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</delete>
 
 </mapper>

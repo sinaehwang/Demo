@@ -127,6 +127,16 @@ public class Ut {
 		}
 		return defaultValue;
 	}
+
+	public static boolean  delteFile(String filePath) {
+		java.io.File ioFile = new java.io.File(filePath);
+		if (ioFile.exists()) {
+			return ioFile.delete();
+		}
+
+		return true;
+		
+	}
 	
 	
 

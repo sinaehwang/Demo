@@ -114,7 +114,7 @@ public class UsrArticleController {
 
 		String replaceUrl = "detail?id=" + newArticleId;
 
-		return msgAndReplace(req, "게시글 작성완료했습니다.", replaceUrl);
+		return msgAndReplace(req, Ut.f("%d번째 게시글이 작성되었습니다.", newArticleId), replaceUrl);
 
 		// return msgAndBack(req, "성공");
 
@@ -212,19 +212,17 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDelete")
 	public String doDelete(int id, HttpSession httpSession, HttpServletRequest req) {
 
-		boolean isLogined = false;
-
-		int loginedMemberId = 0;
-
-		if (httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-		}
-
-		if (isLogined == false) {
-			// return ResultData.from("F-A", "로그인 후 이용해주세요");
-			return msgAndBack(req, "로그인 후 이용해주세요");
-		}
+		/*
+		 * boolean isLogined = false;
+		 * 
+		 * int loginedMemberId = 0;
+		 * 
+		 * if (httpSession.getAttribute("loginedMemberId") != null) { isLogined = true;
+		 * loginedMemberId = (int) httpSession.getAttribute("loginedMemberId"); }
+		 * 
+		 * if (isLogined == false) { // return ResultData.from("F-A", "로그인 후 이용해주세요");
+		 * return msgAndBack(req, "로그인 후 이용해주세요"); }
+		 */
 
 		ResultData Foundarticle = articleService.getArticle(id);
 
@@ -237,6 +235,9 @@ public class UsrArticleController {
 		}
 
 		Article article = (Article) Foundarticle.getData1();
+
+		// 임시
+		int loginedMemberId = 1;
 
 		if (article.getMemberId() != loginedMemberId) {
 

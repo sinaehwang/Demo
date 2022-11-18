@@ -136,8 +136,7 @@
                       <span>수정</span>
                     </a>
                     <a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-                      href="#" class="plain-link"
-                    >
+                      href="../article/doDelete?id=${article.id}" class="ml-2 text-blue-500 hover:underline">
                       <span>
                         <i class="fas fa-trash"></i>
                         <span>삭제</span>

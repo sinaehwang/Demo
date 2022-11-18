@@ -1,16 +1,18 @@
 package com.hsn.exam.demo.service;
 
-import java.util.Map;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hsn.exam.demo.vo.GenFile;
 import com.hsn.exam.demo.repository.GenFileRepository;
 import com.hsn.exam.demo.util.Ut;
+import com.hsn.exam.demo.vo.GenFile;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Service
@@ -102,6 +104,24 @@ public class GenFileService {
 	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
 
 		return genFileRepository.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
+	}
+
+	public void deleteFiles(String relTypeCode, int relId) {
+		
+		List<GenFile> genFiles = genFileRepository.getGenFiles(relTypeCode, relId);
+
+		for ( GenFile genFile : genFiles ) {
+			deleteFile(genFile);
+		}
+		
+	}
+
+	private void deleteFile(GenFile genFile) {
+
+		String filePath = genFile.getFilePath(genFileDirPath);
+		Ut.delteFile(filePath); //파일경로를 찾아가서 지움
+
+		genFileRepository.deleteFile(genFile.getId()); //db에서 지움
 	}
 
 }

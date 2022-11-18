@@ -3,6 +3,7 @@ package com.hsn.exam.demo.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hsn.exam.demo.repository.ArticleRepository;
@@ -15,10 +16,16 @@ import com.hsn.exam.demo.vo.ResultData;
 public class ArticleService {
 
 	private ArticleRepository articleRepository;
+	
+	private GenFileService genFileService;
 
-	public ArticleService(ArticleRepository articleRepository) {
+	public ArticleService(ArticleRepository articleRepository,GenFileService genFileService) {
 
 		this.articleRepository = articleRepository;
+		
+		this.genFileService = genFileService;
+		
+		
 
 	}
 
@@ -60,6 +67,8 @@ public class ArticleService {
 	public void doDelete(int id) {
 
 		articleRepository.doDelete(id);
+		
+		genFileService.deleteFiles("article", id);
 	}
 
 	public ResultData doModify(int id, String title, String body) {

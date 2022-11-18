@@ -129,7 +129,7 @@
                       </span>
                       <span>자세히 보기</span>
                     </a>
-                    <a href="#" class="plain-link">
+                    <a href="../article/modify?id=${article.id}" class="plain-link">
                       <span>
                         <i class="fas fa-edit"></i>
                       </span>

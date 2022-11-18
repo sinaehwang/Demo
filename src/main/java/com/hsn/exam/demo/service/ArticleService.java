@@ -93,4 +93,9 @@ public class ArticleService {
 		return articleRepository.getArticlesTotalCount(boardId,searchKeyword,searchKeywordType);
 	}
 
+	public Article getForPrintArticle(Integer id) {
+
+		return articleRepository.getForPrintArticle(id);
+	}
+
 }

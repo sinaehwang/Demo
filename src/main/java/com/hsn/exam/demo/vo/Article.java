@@ -1,5 +1,8 @@
 package com.hsn.exam.demo.vo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +23,17 @@ public class Article {
 	
 	private String extra__writerName;
 	private String extra__thumbImg;
+	
+	private Map<String, Object> extra;
+
+	public Map<String, Object> getExtraNotNull() {
+		if ( extra == null ) {
+			extra = new HashMap<String, Object>();
+		}
+
+		return extra;
+	}
+	
 	
 	public String getBodyForPrint() {
 	        String bodyForPrint = body.replaceAll("\r\n", "<br>");

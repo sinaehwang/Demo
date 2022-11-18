@@ -37,11 +37,13 @@ public class GenFile {
 		return "/" + relTypeCode + "/" + fileDir + "/" + getFileName();
 	}
 
-	private String getFileName() {
+	public String getFileName() {
 		return id + "." + fileExt;
 	}
 
 	public String getForPrintUrl() {
 			return "/gen" + getBaseFileUri() + "?updateDate=" + updateDate;
 		}
+	
+	
 }

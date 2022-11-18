@@ -101,11 +101,6 @@ public class GenFileService {
 		return ResultData.from("S-1", "파일이 생성되었습니다.");
 	}
 
-	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
-
-		return genFileRepository.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
-	}
-
 	public void deleteFiles(String relTypeCode, int relId) {
 		
 		List<GenFile> genFiles = genFileRepository.getGenFiles(relTypeCode, relId);
@@ -123,5 +118,16 @@ public class GenFileService {
 
 		genFileRepository.deleteFile(genFile.getId()); //db에서 지움
 	}
+
+	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
+		return genFileRepository.getGenFiles(relTypeCode, relId, typeCode, type2Code);
+	}
+
+
+	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
+		
+		return genFileRepository.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
+	}
+	
 
 }

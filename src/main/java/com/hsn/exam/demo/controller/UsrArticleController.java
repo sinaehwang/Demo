@@ -1,5 +1,6 @@
 package com.hsn.exam.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -256,24 +257,55 @@ public class UsrArticleController {
 		return msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUrl);
 
 	}
+	
+	@RequestMapping("/usr/article/modify")
+	public String showModify(Integer id, HttpServletRequest req) {
+		
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+
+		Article article = articleService.getForPrintArticle(id);
+		
+		Board board = articleService.getBoardbyId(article.getBoardId());
+
+		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
+
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+		}
+
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("article", article);
+
+		if (article == null) {
+			return msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
+		}
+		
+		req.setAttribute("article", article);
+		req.setAttribute("board", board);
+
+		return "usr/article/modify";
+		
+	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody()
 	public ResultData doModify(int id, String title, String body, HttpSession httpSession) {// return타입을 String과 Article
 																							// 둘다사용하기위해 Object로변경해줌
 
-		boolean isLogined = false;
-
-		int loginedMemberId = 0;
-
-		if (httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
-		}
-
-		if (isLogined == false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요");
-		}
+		/*
+		 * boolean isLogined = false;
+		 * 
+		 * int loginedMemberId = 0;
+		 * 
+		 * if (httpSession.getAttribute("loginedMemberId") != null) { isLogined = true;
+		 * loginedMemberId = (int) httpSession.getAttribute("loginedMemberId"); }
+		 * 
+		 * if (isLogined == false) { return ResultData.from("F-A", "로그인 후 이용해주세요"); }
+		 */
 
 		ResultData ModifyArticle = articleService.getArticle(id);
 
@@ -283,10 +315,11 @@ public class UsrArticleController {
 
 		Article article = (Article) ModifyArticle.getData1();
 
-		if (article.getMemberId() != loginedMemberId) {
-
-			return ResultData.from("F-1", "해당 게시글에 대해 수정권한이 없습니다.");
-		}
+		/*
+		 * if (article.getMemberId() != loginedMemberId) {
+		 * 
+		 * return ResultData.from("F-1", "해당 게시글에 대해 수정권한이 없습니다."); }
+		 */
 
 		ResultData ModifyArticlerd = articleService.doModify(id, title, body);
 

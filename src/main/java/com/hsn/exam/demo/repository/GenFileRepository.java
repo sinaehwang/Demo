@@ -13,12 +13,14 @@ public interface GenFileRepository {
 	void saveMeta(Map<String, Object> param);
 
 	GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo);
-
-	List<GenFile> getGenFiles(String relTypeCode, int relId);
 	
 	void deleteFiles(String relTypeCode,int relId);
 
 	void deleteFile(int id);
+
+	List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code);
+	
+	List<GenFile> getGenFiles(String relTypeCode, int relId);
 
 
 }

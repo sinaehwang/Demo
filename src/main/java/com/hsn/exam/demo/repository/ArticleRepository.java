@@ -27,5 +27,7 @@ public interface ArticleRepository {
 
 	public int getArticlesTotalCount(int boardId, String searchKeyword, String searchKeywordType);
 
+	public Article getForPrintArticle(Integer id);
+
 
 }

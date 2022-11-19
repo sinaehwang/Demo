@@ -89,6 +89,7 @@ function ArticleModify__checkAndSubmit(form) {
         <c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
         <c:set var="fileNo" value="${String.valueOf(inputNo)}" />  
         <c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
+        
         <div class="form-control">
             <div class="lg:flex lg:items-center lg:w-28">
               <span>첨부파일 ${inputNo}</span>
@@ -101,23 +102,12 @@ function ArticleModify__checkAndSubmit(form) {
                     <div>
                       ${file.fileName}
                     </div>
-                    <div>
-                      <label>
-                        <input type="checkbox" name="deleteFile__article__${article.id}__common__attachment__${fileNo}" value="Y" />
-                        <span>삭제</span>
-                      </label>
-                    </div>
                     <c:if test="${file.fileExtTypeCode == 'img'}">
-                                    <div class="img-box img-box-auto">
-                                        <img src="${file.forPrintUrl}">
-                                    </div>
+                       <div class="img-box img-box-auto max-w-xs">
+                          <img src="${file.forPrintUrl}">
+                        </div>
                     </c:if>
               </c:if>
-              
-
-                        
-              
-
             </div>
         </div>
        </c:forEach>

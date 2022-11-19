@@ -42,7 +42,7 @@
                         const param__searchKeywordType = '${param.searchKeywordType}';
                         if ( param__searchKeywordType.length > 0 ) {
                           $('.search-form-box form [name="searchKeywordType"]')
-                          .val('${param.searchKeywordType}');             
+                          .val('${param.searchKeywordType}');
                         }
                       </script>
                 </div>
@@ -71,59 +71,67 @@
           </div>
           
           <div class="item-bt-1-not-last-child">
-              <c:if test="${articles == null || articles.size() == 0}">
-                    검색결과가 존재하지 않습니다.
+
+              <div class = "flex justify-end mt-10 mr-10">
+                <a href="../article/write?boardId=${board.id}" class=" btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">
+                <i class="fa-regular fa-pen-to-square"></i>게시글 작성</a>
+              </div>
+
+              <c:if test="${articles == null || articles.size() == 0}" >
+                    <div class = "flex Stretch grid justify-items-center">
+                        <div class = "h-10">검색결과가 존재하지 않습니다.</div>
+                    </div>
                </c:if>
+
               <c:forEach var="article" items="${articles }">
+              <c:set var="detailUrl" value="detail?id=${article.id}" />
                 <!-- 게시물 아이템, first -->
                 <div class="px-4 py-8">
-                  <a class="hover:underline cursor-pointer">
+                    
+                    <div>
+                      <span class="badge badge-primary">번호</span>
+                      <a href="${detailUrl}" class="hover:underline cursor-pointer" >${article.id}</a>
+                    </div>  
+                    
+                    
                     <span class="badge badge-outline">제목</span>
-                    <div class="line-clamp-3">${article.title}</div>
-                  </a>
-                  
+                    <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.title}</a>
+
                   <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                       <c:if test="${article.extra__thumbImg != null}">
-                          <img src="${article.extra__thumbImg}" alt="" /> <!-- 본문의 이미지불러오기 -->
+                          <img class ="max-w-xs" src="${article.extra__thumbImg}" alt="" /> <!-- 본문의 이미지불러오기 -->
                       </c:if>
                       <c:if test="${article.extra__thumbImg == null}">
-                          <img src="https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif" alt="" /> <!-- 본문의 이미지불러오기 -->
+                          <img class ="max-w-xs" src="https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif" alt="" /> <!-- 본문의 이미지불러오기 -->
                       </c:if>
       
-                   <a href="#" class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
+                   <a  href="${detailUrl}" class="mt-3  hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
                         <span class="badge badge-outline">본문</span>
-                        <div class="line-clamp-3">
+                        <div class="line-clamp-3 ">
                           ${article.body}
                         </div>
                     </a>
       
-                    <a href="#" class="hover:underline">
+                    <a href="${detailUrl}">
                       <span class="badge">수정날짜</span>
-                      <span class="text-gray-600 text-light">${article.updateDate}</span>
+                      <span class="text-gray-600 text-light hover:underline">${article.updateDate}</span>
                     </a>
-      
- 
-                    
-                    <a href="#" class="hover:underline">
-                      <span class="badge badge-primary">번호</span>
-                      <span>${article.id}</span>
-                    </a>
-      
-                    <a href="#" class="cursor-pointer hover:underline">
+
+                    <a href="#" >
                       <span class="badge badge-accent">작성자</span>
-                      <span>${article.extra__writerName}</span>
+                      <span class = "hover:underline">${article.extra__writerName}</span>
                     </a>
       
-                    <a href="#" class="hover:underline">
+                    <a href="${detailUrl}" >
                       <span class="badge">등록날짜</span>
-                      <span class="text-gray-600 text-light">${article.regDate}</span>
+                      <span class="text-gray-600 text-light hover:underline"">${article.regDate}</span>
                     </a>
                     
                     
                   </div>
       
                   <div class="plain-link-wrap gap-3 mt-4">
-                    <a href="#" class="plain-link" title="자세히 보기">
+                    <a href="${detailUrl}" class="plain-link" title="자세히 보기">
                       <span>
                         <i class="fas fa-info"></i>
                       </span>

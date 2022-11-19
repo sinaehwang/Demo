@@ -5,28 +5,40 @@
 <%@ include file="../common/head.jspf" %>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 
-<body>
+
 
 <script>
 let ArticleWrite__submitFormDone = false;
+
 function ArticleWrite__submitForm(form) {
     if ( ArticleWrite__submitFormDone ) {
-        return;
+      alert('처리진행중입니다.');
+      return;
     }
+    
     form.title.value = form.title.value.trim();
     if ( form.title.value.length == 0 ) {
         alert('제목을 입력해주세요.');
         form.title.focus();
         return;
     }
-    form.body.value = form.body.value.trim();
-    if ( form.body.value.length == 0 ) {
-        alert('내용을 입력해주세요.');
-        form.body.focus();
-        return;
+    
+    const editor = $(form).find('.toast-ui-editor').data(
+		'data-toast-editor');
+    const markdown = editor.getMarkdown().trim();
+    
+    if (markdown.length == 0) {
+    	alert('내용을 입력해주세요');
+    	editor.focus();
+    	return;
     }
-    form.submit();
+    
+    form.body.value = markdown;
+    
     ArticleWrite__submitFormDone = true;
+    
+    form.submit();
+    
 }
 </script>
 
@@ -35,6 +47,7 @@ function ArticleWrite__submitForm(form) {
   <div class="container mx-auto">
   <form method="POST" action="../article/doWrite" enctype="multipart/form-data" onsubmit="ArticleWrite__submitForm(this); return false;">
   <input type="hidden" name="boardId" value="${board.id}" />
+  <input type="hidden" name="body" />
     <div class="card bordered shadow-lg item-bt-1-not-last-child">
       <div class="card-title">
         <a href="javascript:history.back();" class="cursor-pointer">
@@ -44,6 +57,7 @@ function ArticleWrite__submitForm(form) {
       </div>
       <div class="px-4 py-8">
         <form class="grid form-type-1">
+        
           <div class="form-control">
             <label class="cursor-pointer label">
               작성자
@@ -65,7 +79,10 @@ function ArticleWrite__submitForm(form) {
               <span class="label-text">본문</span>
             </label>
             
-            <textarea placeholder="내용을 입력해주세요" name="body" class="h-80 textarea textarea-bordered"></textarea>
+            <div class="toast-ui-editor">
+				<script type="text/x-template"></script>
+			</div>
+            
           </div>
 
     		<div class="form-control">
@@ -119,5 +136,5 @@ function ArticleWrite__submitForm(form) {
 </div>
 
 
-</body>
+
 <%@ include file="../common/foot.jspf" %>

@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${board.name } 상세페이지" />
 <%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
+
 <body>
 <div class="section section-article-list">
   <div class="container mx-auto">
@@ -65,7 +67,9 @@
                         <span class="badge badge-outline">본문</span>
                         <!-- 본문 이미지넣는공간 -->
                         <div class="mt-3">
-                            ${article.bodyForPrint}
+                            <div class="toast-ui-viewer">
+                                <script type="text/x-template">${article.bodyForPrint}</script>
+                            </div>
                         </div>
                     </div>
                 </div>

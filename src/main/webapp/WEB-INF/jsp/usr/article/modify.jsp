@@ -5,6 +5,7 @@
 <c:set var="fileInputMaxCount" value="2" />
 
 <%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
 
 <!-- 수정확인 스크립트 -->
 <script>
@@ -12,8 +13,10 @@ ArticleModify__fileInputMaxCount = parseInt("${fileInputMaxCount}");
 </script>
 
 <script>
+let ArticleModify__submitFormDone = false;
+
 function ArticleModify__checkAndSubmit(form) {
-	if ( ArticleModify__submited ) {
+	if ( ArticleModify__submitFormDone ) {
 		alert('처리중입니다.');
 		return;
 	}
@@ -24,14 +27,22 @@ function ArticleModify__checkAndSubmit(form) {
 		form.title.focus();
 		return false;
 	}
-	form.body.value = form.body.value.trim();
-	if ( form.body.value.length == 0 ) {
-		alert('내용을 입력해주세요.');
-		form.body.focus();
-		return false;
-	}
 	
-	ArticleModify__submited = true;
+    const editor = $(form).find('.toast-ui-editor').data(
+  	'data-toast-editor');
+    const markdown = editor.getMarkdown().trim();
+    
+    if (markdown.length == 0) {
+    	alert('내용을 입력해주세요');
+    	editor.focus();
+    	return;
+    }
+    
+    form.body.value = markdown;
+    
+    ArticleWrite__submitFormDone = true;
+    
+    form.submit();
 }
 
 </script>
@@ -42,6 +53,7 @@ function ArticleModify__checkAndSubmit(form) {
   <div class="container mx-auto">
     <form onsubmit="ArticleModify__checkAndSubmit(this); return false;" action="../article/doModify" method="POST" enctype="multipart/form-data">
      <input type="hidden" name="id" value="${article.id}" />
+     <input type="hidden" name="body" />
       <div class="card bordered shadow-lg item-bt-1-not-last-child">
             <div class="card-title">
                 <a href="javascript:history.back();" class="cursor-pointer">
@@ -80,7 +92,9 @@ function ArticleModify__checkAndSubmit(form) {
                       <label class="label">
                         <span class="label-text">본문</span>
                       </label>
-                      <textarea placeholder="내용을 입력해주세요" name="body" class="h-80 textarea textarea-bordered">${article.body}</textarea>
+                      <div class="toast-ui-editor">
+				          <script type="text/x-template">${article.bodyForPrint}</script>
+			          </div>
                     </div>
                     
                 </div>

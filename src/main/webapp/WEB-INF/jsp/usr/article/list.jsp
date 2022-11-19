@@ -4,6 +4,7 @@
 <c:set var="pageTitle" value="${board.name }" />
 <%@ include file="../common/head.jspf" %>
 
+
 <div class="section-article-list">
   <div class="container mx-auto">
       <div class="total-items" >

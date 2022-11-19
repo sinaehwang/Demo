@@ -33,17 +33,24 @@
 		`member`
 		WHERE loginId = #{loginId}
 	</select>
-	
+
 	<select id="getDuplecateEmailAndName" resultType="int">
-		SELECT COUNT(*) FROM
+		SELECT COUNT(*)
+		FROM
 		`member`
 		WHERE name = #{name}
 		AND email = #{email}
 	</select>
-	
+
 	<select id="FoundMemberByLoginId" resultType="Member">
-		SELECT*FROM `member`
+		SELECT*FROM
+		`member`
 		WHERE `member`.loginId = #{loginId}
 	</select>
+
+
+
+
+
 
 </mapper>

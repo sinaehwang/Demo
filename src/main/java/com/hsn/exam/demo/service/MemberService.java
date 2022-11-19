@@ -61,5 +61,11 @@ public class MemberService {
 		return ResultData.from("S-1","로그인 성공","FoundMemberByLoginId", FoundMemberByLoginId);
 	}
 
+	public Member getMemberByLoginId(String loginId) {
+		
+		return memberRepository.FoundMemberByLoginId(loginId);
+
+	}
+
 
 }

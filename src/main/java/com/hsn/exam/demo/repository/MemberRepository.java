@@ -19,4 +19,5 @@ public interface MemberRepository {
 
 	public Member FoundMemberByLoginId(String loginId);
 
+
 }

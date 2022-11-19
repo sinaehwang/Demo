@@ -4,6 +4,9 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class Ut {
 
@@ -136,6 +139,66 @@ public class Ut {
 
 		return true;
 		
+	}
+	
+	public static String msgAndBack(HttpServletRequest req, String msg) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		return "common/redirect";
+	}
+
+	public static String msgAndReplace(HttpServletRequest req, String msg, String replaceUrl) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("replaceUrl", replaceUrl);
+		return "common/redirect";
+	}
+
+	public static boolean allNumberString(String str) {//해당문장이 숫자로만 구성되었는지 참거짓으로 판별하는식
+
+		if(str==null) {
+			return false;
+			
+		}
+		
+		if(str.length()==0) {
+			return true; //숫자만으로 구성된건아니니까 참으로 리턴
+		}
+		for(int i =0; i<str.length(); i++) {
+			if(Character.isDigit(str.charAt(i))==false) { //문자열하나라도 숫자가 아니면 거짓을 리턴해줌
+				
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean startWithNumberString(String str) {
+		if(str==null) {
+			return false;
+			
+		}
+		
+		if(str.length()==0) {
+			return false;
+		}
+		
+		return Character.isDigit(str.charAt(0));
+	}
+
+	public static boolean isStandardLoginIdString(String str) {
+		if ( str == null ) {
+			return false;
+		}
+
+		if ( str.length() == 0 ) {
+			return false;
+		}
+
+		// 조건
+		// 5자 이상, 20자 이하로 구성
+		// 숫자로 시작 금지
+		// _, 알파벳, 숫자로만 구성
+		return Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,19}$", str);
 	}
 	
 	

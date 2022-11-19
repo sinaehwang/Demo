@@ -34,19 +34,7 @@ public class UsrArticleController {
 	@Autowired
 	private GenFileService genFileService;
 
-	private String msgAndBack(HttpServletRequest req, String msg) { // 실패시 메세지 보여주고 뒤로가기
-		req.setAttribute("msg", msg);
-		req.setAttribute("historyBack", true);
-		return "common/redirect";
-	}
 
-	private String msgAndReplace(HttpServletRequest req, String msg, String replaceUrl) { // 성공시 메세지 보여주고 돌아가기
-
-		req.setAttribute("msg", msg);
-		req.setAttribute("replaceUrl", replaceUrl);
-
-		return "common/redirect";
-	}
 
 	@RequestMapping("/usr/article/write")
 	public String write(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId) {
@@ -73,12 +61,12 @@ public class UsrArticleController {
 
 		if (param.get("title") == null) {
 			// return ResultData.from("F-1", "title을 입력해주세요");
-			return msgAndBack(req, "제목을 입력해주세요");
+			return Ut.msgAndBack(req, "제목을 입력해주세요");
 		}
 
 		if (param.get("body") == null) {
 			// return ResultData.from("F-2", "body을 입력해주세요");
-			return msgAndBack(req, "내용을 입력해주세요");
+			return Ut.msgAndBack(req, "내용을 입력해주세요");
 		}
 
 		// 임시
@@ -96,7 +84,7 @@ public class UsrArticleController {
 
 		if (article.isFail()) {
 			// return ResultData.from(article.getResultCode(), article.getMsg());
-			return msgAndBack(req, article.getMsg());
+			return Ut.msgAndBack(req, article.getMsg());
 		}
 
 		Article writearticle = (Article) article.getData1();
@@ -115,7 +103,7 @@ public class UsrArticleController {
 
 		String replaceUrl = "detail?id=" + newArticleId;
 
-		return msgAndReplace(req, Ut.f("%d번째 게시글이 작성되었습니다.", newArticleId), replaceUrl);
+		return Ut.msgAndReplace(req, Ut.f("%d번째 게시글이 작성되었습니다.", newArticleId), replaceUrl);
 
 		// return msgAndBack(req, "성공");
 
@@ -129,7 +117,7 @@ public class UsrArticleController {
 		ResultData articlerd = articleService.getArticle(id);
 
 		if (articlerd.isFail()) {
-			return msgAndBack(req, articlerd.getMsg());
+			return Ut.msgAndBack(req, articlerd.getMsg());
 		}
 
 		Article article = (Article) articlerd.getData1();
@@ -154,7 +142,7 @@ public class UsrArticleController {
 
 		if (board == null) {
 
-			return msgAndBack(req, boardId + "번 게시판은 존재하지 않습니다.");
+			return Ut.msgAndBack(req, boardId + "번 게시판은 존재하지 않습니다.");
 		}
 
 		req.setAttribute("board", board);
@@ -231,7 +219,7 @@ public class UsrArticleController {
 
 			// return ResultData.from(Foundarticle.getResultCode(), Foundarticle.getMsg());
 
-			return msgAndBack(req, Foundarticle.getMsg());
+			return Ut.msgAndBack(req, Foundarticle.getMsg());
 
 		}
 
@@ -244,7 +232,7 @@ public class UsrArticleController {
 
 			// return ResultData.from("F-1", "해당 게시글에 대해 삭제권한이 없습니다.");
 
-			return msgAndBack(req, "해당 게시글에 대해 삭제권한이 없습니다.");
+			return Ut.msgAndBack(req, "해당 게시글에 대해 삭제권한이 없습니다.");
 
 		}
 
@@ -254,7 +242,7 @@ public class UsrArticleController {
 
 		// return ResultData.from("S-1", Ut.f("%d번게시글 삭제완료.", id));
 
-		return msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUrl);
+		return Ut.msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUrl);
 
 	}
 	
@@ -262,7 +250,7 @@ public class UsrArticleController {
 	public String showModify(Integer id, HttpServletRequest req) {
 		
 		if (id == null) {
-			return msgAndBack(req, "id를 입력해주세요.");
+			return Ut.msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(id);
@@ -281,7 +269,7 @@ public class UsrArticleController {
 		req.setAttribute("article", article);
 
 		if (article == null) {
-			return msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
+			return Ut.msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
 		}
 		
 		req.setAttribute("article", article);

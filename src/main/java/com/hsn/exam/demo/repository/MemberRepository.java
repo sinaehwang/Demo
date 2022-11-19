@@ -21,5 +21,7 @@ public interface MemberRepository {
 
 	public Member getMemberByNameAndEmail(String name, String email);
 
+	
+
 
 }

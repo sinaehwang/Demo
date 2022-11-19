@@ -59,4 +59,8 @@ public class MemberService {
 
 	}
 
+	 public Member getMemberById(int id) {
+	        return memberRepository.getMember(id);
+	    }
+
 }

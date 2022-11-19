@@ -96,75 +96,44 @@ public class UsrMemberController {
 		
 	}
 	
-	@RequestMapping("/usr/member/Login")
-	@ResponseBody()
+	@RequestMapping("/usr/member/login")
+    public String showLogin(HttpServletRequest req) {
+        
+		return "usr/member/login";
+    }
+
+    @RequestMapping("/usr/member/doLogin")
+    public String doLogin(HttpServletRequest req, HttpSession session, String loginId, String loginPw, String redirectUrl) {
+        
+    	Member member = memberService.getMemberByLoginId(loginId);
+
+        if (member == null) {
+            return Ut.msgAndBack(req, loginId + "(은)는 존재하지 않는 로그인아이디 입니다.");
+        }
+
+        if (member.getLoginPw().equals(loginPw) == false) {
+            
+        	return Ut.msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+        }
+
+        session.setAttribute("loginedMemberId", member.getId());
+        
+        return Ut.msgAndReplace(req, Ut.f("%s님 로그인되었습니다.", member.getLoginId()), redirectUrl);
+    }
+
+    
+    @RequestMapping("/usr/member/doLogout")
+    public String doLogout(HttpServletRequest req, HttpSession session) {
+        
+    	session.removeAttribute("loginedMemberId");
+
+        String msg = "로그아웃 되었습니다.";
+        return Ut.msgAndReplace(req, msg, "/");
+    }
 	
-	public ResultData login(HttpSession httpSession,String loginId,String loginPw) {
 		
-		boolean isLogined = false;//로그인이 안되어있는 상태로 가정
-		
-		//로그인아이디 null값이거나 공백인경우를 체크하는 함수
-		if(Ut.empty(loginId)) {
-			return ResultData.from("F-1", "loginId값을 입력해주세요");
-		}
-		
-		if(Ut.empty(loginPw)) {
-			return ResultData.from("F-2", "loginPw값을 입력해주세요");
-		}
-		
-		//현재 로그인상태로 확인이 된다면 이중로그인 안되도록 막아야함
-		if(httpSession.getAttribute("LoginedMember")!=null) { 
-			isLogined =true;
-		}
-		
-		if(isLogined) {
-			return ResultData.from("F-3", "이미 로그인 상태입니다.");
-		}
-		
-		ResultData LoginedMember = memberService.Login(loginId,loginPw);
-		
-		if(LoginedMember.isFail()) {
-			return ResultData.from(LoginedMember.getResultCode() , LoginedMember.getMsg());//로그인실패시에는 코드랑 실패메세지 보여줌
-		}
-		
-		httpSession.setAttribute("LoginedMember", LoginedMember.getData1());
-		
-		httpSession.setAttribute("loginedMemberId", LoginedMember.getData1());
-		
-		
-		return ResultData.from(LoginedMember.getResultCode() , LoginedMember.getMsg(),"LoginedMember", LoginedMember.getData1());//로그인 성공시 코드,메세지,로그인 정보까지보여주기
-		
-	}
 	
-	@RequestMapping("/usr/member/Logout")
-	@ResponseBody()
-	
-	public ResultData logout(HttpSession httpSession,String loginId,String loginPw) {
-		
-		boolean isLogouted = false;//로그아웃이 안되어있는 상태로 가정
-		
-		//로그인아이디 null값이거나 공백인경우를 체크하는 함수
-		if(Ut.empty(loginId)) {
-			return ResultData.from("F-1", "loginId값을 입력해주세요");
-		}
-		
-		if(Ut.empty(loginPw)) {
-			return ResultData.from("F-2", "loginPw값을 입력해주세요");
-		}
-		
-		//로그인상태정보가 null이라면 로그아웃상태라는의미니까 true로 변경해줌
-		if(httpSession.getAttribute("LoginedMember")==null) {
-			isLogouted = true;
-		}
-		if(isLogouted) {
-			
-			return ResultData.from("F-1", "이미 로그아웃 상태입니다.");
-		}
-		
-		httpSession.removeAttribute("LoginedMember"); //실제 로그아웃하기위해 세션상태에서 상태정보 제거
-		
-		return ResultData.from("S-1","로그아웃되었습니다.");
-	}
+
 	
 	
 	

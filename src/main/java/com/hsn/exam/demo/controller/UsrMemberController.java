@@ -69,23 +69,30 @@ public class UsrMemberController {
 	
 	
 	@RequestMapping("/usr/member/doJoin")//브라우저요청으로 글을 추가하는경우
-	@ResponseBody()
 	public String dojoin(HttpServletRequest req,String loginId,String loginPw,String name,String nickname,String cellphoneNo,String email) {
 		
-		int id = memberService.join(loginId,loginPw,name,nickname,cellphoneNo,email);
+		Member oldMember = memberService.getMemberByLoginId(loginId);
+
+        if (oldMember != null) {
+            return Ut.msgAndBack(req, loginId + "(은)는 이미 사용중인 로그인아이디 입니다.");
+        }
+
+        oldMember = memberService.getMemberByNameAndEmail(name, email);
+
+        if (oldMember != null) {
+            return Ut.msgAndBack(req, String.format("%s님은 이미 %s 메일주소로 %s 에 가입하셨습니다.", name, email, oldMember.getRegDate()));
+        }
+
+        ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+
+        if (joinRd.isFail()) {
+            return Ut.msgAndBack(req, joinRd.getMsg());
+        }
+
+        int newMemberId = (int) joinRd.getData1();
 		
-		if(id==0) {
-			return Ut.msgAndBack(req, Ut.f("이미 사용중인 아이디(%s)입니다.",loginId));
-		}
-		
-		
-		if(id == -1) {
-			return Ut.msgAndBack(req, Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다.",name,email));
-		}
-		
-		Member member = memberService.getMember(id);
-		
-		return Ut.msgAndReplace(req, Ut.f("%s님 회원가입완료되었습니다.", member.getName()), "/");
+
+        return Ut.msgAndReplace(req, joinRd.getMsg(), "/");
 		
 	}
 	

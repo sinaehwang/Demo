@@ -19,5 +19,7 @@ public interface MemberRepository {
 
 	public Member FoundMemberByLoginId(String loginId);
 
+	public Member getMemberByNameAndEmail(String name, String email);
+
 
 }

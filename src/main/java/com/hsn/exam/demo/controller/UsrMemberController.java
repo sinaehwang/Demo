@@ -85,7 +85,7 @@ public class UsrMemberController {
 		
 		Member member = memberService.getMember(id);
 		
-		return Ut.msgAndReplace(req, Ut.f("%s님 회원가입완료되었습니다.", nickname), "/");
+		return Ut.msgAndReplace(req, Ut.f("%s님 회원가입완료되었습니다.", member.getName()), "/");
 		
 	}
 	

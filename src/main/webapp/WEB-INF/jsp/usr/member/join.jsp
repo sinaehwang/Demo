@@ -13,6 +13,8 @@ const MemberJoin__submitFormDone = false;
 
 let JoinForm__validLoginId = "";//중복체크 여부 판단하기 위해서
 
+let validPw = "";
+
 function JoinForm__checkLoginIdDup(obj) {
   const form = $(obj).closest('form').get(0); //가장가까운 form을 찾아간다
   
@@ -47,7 +49,7 @@ function JoinForm__checkLoginIdDup(obj) {
         JoinForm__validLoginId = '';
       }
       else {
-        JoinForm__validLoginId = data.data1Name;
+        JoinForm__validLoginId = data.data1;
         form.loginPw.focus();
       }
     },
@@ -56,6 +58,41 @@ function JoinForm__checkLoginIdDup(obj) {
   
 }
 
+//비밀번호확인체크
+function check_pw(){
+  
+  var pw = document.getElementById('pw').value;
+  var SC = ["!","@","#","$","%"];
+  var check_SC = 0;
+
+  if(pw.length < 6 || pw.length>16){
+      window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
+      document.getElementById('pw').value='';
+  }
+  for(var i=0;i<SC.length;i++){
+      if(pw.indexOf(SC[i]) != -1){
+          check_SC = 1;
+      }
+  }
+  
+  if(check_SC == 0){
+      window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
+      document.getElementById('pw').value='';
+      
+  }
+  if(document.getElementById('pw').value !='' && document.getElementById('pw2').value!=''){
+      if(document.getElementById('pw').value==document.getElementById('pw2').value){
+          document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
+          document.getElementById('check').style.color='blue';
+      }
+      else{
+          document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
+          document.getElementById('check').style.color='red';
+      }
+  }
+}
+
+//비밀번호확인체크
 
 function MemberJoin__submitForm(form) {
     if ( MemberJoin__submitFormDone ) {
@@ -72,23 +109,7 @@ function MemberJoin__submitForm(form) {
 		return;
 	}
 	
-    form.loginPw.value = form.loginPw.value.trim();
-    if ( form.loginPw.value.length == 0 ) {
-        alert('로그인비밀번호을 입력해주세요.');
-        form.loginPw.focus();
-        return;
-    }
-    form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-    if ( form.loginPwConfirm.value.length == 0 ) {
-        alert('로그인비밀번호 확인을 입력해주세요.');
-        form.loginPwConfirm.focus();
-        return;
-    }
-    if ( form.loginPw.value != form.loginPwConfirm.value ) {
-        alert('로그인비밀번호가 일치하지 않습니다.');
-        form.loginPwConfirm.focus();
-        return;
-    }
+
     form.name.value = form.name.value.trim();
     if ( form.name.value.length == 0 ) {
         alert('이름을 입력해주세요.');
@@ -143,14 +164,15 @@ function MemberJoin__submitForm(form) {
                 <label class="label">
                     비밀번호
                 </label>
-                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPw" placeholder="로그인비밀번호를 입력해주세요." />
+                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPw" id="pw" onchange="check_pw()" placeholder="로그인비밀번호를 입력해주세요." />
             </div>
 
             <div class="form-control">
                 <label class="label">
                     비밀번호 확인
                 </label>
-                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPwConfirm" placeholder="로그인비밀번호 확인을 입력해주세요." />
+                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPwConfirm" id="pw2" onchange="check_pw()" placeholder="로그인비밀번호 확인을 입력해주세요." />
+                <span id="check"></span>
             </div>
 
             <div class="form-control">

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.hsn.exam.demo.service.MemberService;
 import com.hsn.exam.demo.vo.Member;
-import com.hsn.exam.demo.vo.Req;
+import com.hsn.exam.demo.vo.Rq;
 
 @Component
 
@@ -34,7 +34,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
             loginedMember = memberService.getMemberById(loginedMemberId);
         }
 
-        req.setAttribute("req", new Req(loginedMember)); //req에 새 로그인된 회원정보를 담아둠
+        req.setAttribute("rq", new Rq(loginedMember)); //req에 새 로그인된 회원정보를 담아둠
 
         return HandlerInterceptor.super.preHandle(req, resp, handler);
     }

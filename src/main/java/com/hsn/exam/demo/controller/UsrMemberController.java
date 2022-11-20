@@ -113,7 +113,7 @@ public class UsrMemberController {
 
         if (member.getLoginPw().equals(loginPw) == false) {
             
-        	return Ut.msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+        	return Ut.msgAndBack(req,"비밀번호가 일치하지 않습니다.");
         }
 
         session.setAttribute("loginedMemberId", member.getId());

@@ -203,6 +203,26 @@ public class Ut {
 		// _, 알파벳, 숫자로만 구성
 		return Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,19}$", str);
 	}
+
+	public static String msgAndBack(String msg) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<script>");
+		sb.append("alert('" + msg + "');");
+		sb.append("history.back();");
+		sb.append("</script>");
+
+		return sb.toString();
+	}
+
+	public static String msgAndReplace(String msg, String url) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<script>");
+		sb.append("alert('" + msg + "');");
+		sb.append("location.replace('" + url + "');");
+		sb.append("</script>");
+
+		return sb.toString();
+	}
 	
 	
 

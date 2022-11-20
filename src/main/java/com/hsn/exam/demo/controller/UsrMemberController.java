@@ -105,6 +105,10 @@ public class UsrMemberController {
     @RequestMapping("/usr/member/doLogin")
     public String doLogin(HttpServletRequest req, HttpSession session, String loginId, String loginPw, String redirectUrl) {
         
+    	if(Ut.empty(redirectUrl)) {
+    		redirectUrl = "/";
+    	}
+    	
     	Member member = memberService.getMemberByLoginId(loginId);
 
         if (member == null) {
@@ -116,9 +120,11 @@ public class UsrMemberController {
         	return Ut.msgAndBack(req,"비밀번호가 일치하지 않습니다.");
         }
 
+        String msg = Ut.f("%s님 로그인되었습니다.", member.getLoginId());
         session.setAttribute("loginedMemberId", member.getId());
         
-        return Ut.msgAndReplace(req, Ut.f("%s님 로그인되었습니다.", member.getLoginId()), redirectUrl);
+        return Ut.msgAndReplace(req, msg, redirectUrl);
+        
     }
 
     

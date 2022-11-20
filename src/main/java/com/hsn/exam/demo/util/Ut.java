@@ -1,6 +1,8 @@
 package com.hsn.exam.demo.util;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -222,6 +224,16 @@ public class Ut {
 		sb.append("</script>");
 
 		return sb.toString();
+	}
+
+	
+	//주소url값을 인코딩해서 반환해주는 로직
+	public static String getUrlEncoded(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return str;
+		}
 	}
 	
 	

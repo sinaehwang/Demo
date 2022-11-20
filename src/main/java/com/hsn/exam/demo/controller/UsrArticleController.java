@@ -37,7 +37,6 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/write")
 	public String write(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId) {
 
-
 		Board board = articleService.getBoardbyId(boardId);
 
 		req.setAttribute("board", board);

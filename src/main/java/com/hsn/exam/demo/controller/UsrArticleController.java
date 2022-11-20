@@ -21,6 +21,7 @@ import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
 import com.hsn.exam.demo.vo.GenFile;
+import com.hsn.exam.demo.vo.Req;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Controller
@@ -34,10 +35,14 @@ public class UsrArticleController {
 	@Autowired
 	private GenFileService genFileService;
 
-
-
 	@RequestMapping("/usr/article/write")
 	public String write(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId) {
+
+		Req rq = (Req) req.getAttribute("req");
+
+		if (rq.isNotLogined()) {
+			return Ut.msgAndBack(req, "로그인 후 이용해주세요.");
+		}
 
 		Board board = articleService.getBoardbyId(boardId);
 
@@ -50,14 +55,11 @@ public class UsrArticleController {
 	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			MultipartRequest multipartRequest) {
 
-		/*
-		 * boolean isLogined = false; int loginedMemberId = 0;
-		 * 
-		 * if (isLogined == false) { return ResultData.from("F-A", "로그인 후 이용해주세요"); }
-		 * 
-		 * if (httpSession.getAttribute("loginedMemberId") != null) { isLogined = true;
-		 * loginedMemberId = (int) httpSession.getAttribute("loginedMemberId"); }
-		 */
+		Req rq = (Req) req.getAttribute("req");
+
+		if (rq.isNotLogined()) {
+			return Ut.msgAndBack(req, "로그인 후 이용해주세요.");
+		}
 
 		if (param.get("title") == null) {
 			// return ResultData.from("F-1", "title을 입력해주세요");
@@ -245,16 +247,16 @@ public class UsrArticleController {
 		return Ut.msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUrl);
 
 	}
-	
+
 	@RequestMapping("/usr/article/modify")
 	public String showModify(Integer id, HttpServletRequest req) {
-		
+
 		if (id == null) {
 			return Ut.msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(id);
-		
+
 		Board board = articleService.getBoardbyId(article.getBoardId());
 
 		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
@@ -271,12 +273,12 @@ public class UsrArticleController {
 		if (article == null) {
 			return Ut.msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
 		}
-		
+
 		req.setAttribute("article", article);
 		req.setAttribute("board", board);
 
 		return "usr/article/modify";
-		
+
 	}
 
 	@RequestMapping("/usr/article/doModify")

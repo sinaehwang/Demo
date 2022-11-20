@@ -23,8 +23,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // beforeActionInterceptor 인터셉터가 모든 액션 실행전에 실행되도록 처리
         registry.addInterceptor(beforeActionInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/resource/**");
+                .addPathPatterns("/**") //모든들어오는 요청에대해 비포인터셉터를 실행하라는 명령
+                .excludePathPatterns("/resource/**"); //resource로 들어오는 요청에대해서는 비포인터셉터 실행을 제외하라는요청
     }
 	
 	

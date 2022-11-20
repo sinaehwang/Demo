@@ -73,9 +73,11 @@
           
           <div class="item-bt-1-not-last-child">
 
-              <div class = "flex justify-end mt-10 mr-10">
+              <div class="plain-link-wrap gap-3 flex justify-end mt-10 mr-10">
                 <a href="../article/write?boardId=${board.id}" class=" btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">
-                <i class="fa-regular fa-pen-to-square"></i>게시글 작성</a>
+                <span><i class="fa-regular fa-pen-to-square"></i></span>
+                <span>게시글 작성</span>
+                </a>
               </div>
 
               <c:if test="${articles == null || articles.size() == 0}" >

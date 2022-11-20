@@ -34,7 +34,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
             loginedMember = memberService.getMemberById(loginedMemberId);
         }
 
-        req.setAttribute("req", new Req(loginedMember));
+        req.setAttribute("req", new Req(loginedMember)); //req에 새 로그인된 회원정보를 담아둠
 
         return HandlerInterceptor.super.preHandle(req, resp, handler);
     }

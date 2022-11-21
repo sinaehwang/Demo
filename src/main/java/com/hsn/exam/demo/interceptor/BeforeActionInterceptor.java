@@ -1,5 +1,7 @@
 package com.hsn.exam.demo.interceptor;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.hsn.exam.demo.service.MemberService;
+import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Member;
 import com.hsn.exam.demo.vo.Rq;
 
@@ -21,7 +24,10 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	
 	@Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-        HttpSession session = req.getSession();
+        
+		Map<String, String> paramMap = Ut.getParamMap(req);
+		
+		HttpSession session = req.getSession();
 
         Member loginedMember = null;
         int loginedMemberId = 0;
@@ -41,7 +47,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
             currentUrl += "?" + queryString;
         }
 
-        req.setAttribute("rq", new Rq(loginedMember, currentUrl));
+        req.setAttribute("rq", new Rq(loginedMember, currentUrl,paramMap));
         
 
 

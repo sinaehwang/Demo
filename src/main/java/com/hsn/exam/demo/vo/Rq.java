@@ -1,16 +1,20 @@
 package com.hsn.exam.demo.vo;
 
+import java.util.Map;
+
 import com.hsn.exam.demo.util.Ut;
 
 public class Rq {
 	private String currentUrl;
     private String currentUri;
     private Member loginedMember;
+    private Map<String, String> paramMap;
 
-    public Rq(Member loginedMember, String currentUri) {
+    public Rq(Member loginedMember, String currentUri, Map<String, String> paramMap) {
         this.loginedMember = loginedMember;
         this.currentUrl = currentUri.split("\\?")[0];
         this.currentUri = currentUri;
+        this.paramMap = paramMap;
     }
 
     public boolean isLogined() {
@@ -50,7 +54,7 @@ public class Rq {
         String afterLoginUri;
 
         if (isLoginPage()) {
-            afterLoginUri = "";
+            afterLoginUri = Ut.getUriEncoded(paramMap.get("afterLoginUri"));
         } else {
             afterLoginUri = getEncodedCurrentUri();
         }

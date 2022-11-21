@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -234,6 +236,21 @@ public class Ut {
         } catch (UnsupportedEncodingException e) {
             return str;
         }
+    }
+
+    public static Map<String, String> getParamMap(HttpServletRequest request) {
+        Map<String, String> param = new HashMap<>();
+
+        Enumeration<String> parameterNames = request.getParameterNames();
+
+        while (parameterNames.hasMoreElements()) {
+            String paramName = parameterNames.nextElement();
+            String paramValue = request.getParameter(paramName);
+
+            param.put(paramName, paramValue);
+        }
+
+        return param;
     }
 	
 	

@@ -103,10 +103,10 @@ public class UsrMemberController {
     }
 
     @RequestMapping("/usr/member/doLogin")
-    public String doLogin(HttpServletRequest req, HttpSession session, String loginId, String loginPw, String redirectUrl) {
+    public String doLogin(HttpServletRequest req, HttpSession session, String loginId, String loginPw, String redirectUri) {
         
-    	if(Ut.empty(redirectUrl)) {
-    		redirectUrl = "/";
+    	if(Ut.empty(redirectUri)) {
+    		redirectUri = "/";
     	}
     	
     	Member member = memberService.getMemberByLoginId(loginId);
@@ -123,7 +123,7 @@ public class UsrMemberController {
         String msg = Ut.f("%s님 로그인되었습니다.", member.getLoginId());
         session.setAttribute("loginedMemberId", member.getId());
         
-        return Ut.msgAndReplace(req, msg, redirectUrl);
+        return Ut.msgAndReplace(req, msg, redirectUri);
         
     }
 

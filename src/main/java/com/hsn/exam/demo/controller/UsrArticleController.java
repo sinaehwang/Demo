@@ -48,7 +48,6 @@ public class UsrArticleController {
 	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			MultipartRequest multipartRequest) {
 
-
 		if (param.get("title") == null) {
 			return Ut.msgAndBack(req, "제목을 입력해주세요");
 		}
@@ -58,7 +57,6 @@ public class UsrArticleController {
 		}
 
 		ResultData writeArticlerd = articleService.writeArticle(param);// data1에 id를 저장해서 리턴해준상태
-
 
 		ResultData article = articleService.getArticle((int) writeArticlerd.getData1());
 
@@ -81,10 +79,9 @@ public class UsrArticleController {
 			}
 		}
 
-		String replaceUrl = "detail?id=" + newArticleId;
+		String replaceUri = "detail?id=" + newArticleId;
 
-		return Ut.msgAndReplace(req, Ut.f("%d번째 게시글이 작성되었습니다.", newArticleId), replaceUrl);
-
+		return Ut.msgAndReplace(req, Ut.f("%d번째 게시글이 작성되었습니다.", newArticleId), replaceUri);
 
 	}
 
@@ -178,7 +175,6 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDelete")
 	public String doDelete(int id, HttpSession httpSession, HttpServletRequest req) {
 
-
 		ResultData Foundarticle = articleService.getArticle(id);
 
 		if (Foundarticle.isFail()) {
@@ -189,13 +185,11 @@ public class UsrArticleController {
 
 		Article article = (Article) Foundarticle.getData1();
 
-
 		articleService.doDelete(id);
 
-		String redirectUrl = "../article/list?boardId=" + article.getBoardId();
+		String redirectUri = "../article/list?boardId=" + article.getBoardId();
 
-
-		return Ut.msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUrl);
+		return Ut.msgAndReplace(req, Ut.f("%d번 게시글삭제완료", id), redirectUri);
 
 	}
 
@@ -237,7 +231,6 @@ public class UsrArticleController {
 	public ResultData doModify(int id, String title, String body, HttpSession httpSession) {// return타입을 String과 Article
 																							// 둘다사용하기위해 Object로변경해줌
 
-
 		ResultData ModifyArticle = articleService.getArticle(id);
 
 		if (ModifyArticle.isFail()) {
@@ -245,7 +238,6 @@ public class UsrArticleController {
 		}
 
 		Article article = (Article) ModifyArticle.getData1();
-
 
 		ResultData ModifyArticlerd = articleService.doModify(id, title, body);
 

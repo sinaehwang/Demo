@@ -166,29 +166,29 @@
           value="${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1}" />
         <c:set var="endPage"
           value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />
-        <c:set var="urlBase" value="?boardId=${board.id}" />
-        <c:set var="urlBase"
-          value="${urlBase}&searchKeywordType=${param.searchKeywordType}" />
-        <c:set var="urlBase"
-          value="${urlBase}&searchKeyword=${param.searchKeyword}" />
+        <c:set var="uriBase" value="?boardId=${board.id}" />
+        <c:set var="uriBase"
+          value="${uriBase}&searchKeywordType=${param.searchKeywordType}" />
+        <c:set var="uriBase"
+          value="${uriBase}&searchKeyword=${param.searchKeyword}" />
           
         <c:set var="aClassStr"
         value="px-2 inline-block border border-gray-200 rounded text-lg hover:bg-gray-200" />  
         
         <c:if test="${startPage > 1}">
-            <a class="${aClassStr}" href="${urlBase}&page=1">첫페이지</a>
-            <a class="text-xl" href="${urlBase}&page=${startPage - 1}">◀</a>
+            <a class="${aClassStr}" href="${uriBase}&page=1">첫페이지</a>
+            <a class="text-xl" href="${uriBase}&page=${startPage - 1}">◀</a>
         </c:if>  
           
           
         <c:forEach var="i" begin="${startPage}" end="${endPage}">
-            <a class="text-xl ${page == i ? 'text-red-500 underline' : ''}" href="${urlBase}&page=${i}">${i}</a>
+            <a class="text-xl ${page == i ? 'text-red-500 underline' : ''}" href="${uriBase}&page=${i}">${i}</a>
         </c:forEach>
         
         <c:if test="${endPage < totalPage}">
-            <a class="text-xl" href="${urlBase}&page=${endPage + 1}">▶</a>
+            <a class="text-xl" href="${uriBase}&page=${endPage + 1}">▶</a>
     
-            <a class="${aClassStr}" href="${urlBase}&page=${totalPage}">마지막페이지</a>
+            <a class="${aClassStr}" href="${uriBase}&page=${totalPage}">마지막페이지</a>
         </c:if>
     </div>
 <!-- 페이징부 -->  

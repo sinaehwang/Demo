@@ -33,9 +33,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/resource/**") // resource로 들어오는 요청에대해서는 비포인터셉터 실행을 제외하라는요청
 				.excludePathPatterns("/error");
 
-		registry.addInterceptor(needToLoginInterceptor).addPathPatterns("/usr/article/write")
-				.addPathPatterns("/usr/article/doWrite").addPathPatterns("/usr/article/doDelete")
-				.addPathPatterns("/usr/article/modify").addPathPatterns("/usr/article/doModify");
+		registry.addInterceptor(needToLoginInterceptor).addPathPatterns("/usr/member/doLogout")
+				.addPathPatterns("/usr/article/write").addPathPatterns("/usr/article/doWrite")
+				.addPathPatterns("/usr/article/doDelete").addPathPatterns("/usr/article/modify")
+				.addPathPatterns("/usr/article/doModify");
 
 		registry.addInterceptor(needToLogoutInterceptor).addPathPatterns("/usr/member/login")
 				.addPathPatterns("/usr/member/doLogin").addPathPatterns("/usr/member/join")

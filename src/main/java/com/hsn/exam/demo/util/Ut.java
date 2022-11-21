@@ -152,9 +152,9 @@ public class Ut {
 		return "common/redirect";
 	}
 
-	public static String msgAndReplace(HttpServletRequest req, String msg, String replaceUrl) {
+	public static String msgAndReplace(HttpServletRequest req, String msg, String replaceUri) {
 		req.setAttribute("msg", msg);
-		req.setAttribute("replaceUrl", replaceUrl);
+		req.setAttribute("replaceUri", replaceUri);
 		return "common/redirect";
 	}
 
@@ -228,13 +228,13 @@ public class Ut {
 
 	
 	//주소url값을 인코딩해서 반환해주는 로직
-	public static String getUrlEncoded(String str) {
-		try {
-			return URLEncoder.encode(str, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			return str;
-		}
-	}
+	public static String getUriEncoded(String str) {
+        try {
+            return URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return str;
+        }
+    }
 	
 	
 

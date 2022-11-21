@@ -1,6 +1,17 @@
 server:
   port: 8082
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: godvv29756318@gmail.com
+    password: othhxeimpuldzhni
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -16,6 +27,11 @@ mybatis:
   type-aliases-package: com.hsn.exam.demo.vo
 custom:
   genFileDirPath: C:/Users/godvv/Documents/workspace_hsn/at-file
+  needToChangePasswordFreeDays: 30
+  siteMainUri: http://localhost:8082
+  siteName: 레시피공유
+  emailFrom: no-reply@localhost
+  emailFromName: 레시피공유 알림메세지
   logging:
     dir: log
     level: debug

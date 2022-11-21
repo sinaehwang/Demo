@@ -137,12 +137,56 @@ public class UsrMemberController {
         return Ut.msgAndReplace(req, msg, "/");
     }
 	
-		
-	
+    @RequestMapping("/usr/member/findLoginId")
+    public String showFindLoginId(HttpServletRequest req) {
+        return "usr/member/findLoginId";
+    }
 
-	
-	
-	
+    @RequestMapping("/usr/member/doFindLoginId")
+    public String doFindLoginId(HttpServletRequest req, String name, String email, String redirectUri) {
+        if (Ut.empty(redirectUri)) {
+            redirectUri = "/";
+        }
+
+        Member member = memberService.getMemberByNameAndEmail(name, email);
+
+        if (member == null) {
+            return Ut.msgAndBack(req, "일치하는 회원이 존재하지 않습니다.");
+        }
+
+        return Ut.msgAndBack(req, Ut.f("회원님의 사용중인 아이디는 [%s] 입니다.", member.getLoginId()));
+    }
+    
+    @RequestMapping("/usr/member/findLoginPw")
+    public String showFindLoginPw(HttpServletRequest req) {
+        return "usr/member/findLoginPw";
+    }
+
+    @RequestMapping("/usr/member/doFindLoginPw")
+    public String doFindLoginPw(HttpServletRequest req, String loginId, String name, String email, String redirectUri) {
+        if (Ut.empty(redirectUri)) {
+            redirectUri = "/";
+        }
+
+        Member member = memberService.getMemberByLoginId(loginId);
+
+        if (member == null) {
+            return Ut.msgAndBack(req, "일치하는 회원이 존재하지 않습니다.");
+        }
+
+        if (member.getName().equals(name) == false) {
+            return Ut.msgAndBack(req, "일치하는 회원이 존재하지 않습니다.");
+        }
+
+        if (member.getEmail().equals(email) == false) {
+            return Ut.msgAndBack(req, "일치하는 회원이 존재하지 않습니다.");
+        }
+
+        ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
+
+        return Ut.msgAndReplace(req, notifyTempLoginPwByEmailRs.getMsg(), redirectUri);
+    }
+		
 
 
 }

@@ -50,15 +50,28 @@ function MemberLogin__submitForm(form) {
 
             <div class="mt-4 btn-wrap gap-1">
                 <button type="submit"  class="btn btn-primary btn-sm mb-1">
-                    <span><i class="fas fa-sign-in-alt"></i></span>
+                    <span><i class="fa-solid fa-user-check"></i></span>
                     &nbsp;
                     <span>로그인</span>
                 </button>
-
+                &nbsp;
                 <a href="/" class="btn btn-sm mb-1">
                     <span><i class="fas fa-home"></i></span>
                     &nbsp;
                     <span>홈</span>
+                </a>
+            </div>
+            <div>
+              <a href="../member/findLoginId" type="submit" href="#" class="btn btn-link btn-sm mb-1">
+                    <span><i class="fas fa-sign-in-alt"></i></span>
+                    &nbsp;
+                    <span>아이디 찾기</span>
+                </a>
+
+                <a href="../member/findLoginPw" type="submit" href="#" class="btn btn-link btn-sm mb-1">
+                    <span><i class="fas fa-sign-in-alt"></i></span>
+                    &nbsp;
+                    <span>비밀번호 찾기</span>
                 </a>
             </div>
       </form>

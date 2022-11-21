@@ -1,19 +1,28 @@
 package com.hsn.exam.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.hsn.exam.demo.repository.MemberRepository;
+import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Member;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Service
 public class MemberService {
 
+	@Autowired
 	private MemberRepository memberRepository;
 
-	public MemberService(MemberRepository memberRepository) {
-		this.memberRepository = memberRepository;
-	}
+	@Autowired
+	private MailService mailService;
+
+	@Value("${custom.siteMainUri}")
+	private String siteMainUri;
+	
+	@Value("${custom.siteName}")
+	private String siteName;
 
 	public Member getMember(int id) {
 
@@ -45,13 +54,13 @@ public class MemberService {
 	}
 
 	public Member getMemberByNameAndEmail(String name, String email) {
-		
+
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 
 	public ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNo,
 			String email) {
-		
+
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 		int id = memberRepository.getLastInsertId();
 
@@ -59,8 +68,30 @@ public class MemberService {
 
 	}
 
-	 public Member getMemberById(int id) {
-	        return memberRepository.getMember(id);
-	    }
+	public Member getMemberById(int id) {
+		return memberRepository.getMember(id);
+	}
+
+	public ResultData notifyTempLoginPwByEmail(Member actor) {
+		String title = "[" + siteName + "] 임시 패스워드 발송";
+        String tempPassword = Ut.getTempPassword(6);
+        String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
+        body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
+
+        ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
+
+        if (sendResultData.isFail()) {
+            return sendResultData;
+        }
+
+        setTempPassword(actor, tempPassword);
+
+        return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+	}
+
+	private void setTempPassword(Member actor, String tempPassword) {
+		
+		memberRepository.modify(actor.getId(), tempPassword, null, null, null, null);
+    }
 
 }

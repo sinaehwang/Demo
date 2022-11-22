@@ -22,6 +22,7 @@ import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
 import com.hsn.exam.demo.vo.GenFile;
 import com.hsn.exam.demo.vo.ResultData;
+import com.hsn.exam.demo.vo.Rq;
 
 @Controller
 public class UsrArticleController {
@@ -45,9 +46,15 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doWrite") // 브라우저요청으로 글을 추가하는경우
-	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,
+	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,HttpSession session,
 			MultipartRequest multipartRequest) {
 
+		int loginedMemberId = Ut.getAsInt(session.getAttribute("loginedMemberId"), 0);
+		
+		if (loginedMemberId == 0) {
+			return Ut.msgAndBack(req, "로그인후 이용해주세요");
+		}
+		
 		if (param.get("title") == null) {
 			return Ut.msgAndBack(req, "제목을 입력해주세요");
 		}
@@ -55,6 +62,8 @@ public class UsrArticleController {
 		if (param.get("body") == null) {
 			return Ut.msgAndBack(req, "내용을 입력해주세요");
 		}
+		
+		param.put("memberId", loginedMemberId);
 
 		ResultData writeArticlerd = articleService.writeArticle(param);// data1에 id를 저장해서 리턴해준상태
 

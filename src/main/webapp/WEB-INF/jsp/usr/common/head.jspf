@@ -40,6 +40,7 @@
 </head>
 <body>
   <div class="site-wrap">
+  
     <header class="top-bar h-10 top-bar--fly">
       <div class="container mx-auto flex h-full">
           <a href="/" class="px-3 flex items-center">
@@ -56,27 +57,9 @@
             <li>
               <a href="/" class="h-full flex items-center px-5">
                 <span>
-                  <i class="fas fa-house-user"></i>
-                </span>
-                <span class="hidden sm:block">&nbsp;관리자 홈</span>
-              </a>
-              <div></div>
-            </li>
-            <li>
-              <a href="/" class="h-full flex items-center px-5">
-                <span>
                   <i class="fas fa-home"></i>
                 </span>
-                <span class="hidden sm:block">&nbsp;사이트 홈</span>
-              </a>
-              <div></div>
-            </li>
-            <li>
-              <a href="/" class="h-full flex items-center px-5">
-                <span>
-                  <i class="fas fa-user"></i>
-                </span>
-                <span class="hidden sm:block">&nbsp;회원관리</span>
+                <span class="hidden sm:block">&nbsp;HOME</span>
               </a>
               <div></div>
             </li>
@@ -85,16 +68,7 @@
                 <span>
                   <i class="far fa-clipboard"></i>
                 </span>
-                <span class="hidden sm:block">&nbsp;공지사항</span>
-              </a>
-              <div></div>
-            </li>
-            <li>
-              <a href="#" class="h-full flex items-center px-5">
-                <span>
-                  <i class="far fa-clipboard"></i>
-                </span>
-                <span class="hidden sm:block">&nbsp;게시판 관리</span>
+                <span class="hidden sm:block">&nbsp;NOTICE</span>
               </a>
               <div></div>
             </li>
@@ -103,7 +77,7 @@
                 <span>
                   <i class="far fa-newspaper"></i>
                 </span>
-                <span class="hidden sm:block">&nbsp;커뮤니티게시판</span>
+                <span class="hidden sm:block">&nbsp;COMMUNITY</span>
               </a>
               <div></div>
             </li>
@@ -112,7 +86,7 @@
                 <span>
                   <i class="far fa-newspaper"></i>
                 </span>
-                <span class="hidden sm:block">&nbsp;레시피공유방</span>
+                <span class="hidden sm:block">&nbsp;FREE BOARD</span>
               </a>
               <div></div>
             </li>
@@ -123,7 +97,7 @@
                 <span>
                   <i class="fas fa-sign-out-alt"></i>
                 </span>
-                <span class="hidden sm:block">&nbsp;로그아웃</span>
+                <span class="hidden sm:block">&nbsp;LOGOUT</span>
               </a>
               <div></div>
             </li>
@@ -137,22 +111,23 @@
             </c:if>
             
             <c:if test="${rq.isNotLogined()}">
-                        <li>
-                            <a href="${rq.getLoginPageUri()}" class="h-full flex items-center px-5">
-                                <span>
-                                    <i class="fas fa-sign-in-alt"></i>
-                                </span>
-                                <span class="hidden md:block">&nbsp;로그인</span>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="/usr/member/join" class="h-full flex items-center px-5">
                               <span>
                                 <i class="far fa-newspaper"></i>
                               </span>
-                              <span class="hidden sm:block">&nbsp;회원가입</span>
+                              <span class="hidden sm:block">&nbsp;JOIN</span>
                             </a>
                             <div></div>
+                        </li>
+                        <li>
+                            <a href="${rq.getLoginPageUri()}" class="h-full flex items-center px-5">
+                                <span>
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </span>
+                                <span class="hidden md:block">&nbsp;LOGIN</span>
+                            </a>
                         </li>
                 </c:if>
             
@@ -160,6 +135,7 @@
         </nav>
       </div>
     </header>
+    
     <div class="title-bar" >
         <div class="mx-auto container mt-20">
           ${pageTitle}

@@ -117,7 +117,7 @@ html > body,html>body .toast-ui-editor, html>body .toastui-editor-contents, html
 }
 
 .card-title {
-  background-color: rgb(87, 13, 248);
+  background-color: #3c564f;
   color: white;
   text-align: center;
   height: var(--card-title_height);
@@ -390,6 +390,8 @@ body:not(.no-js) .fading-up {
 /*로그인페이지폼*/
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
 
+
+
 .loginForm{
 	background-color:#f5f5f5;
 }
@@ -480,6 +482,7 @@ h6 span{
   transform-style: preserve-3d;
   perspective: 800px;
   margin-top: 60px;
+  
 }
 .card-3d-wrapper {
   width: 100%;
@@ -640,8 +643,8 @@ h6 span{
   -ms-flex-pack: center;
   text-align: center;
   border: none;
-  background-color: #ffeba7;
-  color: #102770;
+  background-color: #b7c4b1;
+  color: white;
   box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
 }
 .btn-1:active,
@@ -651,8 +654,8 @@ h6 span{
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 .btn-1:hover{  
-  background-color: #b7c4b1;
-  color: #ffeba7;
+  background-color: #ffeba7;
+  color: #102770;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 

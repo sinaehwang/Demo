@@ -157,15 +157,16 @@ function MemberJoin__submitForm(form) {
   
   <hr />
   <hr />
-	    <form method="POST" action="../member/doJoin" onsubmit="MemberJoin__submitForm(this); return false;">
+	    <form  class="card-3d-wrap mx-auto" method="POST" action="../member/doJoin" onsubmit="MemberJoin__submitForm(this); return false;">
+             <div class="card-3d-wrapper">
              <input type="hidden" name="loginPw">
 	        <div class="form-control">
                 <label class="label">
                     아이디
                 </label>
-            <span>    
-            <input class="input input-bordered w-1/2 " text = "text" name="loginId" placeholder="로그인아이디를 입력해주세요." />
-            <input onclick="JoinForm__checkLoginIdDup(this);" class="btn btn-outline btn-primary" type = "button" value="중복체크"/>
+            <span >    
+            <input class="input input-bordered w-full" text = "text" name="loginId" placeholder="로그인아이디를 입력해주세요." />
+            <input onclick="JoinForm__checkLoginIdDup(this);" class="btn btn-outline btn-accent mt-2" type = "button" value="중복체크"/>
              </span> 
              
              <div class = "loginIdInputMsg mt-2"></div>
@@ -175,14 +176,14 @@ function MemberJoin__submitForm(form) {
                 <label class="label">
                     비밀번호
                 </label>
-                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPwInput" id="pw" onchange="check_pw()" placeholder="로그인비밀번호를 입력해주세요." />
+                <input class="input input-bordered w-full" type="password" maxlength="30" name="loginPwInput" id="pw" onchange="check_pw()" placeholder="로그인비밀번호를 입력해주세요." />
             </div>
 
             <div class="form-control">
                 <label class="label">
                     비밀번호 확인
                 </label>
-                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPwConfirm" id="pw2" onchange="check_pw()" placeholder="로그인비밀번호 확인을 입력해주세요." />
+                <input class="input input-bordered w-full" type="password" maxlength="30" name="loginPwConfirm" id="pw2" onchange="check_pw()" placeholder="로그인비밀번호 확인을 입력해주세요." />
                 <span id="check"></span>
             </div>
 
@@ -190,32 +191,32 @@ function MemberJoin__submitForm(form) {
                 <label class="label">
                     이름
                 </label>
-                <input class="input input-bordered w-1/2" type="text" maxlength="30" name="name" placeholder="이름을 입력해주세요." />
+                <input class="input input-bordered w-full" type="text" maxlength="30" name="name" placeholder="이름을 입력해주세요." />
             </div>
 
             <div class="form-control">
                 <label class="label">
                     닉네임
                 </label>
-                <input class="input input-bordered w-1/2" type="text" maxlength="30" name="nickname" placeholder="별명을 입력해주세요." />
+                <input class="input input-bordered w-full" type="text" maxlength="30" name="nickname" placeholder="별명을 입력해주세요." />
             </div>
 
             <div class="form-control">
                 <label class="label">
                     휴대전화번호
                 </label>
-                <input class="input input-bordered w-1/2" type="tel" maxlength="30" name="cellphoneNo" placeholder="휴대전화번호를 입력해주세요." />
+                <input class="input input-bordered w-full" type="tel" maxlength="30" name="cellphoneNo" placeholder="휴대전화번호를 입력해주세요." />
             </div>
 
             <div class="form-control">
                 <label class="label">
                     이메일
                 </label>
-                <input class="input input-bordered w-1/2" type="email" maxlength="50" name="email" placeholder="이메일을 입력해주세요." />
+                <input class="input input-bordered w-full" type="email" maxlength="50" name="email" placeholder="이메일을 입력해주세요." />
             </div>
 
             <div class="mt-4 btn-wrap gap-1">
-                <button type="submit"  class="btn btn-primary btn-sm mb-1">
+                <button type="submit"  class="btn btn-accent btn-sm mb-1">
                     <span><i class="fas fa-user-plus"></i></span>
                     &nbsp;
                     <span>가입</span>
@@ -226,6 +227,8 @@ function MemberJoin__submitForm(form) {
                     &nbsp;
                     <span>홈</span>
                 </a>
+            </div>
+            
             </div>
 	    </form>
 	</div>

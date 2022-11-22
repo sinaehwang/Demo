@@ -57,7 +57,7 @@
             </div>
     
             <div class="form-control">
-                  <input type="submit" class="btn btn-sm btn-primary" value="검색" />
+               <p class="mb-0 mt-4 text-center"><input type="submit" class="btn-1" value="검색" /></p>
             </div>
         </form>
       </div>

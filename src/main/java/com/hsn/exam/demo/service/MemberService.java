@@ -83,6 +83,8 @@ public class MemberService {
         if (sendResultData.isFail()) {
             return sendResultData;
         }
+        
+        tempPassword = Ut.sha256(tempPassword);
 
         setTempPassword(actor, tempPassword);
 

@@ -6,6 +6,9 @@
 <%@ include file="../common/head.jspf" %>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 
+<!-- 브라우저에서 비밀번호 암호화 실행하는 스크립트라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script> 
+
 <!-- 아이디 중복체크 ajax로직 -->
 <script>
 
@@ -108,9 +111,12 @@ function MemberJoin__submitForm(form) {
 		alert('로그인아이디 중복체크를해주세요.');
 		return;
 	}
-	
 
-    form.name.value = form.name.value.trim();
+	form.loginPwInput.value = form.loginPwInput.value.trim();
+	
+	form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+
+	form.name.value = form.name.value.trim();
     if ( form.name.value.length == 0 ) {
         alert('이름을 입력해주세요.');
         form.name.focus();
@@ -134,6 +140,10 @@ function MemberJoin__submitForm(form) {
         form.email.focus();
         return;
     }
+    
+    form.loginPw.value = sha256(form.loginPwInput.value);
+    form.loginPwInput.value = '';
+    form.loginPwConfirm.value = '';
 
     MemberJoin__submitFormDone = true;
     form.submit();
@@ -148,6 +158,7 @@ function MemberJoin__submitForm(form) {
   <hr />
   <hr />
 	    <form method="POST" action="../member/doJoin" onsubmit="MemberJoin__submitForm(this); return false;">
+             <input type="hidden" name="loginPw">
 	        <div class="form-control">
                 <label class="label">
                     아이디
@@ -164,7 +175,7 @@ function MemberJoin__submitForm(form) {
                 <label class="label">
                     비밀번호
                 </label>
-                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPw" id="pw" onchange="check_pw()" placeholder="로그인비밀번호를 입력해주세요." />
+                <input class="input input-bordered w-1/2" type="password" maxlength="30" name="loginPwInput" id="pw" onchange="check_pw()" placeholder="로그인비밀번호를 입력해주세요." />
             </div>
 
             <div class="form-control">

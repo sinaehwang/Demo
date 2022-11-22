@@ -36,54 +36,60 @@ function MemberLogin__submitForm(form) {
 }
 </script>
 
-<div class="section section-article-list px-2">
-  <div class="container mx-auto">
+
+  <div class="container mx-auto loginForm">
+  
       <form method="POST" action="doLogin" onsubmit="MemberLogin__submitForm(this); return false;">
           <input type="hidden" name="redirectUri" value="${param.afterLoginUri}" />
           <input type="hidden" name="loginPw" />
-          <div class="form-control">
-                <label class="label">
-                    로그인아이디
-                </label>
-                <input class="input input-bordered w-full" type="text" maxlength="30" name="loginId" placeholder="로그인아이디를 입력해주세요." />
-            </div>
-
-            <div class="form-control">
-                <label class="label">
-                    로그인비밀번호
-                </label>
-                <input class="input input-bordered w-full" type="password" maxlength="30" name="loginPwInput" placeholder="로그인비밀번호를 입력해주세요." />
-            </div>
-
-            <div class="mt-4 btn-wrap gap-1">
-                <button type="submit"  class="btn btn-primary btn-sm mb-1">
-                    <span><i class="fa-solid fa-user-check"></i></span>
-                    &nbsp;
-                    <span>로그인</span>
-                </button>
-                &nbsp;
-                <a href="/" class="btn btn-sm mb-1">
-                    <span><i class="fas fa-home"></i></span>
-                    &nbsp;
-                    <span>홈</span>
-                </a>
-            </div>
-            <div>
-              <a href="../member/findLoginId" type="submit" href="#" class="btn btn-link btn-sm mb-1">
-                    <span><i class="fas fa-sign-in-alt"></i></span>
-                    &nbsp;
-                    <span>아이디 찾기</span>
-                </a>
-
-                <a href="../member/findLoginPw" type="submit" href="#" class="btn btn-link btn-sm mb-1">
-                    <span><i class="fas fa-sign-in-alt"></i></span>
-                    &nbsp;
-                    <span>비밀번호 찾기</span>
-                </a>
-            </div>
+          
+          <!-- 로그인컨트롤구역 -->
+          <div class="section">
+		<div class="container ">
+    
+      <a href="/" class="logo" target="_blank">
+        <img src="logo.png" alt="">
+      </a>
+			<div class="row full-height justify-content-center">
+				<div class="col-12 text-center align-self-center py-5">
+					<div class="section pb-5 pt-5 pt-sm-2 text-center">
+			          	<label for="reg-log"></label>
+						<div class="card-3d-wrap mx-auto">
+							<div class="card-3d-wrapper">
+								<div class="card-front">
+									<div class="center-wrap">
+										<div class="section text-center">
+											<h4 class="mb-4 pb-3">Log In</h4>
+											<div class="form-group">
+												<input type="text" name="loginId" class="form-style" placeholder="Your Login Id" id="loginId" autocomplete="off">
+												<i class="input-icon uil uil-at"></i>
+											</div>	
+											<div class="form-group mt-2">
+												<input type="password" name="loginPwInput" class="form-style" placeholder="Your Login Password" id="loginPwInput" autocomplete="off">
+												<i class="input-icon uil uil-lock-alt"></i>
+											</div>
+											<button type="submit"  class="btn-1 mt-4"">
+                                                <span><i class="fa-solid fa-user-check"></i></span>
+                                                &nbsp;
+                                                <span>submit</span>
+                                            </button>
+                            				<p class="mb-0 mt-4 text-center"><a href="../member/findLoginId"  type="submit" class="link">Forgot your id?</a></p>
+                                            <p class="mb-0 mt-4 text-center"><a href="../member/findLoginPw" type="submit" class="link">Forgot your password?</a></p>
+				      					</div>
+			      					</div>
+			      				</div>
+								
+			      			</div>
+			      		</div>
+			      	</div>
+		      	</div>
+	      	</div>
+	    </div>
+	</div>
+            <!-- 로그인컨트롤구역 -->
       </form>
   </div>
-</div>
+
 
 </body>
 <%@ include file="../common/foot.jspf" %>

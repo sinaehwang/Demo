@@ -33,7 +33,9 @@
 <!-- 폰트어썸의 CDN 스크립트 주소 -->
 <script src="https://kit.fontawesome.com/a52f8bd9a8.js" crossorigin="anonymous"></script>
 
+
 <link rel="stylesheet" href="/resource/common.css" />
+
 <script src="/resource/common.js" defer="defer"></script>
 <title>${pageTitle }</title>
 

@@ -12,6 +12,7 @@ import com.hsn.exam.demo.service.MemberService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Member;
 import com.hsn.exam.demo.vo.ResultData;
+import com.hsn.exam.demo.vo.Rq;
 
 @Controller
 public class UsrMemberController {
@@ -20,6 +21,9 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private Rq rq;
 
 	@RequestMapping("/usr/member/join")
 	public String join() {
@@ -33,6 +37,51 @@ public class UsrMemberController {
 		
 		return "usr/member/mypage";
 	}
+	
+	@RequestMapping("/usr/member/modify")
+	public String modify() {
+
+		return "usr/member/modify";
+
+	}
+	
+	@RequestMapping("/usr/member/checkPassword")
+    public String showCheckPassword(HttpServletRequest req) {
+        return "usr/member/checkPassword";
+    }
+	
+	@RequestMapping("/usr/member/doCheckPassword")
+    public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUri) {
+        Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
+
+        if (loginedMember.getLoginPw().equals(loginPw) == false) {
+            return Ut.msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+        }
+
+        return Ut.msgAndReplace(req, "", redirectUri);
+    }
+	
+	
+	
+
+    @RequestMapping("/usr/member/doModify")
+    public String doModify(HttpServletRequest req, String loginPw, String name, String
+            nickname, String cellphoneNo, String email) {
+
+        if ( loginPw != null && loginPw.trim().length() == 0 ) {
+            loginPw = null;
+        }
+
+         int id = ((Rq)req.getAttribute("rq")).getLoginedMemberId();
+        		
+        ResultData modifyRd = memberService.modify(id, loginPw, name, nickname, cellphoneNo, email);
+
+        if (modifyRd.isFail()) {
+            return Ut.msgAndBack(req, modifyRd.getMsg());
+        }
+
+        return Ut.msgAndReplace(req, modifyRd.getMsg(), "/");
+    }
 
 	@RequestMapping("/usr/member/getLoginIdDup")
 	@ResponseBody

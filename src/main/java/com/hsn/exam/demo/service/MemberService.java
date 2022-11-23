@@ -96,4 +96,11 @@ public class MemberService {
 		memberRepository.modify(actor.getId(), tempPassword, null, null, null, null);
     }
 
+	public ResultData modify(int id, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+		
+		memberRepository.modify(id, loginPw, name, nickname, cellphoneNo, email);
+
+        return ResultData.from("S-1", "회원정보가 수정되었습니다.", "id", id);
+	}
+
 }

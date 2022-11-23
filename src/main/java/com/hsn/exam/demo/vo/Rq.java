@@ -2,8 +2,14 @@ package com.hsn.exam.demo.vo;
 
 import java.util.Map;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 import com.hsn.exam.demo.util.Ut;
 
+
+@Component
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 	private String currentUrl;
     private String currentUri;

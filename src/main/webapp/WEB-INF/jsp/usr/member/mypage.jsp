@@ -6,8 +6,8 @@
 
 <%@ include file="../common/head.jspf" %>
 
+<%@ page import="com.hsn.exam.demo.util.Ut" %>
 
-<body>
 
 <div class="section-article-list">
   <div class="container mx-auto">
@@ -33,44 +33,44 @@
                         </a>
                         </div>
     
-                        <a href="#" class="order-2 hover:underline">
-                            <span class="badge badge-primary">번호</span>
-                            <span>${rq.loginedMember.id}</span>
-                        </a>
+                        <div class="order-2 ">
+                            <span class="badge badge-primary ">번호</span>
+                            <span class = "hover:underline">${rq.loginedMember.id}</span>
+                        </div>
     
-                        <a href="#" class="cursor-pointer order-3 hover:underline">
+                        <div class="order-3 ">
                             <span class="badge badge-accent">회원타입</span>
-                            <span>${rq.loginedMember.authLevelName}</span>
-                        </a>
+                            <span class = "hover:underline">${rq.loginedMember.authLevelName}</span>
+                        </div>
     
-                        <a href="#" class="order-4 hover:underline">
+                        <div class="order-4 ">
                             <span class="badge">등록날짜</span>
-                            <span class="text-gray-600 text-light">${rq.loginedMember.regDate}</span>
-                        </a>
+                            <span class=" hover:underline text-gray-600 text-light">${rq.loginedMember.regDate}</span>
+                        </div>
     
-                        <a href="#" class="order-5 hover:underline">
+                        <div class="order-5 ">
                             <span class="badge">수정날짜</span>
-                            <span class="text-gray-600 text-light">${rq.loginedMember.updateDate}</span>
-                        </a>
+                            <span class="hover:underline text-gray-600 text-light">${rq.loginedMember.updateDate}</span>
+                        </div>
     
-                        <a href="#" class="order-6 hover:underline">
+                        <div class="order-6 ">
                             <span class="badge">로그인아이디</span>
-                            <span class="text-gray-600">${rq.loginedMember.loginId}</span>
-                        </a>
+                            <span class=" hover:underline text-gray-600">${rq.loginedMember.loginId}</span>
+                        </div>
     
-                        <a href="#" class="order-7 hover:underline">
+                        <div  class="order-7">
                             <span class="badge">이름</span>
-                            <span class="text-gray-600">${rq.loginedMember.name}</span>
-                        </a>
+                            <span class="hover:underline text-gray-600">${rq.loginedMember.name}</span>
+                        </div>
     
-                        <a href="#" class="order-8 sm:order-4 md:order-8 hover:underline">
+                        <div class="order-8 sm:order-4 md:order-8 ">
                             <span class="badge">별명</span>
-                            <span class="text-gray-600">${rq.loginedMember.nickname}</span>
-                        </a>
+                            <span class=" hover:underline text-gray-600">${rq.loginedMember.nickname}</span>
+                        </div>
                     </div>
       
                   <div class="plain-link-wrap gap-3 mt-4">
-                    <a href="#" class="plain-link">
+                    <a href="../member/checkPassword?afterUri=${Ut.getUriEncoded('../member/modify')}" class="plain-link">
                       <span>
                         <i class="fas fa-edit"></i>
                       </span>
@@ -90,5 +90,4 @@
     </div>
 </div>
  
-</body>
 <%@ include file="../common/foot.jspf" %>

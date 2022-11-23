@@ -8,18 +8,18 @@
 <div class="section-article-list">
   <div class="container mx-auto">
       <div class="total-items" >
-          <span>전체 게시글수 : </span>
+          <span>Total: </span>
           <span>${totalItemsCount}</span>
       </div>
       
       <div class="total-pages">
-          <span>전체 페이지수 : </span>
-          <span>${totalPage}</span>
+          <span>전체 페이지 : </span>
+          <span>${totalPage} 페이지</span>
       </div>
 
       <div class="page">
             <span>현재페이지 : </span>
-            <span>${page}</span>
+            <span>${page} 페이지</span>
       </div>
 
     <hr />
@@ -68,13 +68,13 @@
             <a href="javascript:history.back();" class="cursor-pointer">
               <i class="fas fa-chevron-left"></i>
             </a>
-            <span>게시물 리스트</span>
+            <span>${board.name }</span>
           </div>
           
           <div class="item-bt-1-not-last-child">
 
               <div class="plain-link-wrap gap-3 flex justify-end mt-10 mr-10">
-                <a href="../article/write?boardId=${board.id}" class=" btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">
+                <a href="../article/write?boardId=${board.id}" class=" btn-1 ">
                 <span><i class="fa-regular fa-pen-to-square"></i></span>
                 <span>게시글 작성</span>
                 </a>
@@ -92,7 +92,7 @@
                 <div class="px-4 py-8">
                     
                     <div>
-                      <span class="badge badge-primary">번호</span>
+                      <span class="badge badge-ghost">게시글 번호</span>
                       <a href="${detailUrl}" class="hover:underline cursor-pointer" >${article.id}</a>
                     </div>  
                     

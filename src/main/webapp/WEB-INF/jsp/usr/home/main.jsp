@@ -9,11 +9,15 @@
 <section class="mt-8">
 
   <div class='container-1'>
-    <h2 class="fadeup">NOTICE</h2>
+    <h2 class="fadeup">
+      <span class ="fadeup-font">
+      <a  href="/usr/article/list?boardId=1">NOTICE</a>
+      </span>
+     </h2>
     <div class='reveal'>
       <div class="image-wrap">
         <img
-          src='https://images.unsplash.com/photo-1496865534669-25ec2a3a0fd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
+          src='https://images.unsplash.com/photo-1493552152660-f915ab47ae9d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
         >
       </div>
       
@@ -21,18 +25,26 @@
   </div>
 
   <div class='container-1'>
-    <h2 class="fadeup">COMMUNITY</h2>
+    <h2 class="fadeup">
+      <span class ="fadeup-font">
+        <a  href="/usr/article/list?boardId=2">COMMUNITY</a>
+        </span>
+      </h2>
     <div class='reveal'>
       <div class="image-wrap">
         <img
-          src='https://images.unsplash.com/photo-1493552152660-f915ab47ae9d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
+          src='https://images.unsplash.com/photo-1496865534669-25ec2a3a0fd3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
         >
       </div>
     </div>
   </div>
   
   <div class='container-1'>
-    <h2 class="fadeup">FREE BOARD</h2>
+    <h2 class="fadeup">
+      <span class ="fadeup-font">
+        <a  href="/usr/article/list?boardId=3">FREE BOARD</a>
+      </span>
+    </h2>
     <div class='reveal'>
       <div class="image-wrap">
         <img
@@ -43,7 +55,11 @@
   </div>
 
   <div class='container-1'>
-    <h2 class="fadeup">JOIN</h2>
+    <h2 class="fadeup">
+      <span class ="fadeup-font">
+          <a  href="/usr/member/join">JOIN</a>
+        </span>
+    </h2>
     <div class='reveal'>
       <div class="image-wrap">
         <img

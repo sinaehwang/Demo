@@ -46,10 +46,8 @@
     <header class="top-bar h-10 top-bar--fly">
       <div class="container mx-auto flex h-full">
           <a href="/" class="px-3 flex items-center">
-            <span>
-              <i class="fas fa-lemon"></i>
-            </span>
-            <span class="hidden sm:block">&nbsp;로고</span>
+              <img src="https://user-images.githubusercontent.com/109134688/203498886-eb6969b0-ce4f-44d1-bc27-806d2c883200.png" 
+              class = "w-full " alt="" />
           </a>
 
         <div class="flex-grow"></div>

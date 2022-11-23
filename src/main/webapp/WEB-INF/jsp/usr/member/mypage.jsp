@@ -26,9 +26,12 @@
                     <a href="${detailUrl}" class="hover:underline cursor-pointer"></a>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                        <a href="#" class="row-span-2 order-1">
+                    
+                      <div class = "imgBackground" >                      
+                        <a href="#" class="row-span-2 order-1 ">
                             <img class="rounded-full" src="https://i.pravatar.cc/100?img=37" alt="">
                         </a>
+                        </div>
     
                         <a href="#" class="order-2 hover:underline">
                             <span class="badge badge-primary">번호</span>

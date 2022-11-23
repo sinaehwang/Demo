@@ -308,10 +308,10 @@ box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #
   text-transform: lowercase;
 }
 
-.container-1:nth-child(2) {
+.container-1:nth-child(1) {
   background: #3c564f;
 }
-.container-1:nth-child(1) {
+.container-1:nth-child(2) {
   background: #b69187;
 }
 .container-1:nth-child(4) {
@@ -328,7 +328,7 @@ img {
   object-fit: contain;
 }
 
-h2 {
+h2  {
   font-family: Termina, sans-serif;
   font-weight: 800;
   text-transform: uppercase;
@@ -344,6 +344,12 @@ h2 {
   z-index: 99;
   display: grid;
   place-items: center;
+}
+
+.fadeup-font{
+	font-family: Termina, sans-serif;
+	color:white;
+	opacity:0.8;
 }
 
 body:not(.no-js) .image-wrap {
@@ -644,8 +650,8 @@ h6 span{
 .btn-1{  
   border-radius: 4px;
   height: 44px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 800;
   text-transform: uppercase;
   -webkit-transition : all 200ms linear;
   transition: all 200ms linear;
@@ -694,6 +700,17 @@ h6 span{
 	width: auto;
 	display: block;
 }
+
+.imgBackground {
+	margin:10px;
+	padding:5px;
+	background-color:#ffeba7;
+	height: 200px;
+	width: 200px;
+	
+	
+}
+
 
 /*로그인페이지폼*/
 

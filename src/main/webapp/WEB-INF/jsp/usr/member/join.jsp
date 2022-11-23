@@ -3,12 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="회원가입 페이지" />
 
-<%@ include file="../common/head.jspf" %>
-<%@ include file="../common/toastUiEditorLib.jspf"%>
 
+<%@ include file="../common/toastUiEditorLib.jspf"%>
+<%@ include file="../common/head.jspf" %>
 <!-- 브라우저에서 비밀번호 암호화 실행하는 스크립트라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script> 
 
+<body>
 <!-- 아이디 중복체크 ajax로직 -->
 <script>
 
@@ -233,5 +234,5 @@ function MemberJoin__submitForm(form) {
 	    </form>
 	</div>
 </div>
-
+</body>
 <%@ include file="../common/foot.jspf" %>

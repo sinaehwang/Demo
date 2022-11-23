@@ -37,8 +37,8 @@ function MemberLogin__submitForm(form) {
 </script>
 
 
-  <div class="container mx-auto loginForm">
-  
+  <div class="container mx-auto loginForm-out">
+  <div class ="loginForm-in card">
       <form method="POST" action="doLogin" onsubmit="MemberLogin__submitForm(this); return false;">
           <input type="hidden" name="redirectUri" value="${param.afterLoginUri}" />
           <input type="hidden" name="loginPw" />
@@ -48,7 +48,7 @@ function MemberLogin__submitForm(form) {
 		<div class="container ">
     
       <a href="/" class="logo" target="_blank">
-        <img src="logo.png" alt="">
+        <img src="https://user-images.githubusercontent.com/109134688/203586580-6a7ac039-be14-4579-b85d-08c0a885b11b.png" alt="">
       </a>
 			<div class="row full-height justify-content-center">
 				<div class="col-12 text-center align-self-center py-5">
@@ -87,7 +87,9 @@ function MemberLogin__submitForm(form) {
 	    </div>
 	</div>
             <!-- 로그인컨트롤구역 -->
+            
       </form>
+      </div>
   </div>
 
 

@@ -30,30 +30,32 @@ function MemberCheckPassword__submitForm(form) {
 
 <div class="section section-login px-2">
 	<div class="container mx-auto">
-	    <form method="POST" action="doCheckPassword" onsubmit="MemberCheckPassword__submitForm(this); return false;">
-	        <input type="hidden" name="redirectUri" value="${param.afterUri}" />
-	        <input type="hidden" name="loginPw" />
+	    <form class = "card-3d-wrap mx-auto" method="POST" action="doCheckPassword" onsubmit="MemberCheckPassword__submitForm(this); return false;">
+	      <input type="hidden" name="redirectUri" value="${param.afterUri}" />
+          <input type="hidden" name="loginPw" />  
+          
+          <div class="card-3d-wrapper ">
+            <div class="card-front">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                        <h4 class="mb-4 pb-3">비밀번호 확인</h4>
+                        <div class="form-group">
+                          <input type="password" name="loginPwInput" class="form-style" placeholder="Your Login Pw" id="loginId" autocomplete="off">
+                          <i class="input-icon uil uil-at"></i>
+                        </div>  
 
-	        <div class="form-control">
-                <label class="label">
-                    로그인비밀번호
-                </label>
-                <input class="input input-bordered w-full" type="password" maxlength="30" name="loginPwInput" placeholder="로그인비밀번호를 입력해주세요." />
+                               <button type="submit"  class="btn-1 mt-4"">
+                               <span><i class="fa-solid fa-user-check"></i></span>
+                                &nbsp;
+                               <span>submit</span>
+                               </button>
+                               <p class="mb-0 mt-4 text-center"><a href="/"  type="submit" class="link">메인페이지로 이동하시겠습니까?</a></p>
+                          </div>
+                      
+                    </div>  
+                 </div>
             </div>
-
-            <div class="mt-4 btn-wrap gap-1">
-                <button type="submit" href="#" class="btn btn-primary btn-sm mb-1">
-                    <span><i class="fas fa-sign-in-alt"></i></span>
-                    &nbsp;
-                    <span>비밀번호 확인</span>
-                </button>
-
-                <a href="#" class="btn btn-link btn-sm mb-1">
-                    <span><i class="fas fa-home"></i></span>
-                    &nbsp;
-                    <span>홈</span>
-                </a>
-            </div>
+         </div> 
 	    </form>
 	</div>
 </div>

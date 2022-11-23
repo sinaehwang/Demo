@@ -397,10 +397,17 @@ body:not(.no-js) .fading-up {
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
 
 
+.loginForm-out{
 
-.loginForm{
+	padding:5rem;
 	background-color:#f5f5f5;
 }
+
+.loginForm-in{
+	background-color:white;
+}
+
+
 
 a {
 	cursor: pointer;
@@ -696,9 +703,10 @@ h6 span{
 	transition: all 250ms linear;
 }
 .logo img {
-	height: 26px;
+	height: 5rem;
 	width: auto;
 	display: block;
+	
 }
 
 .imgBackground {

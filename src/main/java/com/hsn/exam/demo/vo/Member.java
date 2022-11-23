@@ -22,6 +22,10 @@ public class Member {
 	private String delStatus;
 	private String delDate;
 	
+	public String getAuthLevelName() {
+        return "일반회원";
+    }
+	
 	
 
 }

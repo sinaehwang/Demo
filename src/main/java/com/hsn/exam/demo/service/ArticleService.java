@@ -51,7 +51,7 @@ public class ArticleService {
 
 	}
 
-	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page, String searchKeyword, String searchKeywordType) {
+	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page, String searchKeyword, String searchKeywordType, int catergoryId) {
 		
 		if(searchKeyword != null && searchKeyword.length() == 0) {
 			searchKeyword = null;
@@ -61,7 +61,7 @@ public class ArticleService {
 		int limitTake = itemsCountInAPage;
 		
 
-		return articleRepository.getArticles(boardId,limitFrom,limitTake,searchKeyword,searchKeywordType);
+		return articleRepository.getArticles(boardId,limitFrom,limitTake,searchKeyword,searchKeywordType,catergoryId);
 	}
 
 	public void doDelete(int id) {
@@ -84,13 +84,13 @@ public class ArticleService {
 		return articleRepository.getBoardbyId(boardId);
 	}
 
-	public int getArticlesTotalCount(int boardId, String searchKeyword, String searchKeywordType) {
+	public int getArticlesTotalCount(int boardId, String searchKeyword, String searchKeywordType, int catergoryId) {
 		
 		if(searchKeyword != null && searchKeyword.length() == 0) {
 			searchKeyword = null;
 		}
 
-		return articleRepository.getArticlesTotalCount(boardId,searchKeyword,searchKeywordType);
+		return articleRepository.getArticlesTotalCount(boardId,searchKeyword,searchKeywordType,catergoryId);
 	}
 
 	public Article getForPrintArticle(Integer id) {

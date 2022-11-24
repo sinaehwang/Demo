@@ -45,10 +45,7 @@
   
     <header class="top-bar h-10 top-bar--fly">
       <div class="container mx-auto flex h-full">
-          <a href="/" class="  px-3 flex items-center">
-              <img src="https://user-images.githubusercontent.com/109134688/203586580-6a7ac039-be14-4579-b85d-08c0a885b11b.png" 
-              class = "w-full " alt="" />
-          </a>
+
 
         <div class="flex-grow"></div>
 

@@ -20,6 +20,7 @@ import com.hsn.exam.demo.service.GenFileService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
+import com.hsn.exam.demo.vo.Catergory;
 import com.hsn.exam.demo.vo.GenFile;
 import com.hsn.exam.demo.vo.ResultData;
 import com.hsn.exam.demo.vo.Rq;
@@ -61,6 +62,9 @@ public class UsrArticleController {
 
 		if (param.get("body") == null) {
 			return Ut.msgAndBack(req, "내용을 입력해주세요");
+		}
+		if (param.get("catergoryId") == null) {
+			return Ut.msgAndBack(req, "카테고리를 입력해주세요");
 		}
 		
 		param.put("memberId", loginedMemberId);
@@ -114,7 +118,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
+	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,@RequestParam(defaultValue = "1") String catergoryType,
 			@RequestParam(defaultValue = "1") int page, String searchKeywordType, String searchKeyword) {
 
 		Board board = articleService.getBoardbyId(boardId);
@@ -129,8 +133,10 @@ public class UsrArticleController {
 		}
 
 		req.setAttribute("board", board);
+		
+		int catergoryId = Integer.parseInt(catergoryType);
 
-		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeyword, searchKeywordType);
+		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeyword, searchKeywordType,catergoryId);
 
 		if (searchKeyword == null || searchKeyword.trim().length() == 0) {
 
@@ -148,7 +154,7 @@ public class UsrArticleController {
 		req.setAttribute("totalPage", totalPage);
 
 		List<Article> articles = articleService.getArticles(boardId, itemsCountInAPage, page, searchKeyword,
-				searchKeywordType);
+				searchKeywordType,catergoryId);
 
 		for (Article article : articles) {
 			GenFile genFile = genFileService.getGenFile("article", article.getId(), "common", "attachment", 1);

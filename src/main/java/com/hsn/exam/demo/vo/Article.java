@@ -20,7 +20,9 @@ public class Article {
 	private int memberId;
 	private int boardId;
 	private boolean delStatus;
+	private int catergoryId;
 	
+	private int extra__catergoryName;
 	private String extra__writerName;
 	private String extra__thumbImg;
 	

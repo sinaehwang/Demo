@@ -64,7 +64,7 @@ function MemberModify__submitForm(form) {
 </script>
 
 <div class="section section-member-modify px-2">
-  <div class="container mx-auto">
+  <div class="container mx-auto ">
       <form method="POST" action="doModify" onsubmit="MemberModify__submitForm(this); return false;">
           <input type="hidden" name="loginPw">
           <div class="form-control">

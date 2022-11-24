@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${board.name } 글쓰기" />
-<%@ include file="../common/head.jspf" %>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
+<%@ include file="../common/head.jspf" %>
 
 
 
@@ -47,6 +47,7 @@ function ArticleWrite__submitForm(form) {
   <div class="container mx-auto">
   <form method="POST" action="../article/doWrite" enctype="multipart/form-data" onsubmit="ArticleWrite__submitForm(this); return false;">
   <input type="hidden" name="boardId" value="${board.id}" />
+  
   <input type="hidden" name="body" />
     <div class="card bordered shadow-lg item-bt-1-not-last-child">
       <div class="card-title">
@@ -66,6 +67,21 @@ function ArticleWrite__submitForm(form) {
               홍길동
             </div>
           </div>
+          
+          <div class="form-control">
+            <label class="cursor-pointer label">
+              음식 카테고리
+            </label>
+            <div class="plain-text">
+                <select class="select select-bordered" name="catergoryId">
+                <option disabled>카테고리를 선택해주세요</option>
+                <option value="1">한식</option>
+                <option value="2">중식</option>
+                <option value="3">양식</option>
+                </select>
+            </div>
+          </div>
+          
 
           <div class="form-control">
             <label class="label">

@@ -27,9 +27,9 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     
-                      <div class = "imgBackground" >                      
+                      <div class = "imgBackground flex justify-center" >                      
                         <a href="#" class="row-span-2 order-1 ">
-                            <img class="rounded-full" src="https://i.pravatar.cc/100?img=37" alt="">
+                            <img src="https://user-images.githubusercontent.com/109134688/203896354-3f8f6899-8019-4824-b606-723c38cebd4d.gif" alt="">
                         </a>
                         </div>
     

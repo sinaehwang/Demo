@@ -20,17 +20,20 @@
                 <div class="px-4 py-8">
                     <div class="flex">
                         <span>
-                            <span>Comments:</span>
+                            <span>댓글:</span>
                             <span class="text-gray-400 text-light">30</span>
+                            &nbsp;
                         </span>
-                        <span class="ml-3">
-                            <span>Views:</span>
-                            <span class="text-gray-400 text-light">60k</span>
-                        </span>
-                        <div class="flex-grow"></div>
+                       
                         <span>
-                            <span>Likes:</span>
-                            <span class="text-gray-400 text-light">120k</span>
+                            <span>좋아요:</span>
+                            <span class="text-gray-400 text-light">120</span>
+                        </span>
+                        
+                        <div class="flex-grow"></div>
+                        <span class="ml-3">
+                            <span>조회수:</span>
+                            <span class="text-gray-400 text-light">60</span>
                         </span>
                     </div>
 
@@ -81,7 +84,7 @@
                 <div class="px-4 py-8">
                     <!-- 댓글 입력 시작 -->
                     <form class="relative flex py-4 text-gray-600 focus-within:text-gray-400">
-                        <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
+                        <!-- 프로필이미지 -->
 
                         <span class="absolute inset-y-0 right-0 flex items-center pr-6">
                             <button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">

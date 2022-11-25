@@ -124,20 +124,18 @@
                       <c:if test="${article.extra__thumbImg == null}">
                           <img class ="max-w-xs" src="https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif" alt="" /> <!-- 본문의 이미지불러오기 -->
                       </c:if>
-                      
-                    <a href="${detailUrl}">
-                      <span class="badge">카테고리</span>
-                      <span class="text-gray-600 text-light hover:underline">${article.catergoryId}</span>
-                    </a>  
-      
-      
-      
+
                    <a  href="${detailUrl}" class="mt-3  hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
                         <span class="badge badge-outline">본문</span>
                         <div class="line-clamp-3 ">
                           ${article.body}
                         </div>
                     </a>
+                    
+                   <a href="${detailUrl}">
+                      <span class="badge">카테고리</span>
+                      <span class="text-gray-600 text-light hover:underline">${article.catergoryId}</span>
+                    </a> 
       
                     <a href="${detailUrl}">
                       <span class="badge">수정날짜</span>

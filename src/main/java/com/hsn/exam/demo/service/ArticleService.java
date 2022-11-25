@@ -98,4 +98,9 @@ public class ArticleService {
 		return articleRepository.getForPrintArticle(id);
 	}
 
+	public Article getArticleById(int relId) {
+		
+		return articleRepository.getArticle(relId);
+	}
+
 }

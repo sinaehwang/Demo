@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+
 import com.hsn.exam.demo.util.Ut;
 
 
@@ -46,12 +47,18 @@ public class Rq {
 
         return loginedMember.getNickname();
     }
+    
+    public String getLoginedMemberName() {
+        if (isNotLogined()) return "";
+
+        return loginedMember.getName();
+    }
 
     public String getEncodedCurrentUri() {
         return Ut.getUriEncoded(getCurrentUri());
     }
 
-    private String getCurrentUri() {
+    public String getCurrentUri() {
         return currentUri;
     }
 

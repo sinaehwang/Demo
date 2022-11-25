@@ -64,7 +64,7 @@ function ArticleWrite__submitForm(form) {
               작성자
             </label>
             <div class="plain-text">
-              홍길동
+              <input type="text" name="LoginedMemberName" value="${rq.loginedMember.name}" />
             </div>
           </div>
           

@@ -202,12 +202,27 @@ UPDATE article SET
 catergoryId = 1
 WHERE catergoryId =0
 
+# 댓글 테이블 생성
+CREATE TABLE `reply` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '번호',
+    regDate DATETIME NOT NULL COMMENT '작성날짜',
+    updateDate DATETIME NOT NULL COMMENT '수정날짜',
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입',
+    relId INT(10) UNSIGNED NOT NULL COMMENT '관련 데이터 ID',
+    memberId INT(10) UNSIGNED NOT NULL COMMENT '회원 ID',
+    `body` TEXT NOT NULL COMMENT '내용'
+);
+
 SELECT*FROM category
 SELECT*FROM board
 SELECT*FROM genFile
 SELECT*FROM article
 SELECT*FROM `member`
+SELECT*FROM `reply`
 
+
+		
+		
 
 		
 		

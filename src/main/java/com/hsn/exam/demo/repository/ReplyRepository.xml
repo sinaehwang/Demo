@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hsn.exam.demo.repository.ReplyRepository">
+
+	<insert id="write">
+        INSERT INTO reply
+        SET regDate = NOW(),
+        updateDate = NOW(),
+        relTypeCode = #{relTypeCode},
+        relId = #{relId},
+        memberId = #{memberId},
+        body = #{body}
+    </insert>
+
+	<select id="getLastInsertId" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+
+
+</mapper>

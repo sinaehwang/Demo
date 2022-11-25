@@ -55,6 +55,14 @@
                           .val('${param.searchKeywordType}');
                         }
                       </script>
+                      
+                      <script>
+                        const param__catergoryType = '${param.catergoryType}';
+                        if ( param__catergoryType.length > 0 ) {
+                          $('.search-form-box form [name="catergoryType"]')
+                          .val('${param.catergoryType}');
+                        }
+                      </script>
                 </div>
     
             <div class="form-control">

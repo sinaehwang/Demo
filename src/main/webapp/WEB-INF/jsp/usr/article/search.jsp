@@ -49,6 +49,8 @@
                         
                         $("p").append("<strong>출판사:</strong> " + msg.documents[i].publisher + "<br>");
                         
+                        $("p").append("<strong>도서상세URL:</strong>" + "<a href='"+ msg.documents[i].url+"'>바로가기</a>" + "<br>");
+                        
                         $("p").append("<strong>줄거리:</strong> " + msg.documents[i].contents + "<br>");
                         
                         $("p").append("<img 책표지 src='" + msg.documents[i].thumbnail + "'/>");
@@ -75,6 +77,8 @@
                 $("p").append("<strong>저자:</strong>" + msg.documents[i].title +"<br>" );
                 
                 $("p").append("<strong>출판사:</strong> " + msg.documents[i].publisher + "<br>");
+                
+                $("p").append("<strong>도서상세URL:</strong>" + "<a href='"+ msg.documents[i].url+"'>바로가기</a>" + "<br>");
                 
                 $("p").append("<strong>줄거리:</strong> " + msg.documents[i].contents + "<br>");
                 

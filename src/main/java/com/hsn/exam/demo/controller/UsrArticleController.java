@@ -50,6 +50,8 @@ public class UsrArticleController {
 
 		return "usr/article/search";
 	}
+	
+
 
 	@RequestMapping("/usr/article/doWrite") // 브라우저요청으로 글을 추가하는경우
 	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,HttpSession session,

@@ -43,6 +43,7 @@
                         <span class="label-text">카테고리</span>
                       </label>
                      <select class="select select-bordered" name="catergoryType">
+                        <option value ="0">전체</option>
                         <option value ="1">한식</option>
                         <option value="2">중식</option>
                         <option value="3">양식</option>

@@ -118,7 +118,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,@RequestParam(defaultValue = "1") String catergoryType,
+	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,@RequestParam(defaultValue = "0") String catergoryType,
 			@RequestParam(defaultValue = "1") int page, String searchKeywordType, String searchKeyword) {
 
 		Board board = articleService.getBoardbyId(boardId);

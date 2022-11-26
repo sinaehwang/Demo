@@ -91,7 +91,9 @@
 		SELECT COUNT(*) AS cnt
 		FROM article AS A
 		WHERE A.boardId = #{boardId}
+		<if test="catergoryId != 0">
 		AND A.catergoryId = #{catergoryId}
+		</if>
 		<if test="searchKeyword != null">
 			<if test="searchKeywordType == 'titleAndBody'">
 				AND (

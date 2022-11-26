@@ -33,6 +33,7 @@
         $(document).ready(function () {
           	var pageNum = 1;
             $("#search").click(function () {
+              
               	$("p").html("");
                 $.ajax({
                     method: "GET",
@@ -40,6 +41,7 @@
                     data: { query: $("#bookName").val() },
                     headers: { Authorization: "KakaoAK b6d266ed8e0ac2b0c97c846dc1bcc5bc" }
                 })
+                
                     .done(function (msg) {
                         console.log(msg);
                         for(var i = 0; i<10; i++){
@@ -54,7 +56,35 @@
                         }
                     });
             });
-        });
+            
+            //10개씩 반복문으로 무한스크롤 생성
+            $(window).scroll(function(){
+              
+              if(Math.ceil($(window).scrollTop())+ $(window).height() >= $(document).height() ){
+                pageNum++;
+                
+                $.ajax({
+                  method: "GET",
+                  url: "https://dapi.kakao.com/v3/search/book?target=title",
+                  data: { query: $("#bookName").val(), page:pageNum },
+                  headers: { Authorization: "KakaoAK b6d266ed8e0ac2b0c97c846dc1bcc5bc" }
+              })
+              .done(function (msg) {
+                console.log(msg);
+                for(var i = 0; i<10; i++){
+                $("p").append("<strong>저자:</strong>" + msg.documents[i].title +"<br>" );
+                
+                $("p").append("<strong>출판사:</strong> " + msg.documents[i].publisher + "<br>");
+                
+                $("p").append("<strong>줄거리:</strong> " + msg.documents[i].contents + "<br>");
+                
+                $("p").append("<img 책표지 src='" + msg.documents[i].thumbnail + "'/>");
+                $("p").append("<hr /><br>");
+                }
+            });
+          }
+       });
+ });
     </script>
 
 </div>

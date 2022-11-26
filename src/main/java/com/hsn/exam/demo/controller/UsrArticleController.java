@@ -20,10 +20,8 @@ import com.hsn.exam.demo.service.GenFileService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
-import com.hsn.exam.demo.vo.Catergory;
 import com.hsn.exam.demo.vo.GenFile;
 import com.hsn.exam.demo.vo.ResultData;
-import com.hsn.exam.demo.vo.Rq;
 
 @Controller
 public class UsrArticleController {
@@ -44,6 +42,13 @@ public class UsrArticleController {
 		req.setAttribute("board", board);
 
 		return "usr/article/write";
+	}
+	
+	@RequestMapping("/usr/article/DataSearch")
+	public String search() {
+
+
+		return "usr/article/search";
 	}
 
 	@RequestMapping("/usr/article/doWrite") // 브라우저요청으로 글을 추가하는경우

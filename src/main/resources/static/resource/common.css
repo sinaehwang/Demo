@@ -334,6 +334,13 @@ img {
   object-fit: contain;
 }
 
+.bookPoster img {
+  height: 50%;
+  width: auto;
+  max-width: 75vw;
+  object-fit: contain;
+}
+
 h2  {
   font-family: Termina, sans-serif;
   font-weight: 800;

@@ -22,11 +22,13 @@ public class Article {
 	private boolean delStatus;
 	private int catergoryId;
 	
-	private int extra__catergoryName;
+	
+	
 	private String extra__writerName;
 	private String extra__thumbImg;
 	
 	private Map<String, Object> extra;
+	private Catergory catergory;
 
 	public Map<String, Object> getExtraNotNull() {
 		if ( extra == null ) {
@@ -44,6 +46,7 @@ public class Article {
 
 	        return bodyForPrint;
 	}
+	
 
 	
 

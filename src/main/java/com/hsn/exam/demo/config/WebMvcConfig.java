@@ -13,6 +13,7 @@ import com.hsn.exam.demo.interceptor.NeedToLogoutInterceptor;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+	
 
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;
@@ -50,5 +51,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/gen/**").addResourceLocations("file:///" + genFileDirPath + "/")
 				.setCachePeriod(20);
 	}
+	
 
 }

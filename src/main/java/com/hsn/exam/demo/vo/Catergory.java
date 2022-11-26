@@ -16,6 +16,8 @@ public class Catergory {
 	private String name;
 	private boolean delStatus;
 	private String delDate;
+	
+
 
 
 }

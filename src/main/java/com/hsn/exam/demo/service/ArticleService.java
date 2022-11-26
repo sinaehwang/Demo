@@ -71,11 +71,11 @@ public class ArticleService {
 		genFileService.deleteFiles("article", id);
 	}
 
-	public ResultData doModify(int id, String title, String body) {
+	public Article doModify(int id, String title, String body) {
 
 		articleRepository.doModify(id, title, body);
 		
-		return getArticle(id);//수정후의 data1을 넘겨줌
+		return getArticleById(id);//수정후의 data1을 넘겨줌
 		
 	}
 

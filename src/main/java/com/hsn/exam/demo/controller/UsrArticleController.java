@@ -249,22 +249,22 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doModify")
-	@ResponseBody()
-	public ResultData doModify(int id, String title, String body, HttpSession httpSession) {// return타입을 String과 Article
+	public String doModify(int id, String title, String body, HttpServletRequest req) {// return타입을 String과 Article
 																							// 둘다사용하기위해 Object로변경해줌
 
-		ResultData ModifyArticle = articleService.getArticle(id);
+		ResultData Articlerd = articleService.getArticle(id);
 
-		if (ModifyArticle.isFail()) {
-			return ResultData.from(ModifyArticle.getResultCode(), ModifyArticle.getMsg());
+		if (Articlerd.isFail()) {			
+			return Ut.msgAndBack(req, Articlerd.getMsg());
 		}
 
-		Article article = (Article) ModifyArticle.getData1();
 
-		ResultData ModifyArticlerd = articleService.doModify(id, title, body);
+		Article ModifyArticle = articleService.doModify(id, title, body);
+		
+		String redirectUri = "../article/detail?id=" + ModifyArticle.getId();
 
-		return ResultData.from(ModifyArticlerd.getResultCode(), ModifyArticlerd.getMsg(), "ModifyArticlerd",
-				ModifyArticlerd.getData1());
+		return Ut.msgAndReplace(req, Ut.f("%d번 게시글수정완료", id), redirectUri);
+
 
 	}
 

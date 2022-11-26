@@ -4,8 +4,8 @@
 <c:set var="pageTitle" value="${board.name } 수정페이지" />
 <c:set var="fileInputMaxCount" value="2" />
 
-<%@ include file="../common/head.jspf" %>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
+<%@ include file="../common/head.jspf" %>
 
 <!-- 수정확인 스크립트 -->
 <script>

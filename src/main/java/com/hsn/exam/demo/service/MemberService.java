@@ -1,5 +1,7 @@
 package com.hsn.exam.demo.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import com.hsn.exam.demo.vo.ResultData;
 public class MemberService {
 
 	@Autowired
+	private AttrService attrService;
+
+	@Autowired
 	private MemberRepository memberRepository;
 
 	@Autowired
@@ -20,7 +25,7 @@ public class MemberService {
 
 	@Value("${custom.siteMainUri}")
 	private String siteMainUri;
-	
+
 	@Value("${custom.siteName}")
 	private String siteName;
 
@@ -74,33 +79,65 @@ public class MemberService {
 
 	public ResultData notifyTempLoginPwByEmail(Member actor) {
 		String title = "[" + siteName + "] 임시 패스워드 발송";
-        String tempPassword = Ut.getTempPassword(6);
-        String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
-        body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
+		String tempPassword = Ut.getTempPassword(6);
+		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
+		body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
 
-        ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
+		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
 
-        if (sendResultData.isFail()) {
-            return sendResultData;
-        }
-        
-        tempPassword = Ut.sha256(tempPassword);
+		if (sendResultData.isFail()) {
+			return sendResultData;
+		}
 
-        setTempPassword(actor, tempPassword);
+		tempPassword = Ut.sha256(tempPassword);
 
-        return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+		setTempPassword(actor, tempPassword);
+
+		return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {
 		
+		attrService.setValue("member", actor.getId(), "extra", "useTempPassword", "1", null);
+
 		memberRepository.modify(actor.getId(), tempPassword, null, null, null, null);
-    }
+	}
 
 	public ResultData modify(int id, String loginPw, String name, String nickname, String cellphoneNo, String email) {
-		
-		memberRepository.modify(id, loginPw, name, nickname, cellphoneNo, email);
 
-        return ResultData.from("S-1", "회원정보가 수정되었습니다.", "id", id);
+		memberRepository.modify(id, loginPw, name, nickname, cellphoneNo, email);
+		
+		if (loginPw != null) {
+            attrService.remove("member", id, "extra", "useTempPassword");
+        }
+		
+
+		return ResultData.from("S-1", "회원정보가 수정되었습니다.", "id", id);
+	}
+
+	public ResultData checkValidCheckPasswordAuthCode(int actorId, String checkPasswordAuthCode) {
+
+		//멤버의 유효인증키값을가져와서 생성된 인증키와 동일한지 비교
+		if (attrService.getValue("member__" + actorId + "__extra__checkPasswordAuthCode").equals(checkPasswordAuthCode)) {
+			return ResultData.from("S-1", "비밀번호인증키 확인완료");
+		}
+
+		return ResultData.from("F-1", "유효하지 않은 키 입니다.");
+	}
+
+	public String genCheckPasswordAuthCode(int actorId) {
+        String attrName = "member__" + actorId + "__extra__checkPasswordAuthCode";
+        String authCode = UUID.randomUUID().toString();
+        String expireDate = Ut.getDateStrLater(60 * 60);
+
+        attrService.setValue(attrName, authCode, expireDate);
+
+        return authCode;
+    }
+
+	public boolean isUsingTempPassword(int actorId) {
+		
+		return attrService.getValue("member", actorId, "extra", "useTempPassword").equals("1");
 	}
 
 }

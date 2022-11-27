@@ -67,6 +67,7 @@ function MemberModify__submitForm(form) {
   <div class="container mx-auto ">
       <form method="POST" action="doModify" onsubmit="MemberModify__submitForm(this); return false;">
           <input type="hidden" name="loginPw">
+          <input type="hidden" name="checkPasswordAuthCode" value="${param.checkPasswordAuthCode}">
           <div class="form-control">
                 <label class="label">
                     로그인아이디

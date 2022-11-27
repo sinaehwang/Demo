@@ -21,7 +21,7 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private Rq rq;
 
@@ -34,54 +34,77 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/mypage")
 	public String showMypage(HttpServletRequest req) {
-		
+
 		return "usr/member/mypage";
 	}
-	
+
+	@RequestMapping("/usr/member/checkPassword")
+	public String showCheckPassword(HttpServletRequest req) {
+		return "usr/member/checkPassword";
+	}
+
+	@RequestMapping("/usr/member/doCheckPassword")
+	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUri) {
+		
+		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
+
+		if (loginedMember.getLoginPw().equals(loginPw) == false) {
+			return Ut.msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+		}
+
+		//비밀번호 인증코드생성
+		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
+
+		redirectUri = Ut.getNewUri(redirectUri, "checkPasswordAuthCode", authCode);
+
+		return Ut.msgAndReplace(req, "", redirectUri);
+	}
+
 	@RequestMapping("/usr/member/modify")
-	public String modify() {
+	public String modify(HttpServletRequest req, String checkPasswordAuthCode) {
+
+		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
+
+		// 멤버가가지고있는 비밀번호인증코드 유효성을 체크
+
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
+
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return Ut.msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
 
 		return "usr/member/modify";
 
 	}
-	
-	@RequestMapping("/usr/member/checkPassword")
-    public String showCheckPassword(HttpServletRequest req) {
-        return "usr/member/checkPassword";
-    }
-	
-	@RequestMapping("/usr/member/doCheckPassword")
-    public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUri) {
-        Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
 
-        if (loginedMember.getLoginPw().equals(loginPw) == false) {
-            return Ut.msgAndBack(req, "비밀번호가 일치하지 않습니다.");
-        }
+	@RequestMapping("/usr/member/doModify")
+	public String doModify(HttpServletRequest req, String loginPw, String name, String nickname, String cellphoneNo,
+			String email, String checkPasswordAuthCode) {
 
-        return Ut.msgAndReplace(req, "", redirectUri);
-    }
-	
-	
-	
+		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
 
-    @RequestMapping("/usr/member/doModify")
-    public String doModify(HttpServletRequest req, String loginPw, String name, String
-            nickname, String cellphoneNo, String email) {
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
 
-        if ( loginPw != null && loginPw.trim().length() == 0 ) {
-            loginPw = null;
-        }
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return Ut.msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
 
-         int id = ((Rq)req.getAttribute("rq")).getLoginedMemberId();
-        		
-        ResultData modifyRd = memberService.modify(id, loginPw, name, nickname, cellphoneNo, email);
+		if (loginPw != null && loginPw.trim().length() == 0) {
+			loginPw = null;
+		}
 
-        if (modifyRd.isFail()) {
-            return Ut.msgAndBack(req, modifyRd.getMsg());
-        }
+		int id = ((Rq) req.getAttribute("rq")).getLoginedMemberId();
 
-        return Ut.msgAndReplace(req, modifyRd.getMsg(), "/");
-    }
+		ResultData modifyRd = memberService.modify(id, loginPw, name, nickname, cellphoneNo, email);
+
+		if (modifyRd.isFail()) {
+			return Ut.msgAndBack(req, modifyRd.getMsg());
+		}
+
+		return Ut.msgAndReplace(req, modifyRd.getMsg(), "/");
+	}
 
 	@RequestMapping("/usr/member/getLoginIdDup")
 	@ResponseBody
@@ -175,7 +198,15 @@ public class UsrMemberController {
 		}
 
 		String msg = Ut.f("%s님 로그인되었습니다.", member.getLoginId());
+
 		session.setAttribute("loginedMemberId", member.getId());
+
+		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
+
+		if (isUsingTempPassword) {
+			msg = "임시 비밀번호를 변경해주세요.";
+			redirectUri = "/mpaUsr/member/mypage";
+		}
 
 		return Ut.msgAndReplace(req, msg, redirectUri);
 

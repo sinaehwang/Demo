@@ -107,6 +107,7 @@ public class MemberService {
 
 		memberRepository.modify(id, loginPw, name, nickname, cellphoneNo, email);
 		
+		//회원이 마이페이지에서 비번을 변경한경우
 		if (loginPw != null) {
             attrService.remove("member", id, "extra", "useTempPassword");
         }

@@ -200,12 +200,14 @@ public class UsrMemberController {
 		String msg = Ut.f("%s님 로그인되었습니다.", member.getLoginId());
 
 		session.setAttribute("loginedMemberId", member.getId());
+		
 
+		//임시비번사용하고있는지 체크
 		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
 
 		if (isUsingTempPassword) {
-			msg = "임시 비밀번호를 변경해주세요.";
-			redirectUri = "/mpaUsr/member/mypage";
+			msg = "임시 비밀번호를 사용중입니다. 비밀번호를 변경해주세요.";
+			redirectUri = "/usr/member/mypage";
 		}
 
 		return Ut.msgAndReplace(req, msg, redirectUri);

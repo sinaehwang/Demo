@@ -213,13 +213,49 @@ CREATE TABLE `reply` (
     `body` TEXT NOT NULL COMMENT '내용'
 );
 
+
+
+# 부가정보테이블(모든메인테이블에서 컬럼으로 추가하기 애매한 컬럼들을 모아두는곳)
+CREATE TABLE attr (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `relTypeCode` CHAR(20) NOT NULL,
+    `relId` INT(10) UNSIGNED NOT NULL,
+    `typeCode` CHAR(30) NOT NULL,
+    `type2Code` CHAR(70) NOT NULL,
+    `value` TEXT NOT NULL
+);
+
+# attr 유니크 인덱스 걸기
+## 중복변수 생성금지
+## 변수찾는 속도 최적화
+ALTER TABLE `attr` ADD UNIQUE INDEX (`relTypeCode`, `relId`, `typeCode`, `type2Code`);
+
+## 특정 조건을 만족하는 회원 또는 게시물(기타 데이터)를 빠르게 찾기 위해서
+ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
+
+# attr에 만료날짜 추가
+ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
+
+
+
+
 SELECT*FROM category
 SELECT*FROM board
 SELECT*FROM genFile
 SELECT*FROM article
 SELECT*FROM `member`
 SELECT*FROM `reply`
+SELECT*FROM attr
 
+
+
+
+
+SELECT *FROM article AS caterforyname
+LEFT JOIN category
+WHERE article.id=category.id
 
 		
 		

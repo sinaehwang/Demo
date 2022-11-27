@@ -82,7 +82,9 @@
             <div>
                 <h1 class="title-bar-type-2 px-4">댓글</h1>
                 <c:if test="${rq.notLogined}">
-                    댓글 작성은 <a href=" ${rq.loginPageUri} ">로그인</a> 후 이용할 수 있습니다.
+                    <div>
+                        댓글 작성은 <a class = "plain-link" href=" ${rq.loginPageUri} ">로그인</a> 후 이용할 수 있습니다.
+                    </div>
                 </c:if>
                 
                 <c:if test="${rq.logined}">
@@ -113,7 +115,8 @@
              <!-- 댓글리스트 -->
              <div>
                     <c:forEach items="${replies}" var="reply">
-                        <div class="flex py-5 px-4">
+                        <div class="py-5 px-4">
+                            <div class="flex">
                             <!-- 아바타 이미지 -->
                             <div class="flex-shrink-0">
                                 <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
@@ -129,15 +132,27 @@
                                     ${reply.bodyForPrint}
                                 </div>
                                 <div class="mt-1">
-                                    <span>
-                                        <span>업</span>
-                                        <span>5,600</span>
+                                    <span class="text-gray-400 cursor-pointer">
+                                        <i class="fa-solid fa-heart"></i>
+                                        <span>좋아요수:</span>
                                     </span>
-                                    <span class="ml-1">
-                                        <span>다</span>
-                                        <span>5,600</span>
+                                    <span class="ml-1 text-gray-400 cursor-pointer">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span>싫어요수:</span>
                                     </span>
                                 </div>
+                            </div>
+                            
+                            
+                            
+                           </div> 
+                           <div class="plain-link-wrap gap-3 mt-3">
+                                <c:if test="${reply.memberId == rq.loginedMemberId}">
+                                    <a onclick="if ( !confirm('정말 삭제하시겠습니까?') ) return false;" href="../reply/doDelete?id=${reply.id}&redirectUri=${rq.encodedCurrentUri}" class="plain-link">
+                                        <span><i class="fas fa-trash-alt"></i></span>
+                                        <span>댓글 삭제</span>
+                                    </a>
+                                </c:if>
                             </div>
                         </div>
                     </c:forEach>

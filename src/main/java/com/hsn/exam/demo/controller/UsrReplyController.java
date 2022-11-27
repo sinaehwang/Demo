@@ -10,6 +10,7 @@ import com.hsn.exam.demo.service.ArticleService;
 import com.hsn.exam.demo.service.ReplyService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
+import com.hsn.exam.demo.vo.Reply;
 import com.hsn.exam.demo.vo.ResultData;
 import com.hsn.exam.demo.vo.Rq;
 
@@ -44,6 +45,26 @@ public class UsrReplyController {
         ResultData writeResultData = replyService.write(relTypeCode, relId, memberId, body);
 
         return Ut.msgAndReplace(req, writeResultData.getMsg(), redirectUri);
+    }
+    
+    @RequestMapping("/usr/reply/doDelete")
+    public String doDelete(HttpServletRequest req,int id,String redirectUri) {
+    	
+    	Reply reply = replyService.getReplyById(id);
+    	
+    	if(reply == null) {
+    		return Ut.msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
+    	}
+    	
+    	Rq rq = (Rq)req.getAttribute("rq");
+    	
+    	if(reply.getMemberId() != rq.getLoginedMemberId()) {
+    		return Ut.msgAndBack("해당 댓글에 대해 권한이 없습니다.");
+    	}
+    	
+    	ResultData deleteResultData = replyService.delete(id);
+    	
+    	return Ut.msgAndReplace(req, deleteResultData.getMsg(), redirectUri);
     }
 
 }

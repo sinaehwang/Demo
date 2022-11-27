@@ -1,9 +1,12 @@
 package com.hsn.exam.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hsn.exam.demo.repository.ReplyRepository;
+import com.hsn.exam.demo.vo.Reply;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Service
@@ -18,6 +21,11 @@ public class ReplyService {
 		int id = replyRepository.getLastInsertId();
 
 		return ResultData.from("S-1", "댓글이 작성되었습니다.", "id", id);
+	}
+
+
+	public List<Reply> getForPrintRepliesByRelTypeCodeAndRelId(String relTypeCode, int relId) {
+		return replyRepository.getForPrintRepliesByRelTypeCodeAndRelId(relTypeCode,relId);
 	}
 
 }

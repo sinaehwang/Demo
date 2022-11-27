@@ -81,6 +81,11 @@
 
             <div>
                 <h1 class="title-bar-type-2 px-4">댓글</h1>
+                <c:if test="${rq.notLogined}">
+                    댓글 작성은 <a href=" ${rq.loginPageUri} ">로그인</a> 후 이용할 수 있습니다.
+                </c:if>
+                
+                <c:if test="${rq.logined}">
                 <div class="px-4 py-8">
                     <!-- 댓글 입력 시작 -->
                     <form method="POST" action="../reply/doWrite" class="relative flex py-4 text-gray-600 focus-within:text-gray-400">
@@ -103,6 +108,42 @@
                     </form>
                     <!-- 댓글 입력 끝 -->
                 </div>
+             </c:if>
+             
+             <!-- 댓글리스트 -->
+             <div>
+                    <c:forEach items="${replies}" var="reply">
+                        <div class="flex py-5 px-4">
+                            <!-- 아바타 이미지 -->
+                            <div class="flex-shrink-0">
+                                <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
+                            </div>
+
+                            <div class="flex-grow px-1">
+                                <div class="flex text-gray-400 text-light text-sm">
+                                    <span>${reply.extra__writerName}</span>
+                                    <span class="mx-1">·</span>
+                                    <span>${reply.updateDate}</span>
+                                </div>
+                                <div class="break-all">
+                                    ${reply.bodyForPrint}
+                                </div>
+                                <div class="mt-1">
+                                    <span>
+                                        <span>업</span>
+                                        <span>5,600</span>
+                                    </span>
+                                    <span class="ml-1">
+                                        <span>다</span>
+                                        <span>5,600</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+             <!-- 댓글리스트 -->
+             
+             
             </div>
         </div>
   </div>

@@ -17,16 +17,21 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.hsn.exam.demo.service.ArticleService;
 import com.hsn.exam.demo.service.GenFileService;
+import com.hsn.exam.demo.service.ReplyService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
 import com.hsn.exam.demo.vo.GenFile;
+import com.hsn.exam.demo.vo.Reply;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Controller
 public class UsrArticleController {
 
 	// 전역변수를 만들어줌
+
+	@Autowired
+	private ReplyService replyService;
 
 	@Autowired
 	private ArticleService articleService;// Service랑 연결됨
@@ -43,26 +48,23 @@ public class UsrArticleController {
 
 		return "usr/article/write";
 	}
-	
+
 	@RequestMapping("/usr/article/DataSearch")
 	public String search() {
 
-
 		return "usr/article/search";
 	}
-	
-
 
 	@RequestMapping("/usr/article/doWrite") // 브라우저요청으로 글을 추가하는경우
-	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,HttpSession session,
+	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req, HttpSession session,
 			MultipartRequest multipartRequest) {
 
 		int loginedMemberId = Ut.getAsInt(session.getAttribute("loginedMemberId"), 0);
-		
+
 		if (loginedMemberId == 0) {
 			return Ut.msgAndBack(req, "로그인후 이용해주세요");
 		}
-		
+
 		if (param.get("title") == null) {
 			return Ut.msgAndBack(req, "제목을 입력해주세요");
 		}
@@ -73,7 +75,7 @@ public class UsrArticleController {
 		if (param.get("catergoryId") == null) {
 			return Ut.msgAndBack(req, "카테고리를 입력해주세요");
 		}
-		
+
 		param.put("memberId", loginedMemberId);
 
 		ResultData writeArticlerd = articleService.writeArticle(param);// data1에 id를 저장해서 리턴해준상태
@@ -115,18 +117,26 @@ public class UsrArticleController {
 		}
 
 		Article article = (Article) articlerd.getData1();
+		
+		List<Reply>replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId("article", id);
+		
+		if (article == null) {
+            return Ut.msgAndBack(req, id + "번 게시물이 존재하지 않습니다.");
+        }
 
 		Board board = articleService.getBoardbyId(article.getBoardId());
 
 		req.setAttribute("article", article);
 		req.setAttribute("board", board);
+		req.setAttribute("replies", replies);
 
 		return "usr/article/detail";
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,@RequestParam(defaultValue = "0") String catergoryType,
-			@RequestParam(defaultValue = "1") int page, String searchKeywordType, String searchKeyword) {
+	public String getArticles(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
+			@RequestParam(defaultValue = "0") String catergoryType, @RequestParam(defaultValue = "1") int page,
+			String searchKeywordType, String searchKeyword) {
 
 		Board board = articleService.getBoardbyId(boardId);
 
@@ -140,10 +150,11 @@ public class UsrArticleController {
 		}
 
 		req.setAttribute("board", board);
-		
+
 		int catergoryId = Integer.parseInt(catergoryType);
 
-		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeyword, searchKeywordType,catergoryId);
+		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeyword, searchKeywordType,
+				catergoryId);
 
 		if (searchKeyword == null || searchKeyword.trim().length() == 0) {
 
@@ -161,7 +172,7 @@ public class UsrArticleController {
 		req.setAttribute("totalPage", totalPage);
 
 		List<Article> articles = articleService.getArticles(boardId, itemsCountInAPage, page, searchKeyword,
-				searchKeywordType,catergoryId);
+				searchKeywordType, catergoryId);
 
 		for (Article article : articles) {
 			GenFile genFile = genFileService.getGenFile("article", article.getId(), "common", "attachment", 1);
@@ -250,21 +261,19 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	public String doModify(int id, String title, String body, HttpServletRequest req) {// return타입을 String과 Article
-																							// 둘다사용하기위해 Object로변경해줌
+																						// 둘다사용하기위해 Object로변경해줌
 
 		ResultData Articlerd = articleService.getArticle(id);
 
-		if (Articlerd.isFail()) {			
+		if (Articlerd.isFail()) {
 			return Ut.msgAndBack(req, Articlerd.getMsg());
 		}
 
-
 		Article ModifyArticle = articleService.doModify(id, title, body);
-		
+
 		String redirectUri = "../article/detail?id=" + ModifyArticle.getId();
 
 		return Ut.msgAndReplace(req, Ut.f("%d번 게시글수정완료", id), redirectUri);
-
 
 	}
 

@@ -5,7 +5,63 @@
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 <%@ include file="../common/head.jspf" %>
 
+<style>
+.reply-list [data-id] {
+  transition: background-color 1s;
+}
+.reply-list [data-id].focus {
+  background-color:#fff7d9;
+  transition: background-color 0s;
+}
+</style>
+
+
 <body>
+
+<!-- 댓글작성포커스효과 스크립트 -->
+<script>
+
+function ReplyList__goToReply(id) {
+    setTimeout(function() {
+        const $target = $('.reply-list [data-id="' + id + '"]');
+        const targetOffset = $target.offset();
+        $(window).scrollTop(targetOffset.top - 50);
+        $target.addClass('focus');
+        setTimeout(function() {
+            $target.removeClass('focus');
+        }, 1000);
+    }, 1000);
+}
+if ( param.focusReplyId ) {
+    ReplyList__goToReply(param.focusReplyId);
+}
+
+</script>
+<!-- 댓글작성포커스효과 스크립트 -->
+
+<!-- 삭제버튼 스크립트 -->
+<script>
+let ReplyWrite__submitFormDone = false;
+	function ReplyWrite__submitForm(form) {
+        
+	  if ( ReplyWrite__submitFormDone ) {
+        	return;
+       }
+        form.body.value = form.body.value.trim();
+        
+      if ( form.body.value.length == 0 ) {
+          alert('내용을 입력해주세요.');
+          form.body.focus();
+          return;
+      }
+       form.submit();
+       ReplyWrite__submitFormDone = true;
+	}
+</script>
+                    
+<!-- 삭제버튼 스크립트 -->  
+
+
 <div class="section section-article-detail">
   <div class="container mx-auto">
       <div class="card bordered shadow-lg item-bt-1-not-last-child">
@@ -78,7 +134,7 @@
                 </div>
             </div>
 
-
+        
             <div>
                 <h1 class="title-bar-type-2 px-4">댓글</h1>
                 <c:if test="${rq.notLogined}">
@@ -89,12 +145,13 @@
                 
                 <c:if test="${rq.logined}">
                 <div class="px-4 py-8">
-                    <!-- 댓글 입력 시작 -->
-                    <form method="POST" action="../reply/doWrite" class="relative flex py-4 text-gray-600 focus-within:text-gray-400">
+                
+                <!-- 댓글입력시작 -->   
+                <form method="POST" action="../reply/doWrite" class="relative flex py-4 text-gray-600 focus-within:text-gray-400" onsubmit="ReplyWrite__submitForm(this); return false;">
                         <input type="hidden" name="relTypeCode" value="article" />
                         <input type="hidden" name="relId" value="${article.id}" />
                         <input type="hidden" name="redirectUri" value="${rq.currentUri}" />
-                        <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://play-lh.googleusercontent.com/38AGKCqmbjZ9OuWx4YjssAz3Y0DTWbiM5HB0ove1pNBq_o9mtWfGszjZNxZdwt_vgHo=w240-h480-rw?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
+                        <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://user-images.githubusercontent.com/109134688/204195353-6757dfa2-7b32-4625-bef6-cb229f5c8428.png">
                         
                         <!-- 프로필이미지 -->
 
@@ -109,13 +166,14 @@
                         <input name="body" type="text" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off">
                     </form>
                     <!-- 댓글 입력 끝 -->
+                    
                 </div>
              </c:if>
              
              <!-- 댓글리스트 -->
-             <div>
+             <div class="reply-list">
                     <c:forEach items="${replies}" var="reply">
-                        <div class="py-5 px-4">
+                        <div data-id="${reply.id}" class="py-5 px-4"> <!-- 댓글엘리먼트마다 이름을 붙여줘서 호출가능해짐 -->
                             <div class="flex">
                             <!-- 아바타 이미지 -->
                             <div class="flex-shrink-0">
@@ -144,9 +202,10 @@
                             </div>
                             
                             
-                            
                            </div> 
-                           <div class="plain-link-wrap gap-3 mt-3">
+                           
+                           <!-- 댓글삭제버튼 -->
+                           <div class="plain-link-wrap gap-3 mt-3 pl-12">
                                 <c:if test="${reply.memberId == rq.loginedMemberId}">
                                     <a onclick="if ( !confirm('정말 삭제하시겠습니까?') ) return false;" href="../reply/doDelete?id=${reply.id}&redirectUri=${rq.encodedCurrentUri}" class="plain-link">
                                         <span><i class="fas fa-trash-alt"></i></span>
@@ -154,6 +213,7 @@
                                     </a>
                                 </c:if>
                             </div>
+                           <!-- 댓글삭제버튼 --> 
                         </div>
                     </c:forEach>
              <!-- 댓글리스트 -->
@@ -161,6 +221,7 @@
              
             </div>
         </div>
+    </div>
   </div>
 </div>
 </body>

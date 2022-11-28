@@ -43,6 +43,10 @@ public class UsrReplyController {
         int memberId = rq.getLoginedMemberId();
 
         ResultData writeResultData = replyService.write(relTypeCode, relId, memberId, body);
+        
+        int newReplyId = (int) writeResultData.getData1();
+        
+        redirectUri = Ut.getNewUri(redirectUri, "focusReplyId", newReplyId + "");
 
         return Ut.msgAndReplace(req, writeResultData.getMsg(), redirectUri);
     }

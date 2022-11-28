@@ -61,6 +61,10 @@ public class Rq {
     public String getCurrentUri() {
         return currentUri;
     }
+    
+    public String getParamJsonStr() {
+        return Ut.toJsonStr(paramMap);
+    }
 
     public String getLoginPageUri() {
     	

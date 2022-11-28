@@ -39,6 +39,10 @@
 <script src="/resource/common.js" defer="defer"></script>
 <title>${pageTitle }</title>
 
+<script>
+const param = ${rq.paramJsonStr};
+</script>
+
 </head>
 <body>
   <div class="site-wrap">

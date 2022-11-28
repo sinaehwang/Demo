@@ -12,6 +12,9 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Ut {
 
 	public static boolean empty(Object object) {
@@ -326,6 +329,19 @@ public class Ut {
 
         return dateStr;
     }
+
+	public static String toJsonStr(Map<String, String> paramMap) {
+		ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(paramMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+	}
+
+
 	
 	
 	

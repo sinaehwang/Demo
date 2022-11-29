@@ -4,51 +4,60 @@
 <mapper namespace="com.hsn.exam.demo.repository.ReplyRepository">
 
 	<insert id="write">
-        INSERT INTO reply
-        SET regDate = NOW(),
-        updateDate = NOW(),
-        relTypeCode = #{relTypeCode},
-        relId = #{relId},
-        memberId = #{memberId},
-        body = #{body}
-    </insert>
+		INSERT INTO reply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
+		memberId = #{memberId},
+		body = #{body}
+	</insert>
 
 	<select id="getLastInsertId" resultType="int">
-        SELECT LAST_INSERT_ID()
-    </select>
-    
-    <select id="getReplyById" resultType="Reply">
-        SELECT R.*,
-        IFNULL(M.nickname, "삭제된_회원") AS extra__writerName
-        FROM reply AS R
-        LEFT JOIN `member` AS M
-        ON R.memberId = M.id
-        WHERE R.id = #{id}
-        AND R.delStatus = 0
-        ORDER BY R.id DESC
-    </select>
-    
-    
-    <select id="getForPrintRepliesByRelTypeCodeAndRelId" resultType="Reply">
-        SELECT R.*,
-        IFNULL(M.nickname, "삭제된_회원") AS extra__writerName
-        FROM reply AS R
-        LEFT JOIN `member` AS M
-        ON R.memberId = M.id
-        WHERE R.relTypeCode = #{relTypeCode}
-        AND R.relId = #{relId}
-        AND R.delStatus = 0
-        ORDER BY R.id DESC
-    </select>
-    
-      <update id="delete">
-        UPDATE reply
-        SET delDate = NOW(),
-        delStatus = 1
-        WHERE id = #{id}
-    </update>
-    
-    
+		SELECT LAST_INSERT_ID()
+	</select>
+
+	<select id="getReplyById" resultType="Reply">
+		SELECT R.*,
+		IFNULL(M.nickname, "삭제된_회원") AS extra__writerName
+		FROM reply AS R
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE R.id = #{id}
+		AND R.delStatus = 0
+		ORDER BY R.id DESC
+	</select>
+
+
+	<select id="getForPrintRepliesByRelTypeCodeAndRelId"
+		resultType="Reply">
+		SELECT R.*,
+		IFNULL(M.nickname, "삭제된_회원") AS extra__writerName
+		FROM reply AS R
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE R.relTypeCode = #{relTypeCode}
+		AND R.relId = #{relId}
+		AND R.delStatus = 0
+		ORDER BY R.id DESC
+	</select>
+
+	<update id="delete">
+		UPDATE reply
+		SET delDate = NOW(),
+		delStatus = 1
+		WHERE id = #{id}
+	</update>
+
+	<update id="modify">
+		UPDATE reply
+		SET updateDate = NOW(),
+		<if test="body !=null">
+			body=#{body}
+		</if>
+		WHERE id = #{id}
+	</update>
+
 
 
 

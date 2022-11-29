@@ -43,6 +43,14 @@ public class ReplyService {
     }
 
 
+	public ResultData modify(int id, String body) {
+		
+		replyRepository.modify(id,body);
+		
+		return ResultData.from("S-1", Ut.f("%d번댓글 수정완료했습니다.", id), "id", id);
+	}
+
+
 
 
 }

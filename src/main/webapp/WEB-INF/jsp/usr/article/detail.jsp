@@ -211,6 +211,10 @@ let ReplyWrite__submitFormDone = false;
                                         <span><i class="fas fa-trash-alt"></i></span>
                                         <span>댓글 삭제</span>
                                     </a>
+                                    <a href="../reply/modify?id=${reply.id}&redirectUri=${rq.encodedCurrentUri}" class="plain-link">
+                                        <span><i class="fa-regular fa-pen-to-square"></i></span>
+                                        <span>댓글 수정</span>
+                                    </a>
                                 </c:if>
                             </div>
                            <!-- 댓글삭제버튼 --> 

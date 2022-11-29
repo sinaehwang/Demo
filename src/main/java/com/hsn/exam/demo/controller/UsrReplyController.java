@@ -70,5 +70,56 @@ public class UsrReplyController {
     	
     	return Ut.msgAndReplace(req, deleteResultData.getMsg(), redirectUri);
     }
+    
+    @RequestMapping("/usr/reply/modify")
+    public String showModify(HttpServletRequest req, int id, String redirectUri) {
+        Reply reply = replyService.getReplyById(id);
+
+        if ( reply == null ) {
+            return Ut.msgAndBack(req, "존재하지 않는 댓글입니다.");
+        }
+
+        Rq rq = (Rq)req.getAttribute("rq");
+
+        if ( reply.getMemberId() != rq.getLoginedMemberId() ) {
+            return Ut.msgAndBack(req, "권한이 없습니다.");
+        }
+
+        req.setAttribute("reply", reply);
+
+        String title = "";
+
+        switch ( reply.getRelTypeCode() ) {
+            case "article":
+                Article article = articleService.getArticleById(reply.getRelId());
+                title = article.getTitle();
+        }
+
+        req.setAttribute("title", title);
+
+        return "usr/reply/modify";
+    }
+    
+    @RequestMapping("/usr/reply/doModify")
+    public String doModify(HttpServletRequest req,int id,String body,String redirectUri) {
+    	
+    	Reply reply = replyService.getReplyById(id);
+    	
+    	if(reply == null) {
+    		return Ut.msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
+    	}
+    	
+    	Rq rq = (Rq)req.getAttribute("rq");
+    	
+    	if(reply.getMemberId() != rq.getLoginedMemberId()) {
+    		return Ut.msgAndBack("해당 댓글에 대해 권한이 없습니다.");
+    	}
+    	
+    	ResultData modifyResultData = replyService.modify(id,body);
+    	
+    	redirectUri = Ut.getNewUri(redirectUri, "focusReplyId", id+"");
+    	
+    	return Ut.msgAndReplace(req, modifyResultData.getMsg(), redirectUri);
+    }
 
 }

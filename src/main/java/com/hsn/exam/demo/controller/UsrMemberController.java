@@ -1,5 +1,7 @@
 package com.hsn.exam.demo.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
+import com.hsn.exam.demo.service.GenFileService;
 import com.hsn.exam.demo.service.MemberService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Member;
@@ -21,6 +26,9 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private GenFileService genFileService;
 
 	@Autowired
 	private Rq rq;
@@ -145,7 +153,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin") // 브라우저요청으로 글을 추가하는경우
 	public String dojoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname,
-			String cellphoneNo, String email) {
+			String cellphoneNo, String email,MultipartRequest multipartRequest) {//form 안에 모든 input파일을 가져옴
 
 		Member oldMember = memberService.getMemberByLoginId(loginId);
 
@@ -167,6 +175,19 @@ public class UsrMemberController {
 		}
 
 		int newMemberId = (int) joinRd.getData1();
+		
+		//회원가입후에 프로필이미지파일이 생성되야함
+		Map<String, MultipartFile>fileMap = multipartRequest.getFileMap();
+		
+		for(String fileInputName:fileMap.keySet()) {
+			
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+			
+			if(multipartFile.isEmpty()==false) {
+				genFileService.save(multipartFile,newMemberId);//젠파일에 멤버번호와 파일저장
+				
+			}
+		}
 
 		return Ut.msgAndReplace(req, joinRd.getMsg(), "/");
 

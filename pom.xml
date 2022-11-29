@@ -88,6 +88,14 @@
             <version>1.6.2</version>
         </dependency>
         
+        <!-- guava의존성추가(파일첨부용도) -->
+				<dependency>
+				    <groupId>com.google.guava</groupId>
+				    <artifactId>guava</artifactId>
+				    <version>31.1-jre</version>
+				</dependency>
+        
+        
 		
 	</dependencies>
 

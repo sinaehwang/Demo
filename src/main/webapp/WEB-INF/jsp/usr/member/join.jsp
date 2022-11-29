@@ -158,7 +158,7 @@ function MemberJoin__submitForm(form) {
   
   <hr />
   <hr />
-	    <form  class="card-3d-wrap mx-auto" method="POST" action="../member/doJoin" onsubmit="MemberJoin__submitForm(this); return false;">
+	    <form  class="card-3d-wrap mx-auto" enctype="multipart/form-data"  method="POST" action="../member/doJoin" onsubmit="MemberJoin__submitForm(this); return false;">
              <div class="card-3d-wrapper">
              <input type="hidden" name="loginPw">
 	        <div class="form-control">
@@ -186,6 +186,13 @@ function MemberJoin__submitForm(form) {
                 </label>
                 <input class="input input-bordered w-full" type="password" maxlength="30" name="loginPwConfirm" id="pw2" onchange="check_pw()" placeholder="로그인비밀번호 확인을 입력해주세요." />
                 <span id="check"></span>
+            </div>
+            
+            <div class="form-control">
+                <label class="label">
+                    프로필 이미지
+                </label>
+                <input type="file" name="file__member__0__extra__profileImg__1" placeholder="프로필 이미지를 선택해주세요." />
             </div>
 
             <div class="form-control">

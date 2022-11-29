@@ -2,6 +2,8 @@
 
 import java.util.Map;
 
+import com.hsn.exam.demo.util.Ut;
+
 import lombok.Getter;
 
 public class ResultData {
@@ -11,6 +13,8 @@ public class ResultData {
 	@Getter
 	private String msg;
 	@Getter
+	private Map<String, Object> body;
+	@Getter
 	private Object data1;
 	@Getter
 	private String data1Name;
@@ -18,6 +22,14 @@ public class ResultData {
 	private ResultData() {// 외부에서 접근불가
 
 	}
+
+	public ResultData(String resultCode, String msg, Object... args) {
+		this.resultCode = resultCode;
+		this.msg = msg;
+		this.body = Ut.mapOf(args);
+	}
+
+
 
 	public static ResultData from(String resultCode, String msg, String data1Name, Object data1) {
 		// 함수화로만듬, 코드랑 메세지랑 데이터를 하나로 조합해서 리턴해줌, static 메소드 new인스턴스하지않아도 호출가능
@@ -55,4 +67,6 @@ public class ResultData {
 	public boolean isFail() {//실패코드일때의 실패코드정의
 		return resultCode.startsWith("F-");
 	}
+
+
 }

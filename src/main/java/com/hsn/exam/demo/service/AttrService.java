@@ -45,12 +45,6 @@ public class AttrService {
 
 	public int setValue(String relTypeCode, int relId, String typeCode, String type2Code, String value,
 			String expireDate) {
-		System.out.println("relTypeCode : " + relTypeCode);
-		System.out.println("relId : " + relId);
-		System.out.println("typeCode : " + typeCode);
-		System.out.println("type2Code : " + type2Code);
-		System.out.println("value : " + value);
-		System.out.println("expireDate : " + expireDate);
 
 		attrRepository.setValue(relTypeCode, relId, typeCode, type2Code, value, expireDate);
 		

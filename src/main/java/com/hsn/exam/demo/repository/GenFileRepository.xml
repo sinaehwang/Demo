@@ -96,6 +96,16 @@
 		type2Code = #{type2Code}
 		ORDER BY relId, fileNo
 	</select>
+	
+	
+	<select id="getGenFileById" resultType="GenFile">
+		SELECT *
+        FROM genFile
+        WHERE 1
+        AND id = #{id}
+	</select>
+
+
 
 
 

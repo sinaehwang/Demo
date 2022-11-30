@@ -27,5 +27,7 @@ public interface GenFileRepository {
 	List<GenFile> getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(String relTypeCode, List<Integer> relIds,
 			String typeCode, String type2Code);
 
+	GenFile getGenFileById(int id);
+
 
 }

@@ -55,6 +55,7 @@ public class GenFileService {
 				"type2Code", type2Code, "fileNo", fileNo, "originFileName", originFileName, "fileExtTypeCode",
 				fileExtTypeCode, "fileExtType2Code", fileExtType2Code, "fileExt", fileExt, "fileSize", fileSize,
 				"fileDir", fileDir);
+		
 		genFileRepository.saveMeta(param);
 
 		int id = Ut.getAsInt(param.get("id"), 0);
@@ -80,7 +81,7 @@ public class GenFileService {
 
 	public ResultData save(MultipartFile multipartFile, int relId) {
 
-		String fileInputName = multipartFile.getName();
+		String fileInputName = multipartFile.getName();//file__member__0__extra__profileImg__1
 
 		String[] fileInputNameBits = fileInputName.split("__");
 
@@ -133,12 +134,13 @@ public class GenFileService {
 
 		if (relId > 0) {
 			GenFile oldGenFile = getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
-
+			//기존에 올린 첨부파일인지 확인하는쿼리문,기존첨부물이면 삭제
 			if (oldGenFile != null) {
 				deleteFile(oldGenFile);
 			}
 		}
 
+		//새로첨부파일저장실행
 		ResultData saveMetaRd = saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName,
 				fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
 
@@ -198,6 +200,11 @@ public class GenFileService {
 
 	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
 		return genFileRepository.getGenFiles(relTypeCode, relId, typeCode, type2Code);
+	}
+	
+	public GenFile getGenFile(int id) {
+
+		return genFileRepository.getGenFileById(id);
 	}
 
 	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
@@ -290,6 +297,8 @@ public class GenFileService {
             }
         }
     }
+
+
 	
 	
 

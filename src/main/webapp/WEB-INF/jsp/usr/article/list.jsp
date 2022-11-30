@@ -107,7 +107,7 @@
               <c:forEach var="article" items="${articles }">
               <c:set var="detailUrl" value="detail?id=${article.id}" />
                 <!-- 게시물 아이템, first -->
-                <div class="px-4 py-8">
+                <div class="px-4 py-8 border">
                     
                     <div>
                       <span class="badge badge-ghost">게시글 번호</span>
@@ -118,41 +118,47 @@
                     <span class="badge badge-outline">제목</span>
                     <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.title}</a>
 
-                  <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-                      <c:if test="${article.extra__thumbImg != null}">
-                          <img class ="max-w-xs" src="${article.extra__thumbImg}" alt="" /> <!-- 본문의 이미지불러오기 -->
-                      </c:if>
-                      <c:if test="${article.extra__thumbImg == null}">
-                          <img class ="max-w-xs" src="https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif" alt="" /> <!-- 본문의 이미지불러오기 -->
-                      </c:if>
-
-                   <a  href="${detailUrl}" class="mt-3  hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
-                        <span class="badge badge-outline">본문</span>
-                        <div class="line-clamp-3 ">
-                          ${article.body}
-                        </div>
-                    </a>
-                    
-                   <a href="${detailUrl}">
-                      <span class="badge">카테고리</span>
-                      <span class="text-gray-600 text-light hover:underline">${article.catergoryId}</span>
-                    </a> 
-      
-                    <a href="${detailUrl}">
-                      <span class="badge">수정날짜</span>
-                      <span class="text-gray-600 text-light hover:underline">${article.updateDate}</span>
-                    </a>
-
-                    <a href="#" >
+                  <div class="mt-3 grid sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-2">
+                     <div>
+                     <a href="#" >
                       <span class="badge badge-accent">작성자</span>
                       <span class = "hover:underline">${article.extra__writerName}</span>
+                      <img class="w-20 h-20 md:object-cover rounded border" onerror="${article.writerProfileFallbackImgOnErrorHtmlAttr}" src="${article.writerProfileImgUri}" alt="">
                     </a>
-      
-                    <a href="${detailUrl}" >
-                      <span class="badge">등록날짜</span>
-                      <span class="text-gray-600 text-light hover:underline"">${article.regDate}</span>
-                    </a>
+                   </div>
+
+                   <div> 
+                     <a  href="${detailUrl}" class="mt-3  hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
+                          <span class="badge badge-outline">본문</span>
+                          <div class="line-clamp-3 ">
+                            ${article.body}
+                          </div>
+                      </a>
+                    </div>
                     
+                    <div>
+                      <span class="badge">첨부파일</span> 
+                        <c:if test="${article.extra__thumbImg != null}">
+                            <img class ="w-20 h-20 md:object-cover rounded border" src="${article.extra__thumbImg}" alt="" /> <!-- 첨부파일 이미지불러오기 -->
+                        </c:if>
+                        <c:if test="${article.extra__thumbImg == null}">
+                            <img class ="w-20 h-20 md:object-cover rounded border" src="https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif" alt="" /> <!-- 본문의 이미지불러오기 -->
+                        </c:if>
+                   </div>
+                    
+                    <div>
+                      <a href="${detailUrl}">
+                        <span class="badge">수정날짜</span>
+                        <span class="text-gray-600 text-light hover:underline">${article.updateDate}</span>
+                      </a>
+                    </div>
+                    
+                    <div>
+                      <a href="${detailUrl}" >
+                        <span class="badge">등록날짜</span>
+                        <span class="text-gray-600 text-light hover:underline"">${article.regDate}</span>
+                      </a>
+                    </div>
                     
                   </div>
       

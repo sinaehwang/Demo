@@ -93,22 +93,39 @@ let ReplyWrite__submitFormDone = false;
                         </span>
                     </div>
 
-                    <div class="mt-4">
-                        <span class="badge badge-outline">제목</span>
-                        <div>
-                            ${article.title}
-                        </div>
-                    </div>
-
-                    <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-                        <div>
+                    
+                    
+                        <div class="mt-4">
                             <span class="badge badge-primary">번호</span>
                             <span>${article.id}</span>
                         </div>
 
+                    <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3">
+
                         <div>
                             <span class="badge badge-accent">작성자</span>
+                            <div class="mt-2">
                             <span>${article.extra__writerName}</span>
+                            <img class="w-20 h-20 object-cover rounded border" onerror="${article.writerProfileFallbackImgOnErrorHtmlAttr}" src="${article.writerProfileImgUri}" alt="">
+                            </div>
+                            
+                        </div>
+                        
+                       <div >
+                            <span class="badge badge-outline">제목</span>
+                            <div>
+                                ${article.title}
+                            </div>
+                        </div>    
+                        
+                        <div >
+                            <span class="badge badge-outline">본문</span>
+                            <!-- 본문 이미지넣는공간 -->
+                            <div class="mt-3">
+                                <div class="toast-ui-viewer">
+                                    <script type="text/x-template">${article.bodyForPrint}</script>
+                                </div>
+                            </div>
                         </div>
 
                         <div>
@@ -120,17 +137,10 @@ let ReplyWrite__submitFormDone = false;
                             <span class="badge">수정날짜</span>
                             <span class="text-gray-600 text-light">${article.updateDate}</span>
                         </div>
+                        
                     </div>
 
-                    <div class="mt-6">
-                        <span class="badge badge-outline">본문</span>
-                        <!-- 본문 이미지넣는공간 -->
-                        <div class="mt-3">
-                            <div class="toast-ui-viewer">
-                                <script type="text/x-template">${article.bodyForPrint}</script>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 

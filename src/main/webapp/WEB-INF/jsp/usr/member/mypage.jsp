@@ -29,7 +29,7 @@
                     
                       <div class = "imgBackground flex justify-center" >                      
                         <a href="#" class="row-span-2 order-1 ">
-                            <img src="https://user-images.githubusercontent.com/109134688/203896354-3f8f6899-8019-4824-b606-723c38cebd4d.gif" alt="">
+                            <img class="w-20 h-20 object-cover rounded-full" onerror="${rq.loginedMember.profileFallbackImgOnErrorHtmlAttr}" src="${rq.loginedMember.profileImgUri}" alt="">
                         </a>
                         </div>
     

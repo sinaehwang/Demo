@@ -47,7 +47,18 @@ public class Article {
 	        return bodyForPrint;
 	}
 	
+	//작성자 프로필파일불러오기
+	public String getWriterProfileImgUri() {
+        return "/common/genFile/file/member/" + memberId + "/extra/profileImg/1";
+    }
 
+    public String getWriterProfileFallbackImgUri() {
+        return "https://user-images.githubusercontent.com/109134688/204195353-6757dfa2-7b32-4625-bef6-cb229f5c8428.png";
+    }
+    
+    public String getWriterProfileFallbackImgOnErrorHtmlAttr() {
+        return "this.src = '" + getWriterProfileFallbackImgUri() + "'";
+    }
 	
 
 }

@@ -108,7 +108,9 @@ const param = ${rq.paramJsonStr};
             
              <li>
                  <a href="../member/mypage" class="h-full flex items-center px-5">
-                     <span><i class="fas fa-user"></i></span>
+                     <span>
+                     <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" onerror="${rq.loginedMember.profileFallbackImgOnErrorHtmlAttr}" src="${rq.loginedMember.profileImgUri}" alt="">
+                     </span>
                      <span class="hidden md:block">&nbsp;${rq.getLoginedMemberNickname()}님 MY PAGE</span>
                  </a>
               </li>

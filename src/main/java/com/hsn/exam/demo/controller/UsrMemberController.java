@@ -26,7 +26,7 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private GenFileService genFileService;
 
@@ -53,14 +53,14 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doCheckPassword")
 	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUri) {
-		
+
 		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
 
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return Ut.msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
 
-		//비밀번호 인증코드생성
+		// 비밀번호 인증코드생성
 		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
 
 		redirectUri = Ut.getNewUri(redirectUri, "checkPasswordAuthCode", authCode);
@@ -88,7 +88,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doModify")
 	public String doModify(HttpServletRequest req, String loginPw, String name, String nickname, String cellphoneNo,
-			String email, String checkPasswordAuthCode) {
+			String email, String checkPasswordAuthCode, MultipartRequest multipartRequest) {
 
 		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
 
@@ -109,6 +109,16 @@ public class UsrMemberController {
 
 		if (modifyRd.isFail()) {
 			return Ut.msgAndBack(req, modifyRd.getMsg());
+		}
+
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, loginedMember.getId());
+			}
 		}
 
 		return Ut.msgAndReplace(req, modifyRd.getMsg(), "/");
@@ -153,7 +163,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin") // 브라우저요청으로 글을 추가하는경우
 	public String dojoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname,
-			String cellphoneNo, String email,MultipartRequest multipartRequest) {//form 안에 모든 input파일을 가져옴
+			String cellphoneNo, String email, MultipartRequest multipartRequest) {// form 안에 모든 input파일을 가져옴
 
 		Member oldMember = memberService.getMemberByLoginId(loginId);
 
@@ -175,17 +185,17 @@ public class UsrMemberController {
 		}
 
 		int newMemberId = (int) joinRd.getData1();
-		
-		//회원가입후에 프로필이미지파일이 생성되야함
-		Map<String, MultipartFile>fileMap = multipartRequest.getFileMap();
-		
-		for(String fileInputName:fileMap.keySet()) {
-			
+
+		// 회원가입후에 프로필이미지파일이 생성되야함
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+
 			MultipartFile multipartFile = fileMap.get(fileInputName);
-			
-			if(multipartFile.isEmpty()==false) {
-				genFileService.save(multipartFile,newMemberId);//젠파일에 멤버번호와 파일저장
-				
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, newMemberId);// 젠파일에 멤버번호와 파일저장
+
 			}
 		}
 
@@ -221,9 +231,8 @@ public class UsrMemberController {
 		String msg = Ut.f("%s님 로그인되었습니다.", member.getLoginId());
 
 		session.setAttribute("loginedMemberId", member.getId());
-		
 
-		//임시비번사용하고있는지 체크
+		// 임시비번사용하고있는지 체크
 		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
 
 		if (isUsingTempPassword) {

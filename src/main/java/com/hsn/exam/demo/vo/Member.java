@@ -28,6 +28,7 @@ public class Member {
 
 	// 회원 프로필파일불러오기
 	public String getProfileImgUri() {
+
 		return "/common/genFile/file/member/" + id + "/extra/profileImg/1";
 	}
 
@@ -37,6 +38,10 @@ public class Member {
 	
 	public String getProfileFallbackImgOnErrorHtmlAttr() {
         return "this.src = '" + getProfileFallbackImgUri() + "'";
+    }
+	
+	public String getRemoveProfileImgIfNotExistsOnErrorHtmlAttr() {
+        return "$(this).remove();";
     }
 
 }

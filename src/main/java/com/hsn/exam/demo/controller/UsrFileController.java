@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,10 +18,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.hsn.exam.demo.exception.GenFileNotFoundException;
 import com.hsn.exam.demo.service.GenFileService;
 import com.hsn.exam.demo.vo.GenFile;
+import com.hsn.exam.demo.vo.ResultData;
 
 @Controller
 public class UsrFileController {
@@ -31,6 +36,13 @@ public class UsrFileController {
 	
 	@Autowired
 	GenFileService genFileService;
+	
+    @RequestMapping("/common/genFile/doUpload")
+    @ResponseBody
+    public ResultData doUpload(@RequestParam Map<String, Object> param, MultipartRequest multipartRequest) {
+        return genFileService.saveFiles(param, multipartRequest);
+    }
+    
 	
 	//파일다운로드맵핑
 	@GetMapping("/common/genFile/doDownload")

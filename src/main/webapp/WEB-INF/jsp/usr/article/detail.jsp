@@ -161,7 +161,7 @@ let ReplyWrite__submitFormDone = false;
                         <input type="hidden" name="relTypeCode" value="article" />
                         <input type="hidden" name="relId" value="${article.id}" />
                         <input type="hidden" name="redirectUri" value="${rq.currentUri}" />
-                        <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" alt="User avatar" src="https://user-images.githubusercontent.com/109134688/204195353-6757dfa2-7b32-4625-bef6-cb229f5c8428.png">
+                        <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" onerror="${rq.loginedMember.profileFallbackImgOnErrorHtmlAttr}" src="${rq.loginedMember.profileImgUri}" alt="">
                         
                         <!-- 프로필이미지 -->
 
@@ -187,7 +187,7 @@ let ReplyWrite__submitFormDone = false;
                             <div class="flex">
                             <!-- 아바타 이미지 -->
                             <div class="flex-shrink-0">
-                                <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" onerror="${article.writerProfileFallbackImgOnErrorHtmlAttr}" src="${article.writerProfileImgUri}" alt="">
+                                <img class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer" onerror="${reply.replyWriterProfileFallbackImgOnErrorHtmlAttr}" src="${reply.replyWriterProfileImgUri}" alt="">
                             </div>
 
                             <div class="flex-grow px-1">

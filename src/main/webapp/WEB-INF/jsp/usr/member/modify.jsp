@@ -46,8 +46,6 @@ function MemberModify__submitForm(form) {
     const maxSize = maxSizeMb * 1024 * 1024;
     const profileImgFileInput = form["file__member__0__extra__profileImg__1"];
     
-
-    
     if (profileImgFileInput.value) {
         if (profileImgFileInput.files[0].size > maxSize) {
             alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
@@ -55,6 +53,15 @@ function MemberModify__submitForm(form) {
             return;
         }
     }
+    
+    
+    const deleteProfileImgFileInput = form["deleteFile__member__0__extra__profileImg__1"];
+    if ( deleteProfileImgFileInput.checked ) {
+        form["file__member__0__extra__profileImg__1"].value = '';
+    }
+    
+    
+    
     
     form.cellphoneNo.value = form.cellphoneNo.value.trim();
     if ( form.cellphoneNo.value.length == 0 ) {
@@ -125,6 +132,7 @@ function MemberModify__submitForm(form) {
                     프로필 이미지
                 </label>
                 <img class="w-20 h-20 mb-2 object-cover rounded-full" onerror="${rq.loginedMember.removeProfileImgIfNotExistsOnErrorHtmlAttr}" src="${rq.loginedMember.profileImgUri}" alt="">
+
                 <input accept="image/gif, image/jpeg, image/png" type="file" name="file__member__0__extra__profileImg__1" placeholder="프로필 이미지를 선택해주세요." />
             </div>
             

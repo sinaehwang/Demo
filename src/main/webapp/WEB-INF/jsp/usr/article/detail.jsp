@@ -5,6 +5,8 @@
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 <%@ include file="../common/head.jspf" %>
 
+
+
 <style>
 .reply-list [data-id] {
   transition: background-color 1s;
@@ -138,6 +140,9 @@ let ReplyWrite__submitFormDone = false;
                             <span class="text-gray-600 text-light">${article.updateDate}</span>
                         </div>
                         
+                        
+                        
+                        
                     </div>
 
 
@@ -157,7 +162,7 @@ let ReplyWrite__submitFormDone = false;
                 <div class="px-4 py-8">
                 
                 <!-- 댓글입력시작 -->   
-                <form method="POST" action="../reply/doWrite" class="relative flex py-4 text-gray-600 focus-within:text-gray-400" onsubmit="ReplyWrite__submitForm(this); return false;">
+                <form enctype="multipart/form-data" method="POST" action="../reply/doWrite" class="relative flex py-4 text-gray-600 focus-within:text-gray-400" onsubmit="ReplyWrite__submitForm(this); return false;">
                         <input type="hidden" name="relTypeCode" value="article" />
                         <input type="hidden" name="relId" value="${article.id}" />
                         <input type="hidden" name="redirectUri" value="${rq.currentUri}" />
@@ -184,6 +189,7 @@ let ReplyWrite__submitFormDone = false;
              <div class="reply-list">
                     <c:forEach items="${replies}" var="reply">
                         <div data-id="${reply.id}" class="py-5 px-4"> <!-- 댓글엘리먼트마다 이름을 붙여줘서 호출가능해짐 -->
+                            <script type="text/x-template" class="reply-body hidden">${reply.body}</script>
                             <div class="flex">
                             <!-- 아바타 이미지 -->
                             <div class="flex-shrink-0">

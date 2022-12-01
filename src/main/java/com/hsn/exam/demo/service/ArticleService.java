@@ -10,6 +10,7 @@ import com.hsn.exam.demo.repository.ArticleRepository;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
+import com.hsn.exam.demo.vo.Member;
 import com.hsn.exam.demo.vo.ResultData;
 
 @Service
@@ -101,6 +102,22 @@ public class ArticleService {
 	public Article getArticleById(int relId) {
 		
 		return articleRepository.getArticle(relId);
+	}
+
+	public ResultData getActorCanDeleteRd(Article article, int actorId) {
+		if (article.getMemberId() == actorId) {
+			return new ResultData("S-1", "가능합니다.");
+		}
+
+		return ResultData.from("F-1", "삭제권한이 없습니다.");
+	}
+
+	public ResultData getActorCanModifyRd(Article article, int actorId) {
+		if (article.getMemberId() == actorId) {
+			return new ResultData("S-1", "가능합니다.");
+		}
+
+		return ResultData.from("F-1", "수정권한이 없습니다.");
 	}
 
 }

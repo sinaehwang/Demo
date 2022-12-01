@@ -55,7 +55,7 @@ public class GenFileService {
 				"type2Code", type2Code, "fileNo", fileNo, "originFileName", originFileName, "fileExtTypeCode",
 				fileExtTypeCode, "fileExtType2Code", fileExtType2Code, "fileExt", fileExt, "fileSize", fileSize,
 				"fileDir", fileDir);
-		
+
 		genFileRepository.saveMeta(param);
 
 		int id = Ut.getAsInt(param.get("id"), 0);
@@ -81,7 +81,7 @@ public class GenFileService {
 
 	public ResultData save(MultipartFile multipartFile, int relId) {
 
-		String fileInputName = multipartFile.getName();//file__member__0__extra__profileImg__1
+		String fileInputName = multipartFile.getName();// file__member__0__extra__profileImg__1
 
 		String[] fileInputNameBits = fileInputName.split("__");
 
@@ -134,13 +134,13 @@ public class GenFileService {
 
 		if (relId > 0) {
 			GenFile oldGenFile = getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
-			//기존에 올린 첨부파일인지 확인하는쿼리문,기존첨부물이면 삭제
+			// 기존에 올린 첨부파일인지 확인하는쿼리문,기존첨부물이면 삭제
 			if (oldGenFile != null) {
 				deleteFile(oldGenFile);
 			}
 		}
 
-		//새로첨부파일저장실행
+		// 새로첨부파일저장실행
 		ResultData saveMetaRd = saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName,
 				fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
 
@@ -182,7 +182,7 @@ public class GenFileService {
 
 	public void deleteFiles(String relTypeCode, int relId) {
 
-		List<GenFile> genFiles = genFileRepository.getGenFiles(relTypeCode, relId);
+		List<GenFile> genFiles = genFileRepository.getGenFilesByRelTypeCodeAndRelId(relTypeCode, relId);
 
 		for (GenFile genFile : genFiles) {
 			deleteFile(genFile);
@@ -201,7 +201,7 @@ public class GenFileService {
 	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
 		return genFileRepository.getGenFiles(relTypeCode, relId, typeCode, type2Code);
 	}
-	
+
 	public GenFile getGenFile(int id) {
 
 		return genFileRepository.getGenFileById(id);
@@ -268,9 +268,9 @@ public class GenFileService {
 
 		List<GenFile> genFiles = genFileRepository.getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(relTypeCode,
 				relIds, typeCode, type2Code);
-		
+
 		Map<String, GenFile> map = new HashMap<>();
-		
+
 		Map<Integer, Map<String, GenFile>> rs = new LinkedHashMap<>();
 
 		for (GenFile genFile : genFiles) {
@@ -283,23 +283,37 @@ public class GenFileService {
 
 		return rs;
 	}
-	
+
 	public void changeInputFileRelIds(Map<String, Object> param, int id) {
-        String genFileIdsStr = Ut.ifEmpty((String) param.get("genFileIdsStr"), null);
+		String genFileIdsStr = Ut.ifEmpty((String) param.get("genFileIdsStr"), null);
 
-        if (genFileIdsStr != null) {
-            List<Integer> genFileIds = Ut.getListDividedBy(genFileIdsStr, ",");
+		if (genFileIdsStr != null) {
+			List<Integer> genFileIds = Ut.getListDividedBy(genFileIdsStr, ",");
 
-            // 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
-            // 그것을 뒤늦게라도 이렇게 고처야 한다.
-            for (int genFileId : genFileIds) {
-                changeRelId(genFileId, id);
-            }
-        }
-    }
+			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
+			// 그것을 뒤늦게라도 이렇게 고처야 한다.
+			for (int genFileId : genFileIds) {
+				changeRelId(genFileId, id);
+			}
+		}
+	}
 
+	public void deleteGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
 
-	
-	
+		GenFile genFile = genFileRepository.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
+
+		deleteGenFile(genFile);
+
+	}
+
+	private void deleteGenFile(GenFile genFile) {
+		
+		String filePath = genFile.getFilePath(genFileDirPath);
+		
+		Ut.deleteFile(filePath);
+		
+		genFileRepository.deleteFile(genFile.getId());
+
+	}
 
 }

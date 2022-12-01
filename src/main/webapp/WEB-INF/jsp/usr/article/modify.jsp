@@ -109,15 +109,14 @@ function ArticleModify__checkAndSubmit(form) {
               <span>첨부파일 ${inputNo}</span>
             </div>
             <div class="lg:flex-grow">
-                <input type="file" name="file__article__0__common__attachment__${inputNo}"
-                class="form-row-input w-full rounded-sm" />
+                <input type="file" name="file__article__0__common__attachment__${inputNo}" class="form-row-input w-full rounded-sm" />
                 
                 <c:if test="${file != null}">
                     <div>
                       ${file.fileName}
                     </div>
                     <c:if test="${file.fileExtTypeCode == 'img'}">
-                       <div class="img-box img-box-auto max-w-xs">
+                       <div class="img-box img-box-auto w-20 h-20">
                           <img src="${file.forPrintUrl}">
                         </div>
                     </c:if>

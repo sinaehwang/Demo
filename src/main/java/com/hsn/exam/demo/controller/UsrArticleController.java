@@ -118,17 +118,32 @@ public class UsrArticleController {
 
 		Article article = (Article) articlerd.getData1();
 		
+		
 		List<Reply>replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId("article", id);
+		
+		req.setAttribute("replies", replies);
+		
+		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
+		
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+		}
+
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
+		
+		req.setAttribute("article", article);
+		
+		Board board = articleService.getBoardbyId(article.getBoardId());
+		
+		req.setAttribute("board", board);
 		
 		if (article == null) {
             return Ut.msgAndBack(req, id + "번 게시물이 존재하지 않습니다.");
         }
 
-		Board board = articleService.getBoardbyId(article.getBoardId());
 
-		req.setAttribute("article", article);
-		req.setAttribute("board", board);
-		req.setAttribute("replies", replies);
 
 		return "usr/article/detail";
 	}
@@ -206,7 +221,9 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doDelete")
-	public String doDelete(int id, HttpSession httpSession, HttpServletRequest req) {
+	public String doDelete(int id, HttpSession httpSession, HttpServletRequest req, HttpSession session ) {
+		
+		int loginedMemberId = Ut.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
 		ResultData Foundarticle = articleService.getArticle(id);
 
@@ -218,6 +235,13 @@ public class UsrArticleController {
 
 		Article article = (Article) Foundarticle.getData1();
 
+		ResultData actorCanDeleteRd  = articleService.getActorCanDeleteRd(article, loginedMemberId);
+		
+		if (actorCanDeleteRd.isFail()) {
+			
+			return Ut.msgAndBack(req, actorCanDeleteRd.getMsg());
+		}
+		
 		articleService.doDelete(id);
 
 		String redirectUri = "../article/list?boardId=" + article.getBoardId();
@@ -227,13 +251,22 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/modify")
-	public String showModify(Integer id, HttpServletRequest req) {
+	public String showModify(Integer id, HttpServletRequest req, HttpSession session) {
 
 		if (id == null) {
 			return Ut.msgAndBack(req, "id를 입력해주세요.");
 		}
+		
+		int loginedMemberId = Ut.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
 		Article article = articleService.getForPrintArticle(id);
+		
+		ResultData actorCanModifyRd  = articleService.getActorCanModifyRd(article, loginedMemberId);
+		
+		if (actorCanModifyRd.isFail()) {
+			
+			return Ut.msgAndBack(req, actorCanModifyRd.getMsg());
+		}
 
 		Board board = articleService.getBoardbyId(article.getBoardId());
 

@@ -110,6 +110,11 @@ public class UsrMemberController {
 		if (modifyRd.isFail()) {
 			return Ut.msgAndBack(req, modifyRd.getMsg());
 		}
+		
+		if ( req.getParameter("deleteFile__member__0__extra__profileImg__1") != null ) {
+			genFileService.deleteGenFile("member", loginedMember.getId(), "extra", "profileImg", 1);
+        }
+		
 
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 

@@ -20,7 +20,7 @@ public interface GenFileRepository {
 
 	List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code);
 	
-	List<GenFile> getGenFiles(String relTypeCode, int relId);
+	List<GenFile> getGenFilesByRelTypeCodeAndRelId(String relTypeCode, int relId);
 
 	void changeRelId(int id, int relId);
 

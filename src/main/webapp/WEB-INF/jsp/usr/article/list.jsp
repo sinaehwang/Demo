@@ -114,9 +114,21 @@
                       <a href="${detailUrl}" class="hover:underline cursor-pointer" >${article.id}</a>
                     </div>  
                     
-                    
-                    <span class="badge badge-outline">제목</span>
-                    <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.title}</a>
+                    <div class = "flex justify-between">
+                        <div>
+                            <span class="badge badge-outline">제목</span>
+                            <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.title}</a>
+                        </div>
+                        <div>
+                            
+                            추천수
+                              <div class="badge badge-accent">
+                                <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.goodReactionPoint}</a>
+                              </div>
+                          
+                        </div>
+                        
+                    </div>
 
                   <div class="mt-3 grid sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-2">
                      <div>

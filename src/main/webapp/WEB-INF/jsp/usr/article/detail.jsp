@@ -85,7 +85,29 @@ let ReplyWrite__submitFormDone = false;
                        
                         <span>
                             <span>좋아요:</span>
-                            <span class="text-gray-400 text-light">120</span>
+                            <span class="text-gray-400 text-light">${article.goodReactionPoint }</span>
+                            
+                            <c:if test="${actorCanMakeReaction}">
+                                      <span>&nbsp;</span>
+                                      <a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class = "btn btn-xs " > 좋아요💖${article.goodReactionPoint }</a>
+                                      <span>&nbsp;</span>
+                                      <a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class = "btn btn-xs ">싫어요🤍${article.badReactionPoint }</a>
+                                </c:if>
+                                
+                                <c:if test="${actorCanCancelGoodReaction}">
+                                      <span>&nbsp;</span>
+                                      <a href="/usr/reactionPoint/CancleGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class = "btn btn-accent btn-xs"> 좋아요💖${article.goodReactionPoint }</a>
+                                      <span>&nbsp;</span>
+                                      <a onclick = "alert(this.title); return false;" title = "좋아요를 먼저 취소해주세요" href="#" class = "btn btn-xs">싫어요🤍${article.badReactionPoint }</a>
+                                </c:if>
+                                
+                               <c:if test="${actorCanCancelBadReaction}">
+                                      <span>&nbsp;</span>
+                                      <a onclick = "alert(this.title); return false;" title = "싫어요를 먼저 취소해주세요" href="#" class = "btn btn-xs"> 좋아요💖${article.goodReactionPoint }</a>
+                                      <span>&nbsp;</span>
+                                      <a href="/usr/reactionPoint/CanCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class = "btn btn-accent btn-xs ">싫어요🤍${article.badReactionPoint }</a>
+                                </c:if>
+                            
                         </span>
                         
                         <div class="flex-grow"></div>

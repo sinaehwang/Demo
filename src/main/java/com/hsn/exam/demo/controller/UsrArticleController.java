@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.hsn.exam.demo.service.ArticleService;
 import com.hsn.exam.demo.service.GenFileService;
+import com.hsn.exam.demo.service.ReactionPointService;
 import com.hsn.exam.demo.service.ReplyService;
 import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
@@ -29,6 +30,9 @@ import com.hsn.exam.demo.vo.ResultData;
 public class UsrArticleController {
 
 	// 전역변수를 만들어줌
+	
+	@Autowired
+	private ReactionPointService reactionPointService;
 
 	@Autowired
 	private ReplyService replyService;
@@ -108,7 +112,9 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String detail(HttpServletRequest req, int id) {
+	public String detail(HttpServletRequest req, int id, HttpSession session) {
+		
+		int loginedMemberId = Ut.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
 		ResultData articlerd = articleService.getArticle(id);
 
@@ -122,6 +128,36 @@ public class UsrArticleController {
 		List<Reply>replies = replyService.getForPrintRepliesByRelTypeCodeAndRelId("article", id);
 		
 		req.setAttribute("replies", replies);
+		
+		
+		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(loginedMemberId,"article", id);
+		
+		req.setAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
+		
+		req.setAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSucess());
+		
+		
+		if (actorCanMakeReactionRd.getResultCode().equals("F-2")) {// 기존추천버튼을 취소먼저해야하는경우의수
+
+			int checkButton = (int) actorCanMakeReactionRd.getData1(); //기존선택버튼이 좋아요인지 싫어요인지 구분하기위해서
+
+			if (checkButton > 0) {
+
+				req.setAttribute("actorCanCancelGoodReaction", true);// 좋아요버튼을 먼저취소해야하는경우
+			} 
+			
+			else  {
+				
+				req.setAttribute("actorCanCancelBadReaction", true);// 싫어요버튼을 먼저취소해야하는경우
+			}
+		}
+
+		if (actorCanMakeReactionRd.getResultCode().equals("F-1")) {//추천버튼을 누를수없는경우의수(로그인을 하지 않은경우)
+
+			return Ut.msgAndBack(req, actorCanMakeReactionRd.getMsg());
+
+		}
+
 		
 		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
 		
@@ -142,6 +178,10 @@ public class UsrArticleController {
 		if (article == null) {
             return Ut.msgAndBack(req, id + "번 게시물이 존재하지 않습니다.");
         }
+		
+		
+		
+		
 
 
 

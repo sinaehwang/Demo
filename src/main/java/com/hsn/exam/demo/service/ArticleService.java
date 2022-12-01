@@ -120,4 +120,24 @@ public class ArticleService {
 		return ResultData.from("F-1", "수정권한이 없습니다.");
 	}
 
+	public void increaseGoodReaction(int actorId, int relId) {
+		
+		 articleRepository.increaseGoodReaction(actorId,relId);
+	}
+
+	public void decreaseGoodReaction(int actorId, int relId) {
+
+		articleRepository.decreaseGoodReaction(actorId,relId);
+	}
+
+	public void increaseBadReaction(int actorId, int relId) {
+
+		articleRepository.increaseBadReaction(actorId,relId);
+	}
+
+	public void decreaseBadReaction(int actorId, int relId) {
+
+		articleRepository.decreaseBadReaction(actorId,relId);
+	}
+
 }

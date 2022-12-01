@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.hsn.exam.demo.repository.ReactionPointRepository">
+
+	<select id="getSumReactionPointByMemberId" resultType="int">
+		SELECT
+		IFNULL(SUM(RP.point),0) AS s
+		FROM reactionPoint AS RP
+		WHERE
+		RP.relTypeCode = #{relTypeCode}
+		AND RP.relId = #{relId}
+		AND RP.memberId
+		= #{actorId}
+
+	</select>
+
+	<insert id="doGoodReaction">
+		INSERT INTO
+		reactionPoint
+		SET regDate
+		= NOW(),
+		updateDate = NOW(),
+		memberId = #{actorId},
+		relTypeCode =
+		#{relTypeCode},
+		relId = #{relId},
+		`point` = 1
+	</insert>
+
+	<insert id="doBadReaction">
+		INSERT INTO reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{actorId},
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
+		`point` = -1
+	</insert>
+
+
+	<delete id="decreaseGoodReaction">
+		DELETE FROM reactionPoint
+		WHERE relId = #{relId}
+		AND memberId = #{actorId}
+	</delete>
+
+	<delete id="decreaseBadReaction">
+		DELETE FROM reactionPoint
+		WHERE
+		relId = #{relId}
+		AND memberId = #{actorId}
+	</delete>
+
+
+	<select id="isAlreadyPoint" resultType="int">
+		SELECT COUNT(*) FROM
+		reactionPoint
+		WHERE relId = #{relId}
+		AND memberId = #{actorId}
+	</select>
+
+
+
+</mapper>

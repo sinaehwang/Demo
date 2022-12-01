@@ -22,7 +22,11 @@ public class Article {
 	private boolean delStatus;
 	private int catergoryId;
 	
+	private int goodReactionPoint;
+	private int badReactionPoint;
 	
+	private boolean extra__actorCanDelete;
+	private boolean extra__actorCanModify;
 	
 	private String extra__writerName;
 	private String extra__thumbImg;

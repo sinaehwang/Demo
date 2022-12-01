@@ -29,5 +29,13 @@ public interface ArticleRepository {
 
 	public Article getForPrintArticle(Integer id);
 
+	public void increaseGoodReaction(int actorId, int relId);
+
+	public void decreaseGoodReaction(int actorId, int relId);
+
+	public void increaseBadReaction(int actorId, int relId);
+
+	public void decreaseBadReaction(int actorId, int relId);
+
 
 }

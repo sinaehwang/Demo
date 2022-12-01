@@ -37,5 +37,9 @@ public interface ArticleRepository {
 
 	public void decreaseBadReaction(int actorId, int relId);
 
+	public int increaseHitCount(int id);
+
+	public int getArticleHitCount(int id);
+
 
 }

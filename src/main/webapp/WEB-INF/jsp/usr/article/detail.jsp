@@ -20,6 +20,39 @@
 
 <body>
 
+<!-- 조회수 실행스크립트 -->
+<script>
+  const params = {};
+  params.id = parseInt('${param.id}');
+</script>
+
+<script>
+  function ArticleDetail__increaseHitCount() {
+    const localStorageKey = 'article__' + params.id + '__alreadyView';
+    if (localStorage.getItem(localStorageKey)) {
+      return;
+    }
+    localStorage.setItem(localStorageKey, true);
+    $.get('../article/doIncreaseHitCountRd', {
+      id : params.id,
+      ajaxMode : 'Y'
+    }, function(data) {
+      $('.article-detail__hit-count').empty().html(data.data1);
+    }, 'json');
+  }
+  $(function() {
+    // 실전코드
+    //ArticleDetail__increaseHitCount();
+    // 연습코드
+    setTimeout(ArticleDetail__increaseHitCount, 2000);
+  })
+</script>
+
+<!-- 조회수 실행스크립트 -->
+
+
+
+
 <!-- 댓글작성포커스효과 스크립트 -->
 <script>
 
@@ -78,8 +111,8 @@ let ReplyWrite__submitFormDone = false;
                 <div class="px-4 py-8">
                     <div class="flex">
                         <span>
-                            <span>댓글:</span>
-                            <span class="text-gray-400 text-light">30</span>
+                            <span>댓글수:</span>
+                            <span class="text-gray-400 text-light">${repliesCount }</span>
                             &nbsp;
                         </span>
                        
@@ -113,7 +146,7 @@ let ReplyWrite__submitFormDone = false;
                         <div class="flex-grow"></div>
                         <span class="ml-3">
                             <span>조회수:</span>
-                            <span class="text-gray-400 text-light">60</span>
+                            <span class="text-gray-400 text-light article-detail__hit-count">${article.hitCount }</span>
                         </span>
                     </div>
 

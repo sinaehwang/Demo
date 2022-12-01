@@ -129,6 +129,10 @@ public class UsrArticleController {
 		
 		req.setAttribute("replies", replies);
 		
+		int repliesCount = replies.size();
+		
+		req.setAttribute("repliesCount", repliesCount);
+		
 		
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(loginedMemberId,"article", id);
 		
@@ -178,12 +182,6 @@ public class UsrArticleController {
 		if (article == null) {
             return Ut.msgAndBack(req, id + "번 게시물이 존재하지 않습니다.");
         }
-		
-		
-		
-		
-
-
 
 		return "usr/article/detail";
 	}
@@ -348,6 +346,22 @@ public class UsrArticleController {
 
 		return Ut.msgAndReplace(req, Ut.f("%d번 게시글수정완료", id), redirectUri);
 
+	}
+	
+	@RequestMapping("/usr/article/doIncreaseHitCountRd")
+	@ResponseBody
+	public ResultData doIncreaseHitCountRd(int id) {
+		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+
+		if (increaseHitCountRd.isFail()) {
+			return increaseHitCountRd;
+		}
+
+		ResultData rd = ResultData.newData(increaseHitCountRd, "hitCount",(int)articleService.getArticleHitCount(id));
+
+		rd.setData2("id", id);
+
+		return rd;
 	}
 
 }

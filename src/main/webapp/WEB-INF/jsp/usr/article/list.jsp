@@ -120,10 +120,13 @@
                             <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.title}</a>
                         </div>
                         <div>
-                            
                             추천수
-                              <div class="badge badge-accent">
+                            <div class="badge badge-accent">
                                 <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.goodReactionPoint}</a>
+                            </div>
+                            조회수
+                              <div class="badge badge-accent">
+                                <a href="${detailUrl}" class="hover:underline cursor-pointer">${article.hitCount}</a>
                               </div>
                           
                         </div>

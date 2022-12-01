@@ -21,6 +21,7 @@ public class Article {
 	private int boardId;
 	private boolean delStatus;
 	private int catergoryId;
+	private int hitCount;
 	
 	private int goodReactionPoint;
 	private int badReactionPoint;

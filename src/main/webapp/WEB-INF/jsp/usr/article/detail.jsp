@@ -20,7 +20,7 @@
 
 <body>
 
-<!-- 조회수 실행스크립트 -->
+<!-- 조회수 실행스크립트,로컬스토리지적용 -->
 <script>
   const params = {};
   params.id = parseInt('${param.id}');

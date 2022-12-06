@@ -63,7 +63,7 @@ function ReplyModify__submitForm(form) {
                 </button>
 
                 <a href="#" onclick="history.back();" class="btn btn-sm mb-1" title="자세히 보기">
-                    <span><i class="fas fa-list"></i></span>
+                    <span><i class="fa-solid fa-circle-arrow-left"></i></span>
                     &nbsp;
                     <span>뒤로가기</span>
                 </a>

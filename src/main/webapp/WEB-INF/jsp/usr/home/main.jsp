@@ -42,7 +42,7 @@
   <div class='container-1'>
     <h2 class="fadeup">
       <span class ="fadeup-font">
-        <a  href="/usr/article/list?boardId=3">FREE BOARD</a>
+        <a  href="/usr/article/list?boardId=3">SHARE STORY</a>
       </span>
     </h2>
     <div class='reveal'>
@@ -57,7 +57,7 @@
   <div class='container-1'>
     <h2 class="fadeup">
       <span class ="fadeup-font">
-          <a  href="/usr/member/join">JOIN</a>
+          <a  href="/usr/member/join">MAGAZINE</a>
         </span>
     </h2>
     <div class='reveal'>

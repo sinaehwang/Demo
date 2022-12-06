@@ -158,8 +158,8 @@ function MemberModify__submitForm(form) {
                     <span>수정</span>
                 </button>
 
-                <a href="../member/mypage" class="btn btn-link btn-sm mb-1">
-                    <span><i class="fas fa-home"></i></span>
+                <a href="../member/mypage" type="button" class="btn btn-primary btn-sm mb-1">
+                    <span><i class="fa-solid fa-id-card"></i></span>
                     &nbsp;
                     <span>마이페이지</span>
                 </a>

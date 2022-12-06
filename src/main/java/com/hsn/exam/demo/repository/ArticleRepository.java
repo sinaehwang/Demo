@@ -21,7 +21,7 @@ public interface ArticleRepository {
 
 	public void doDelete(int id);
 
-	public void doModify(int id, String title, String body);
+	public void doModify(Map<String, Object>param);
 
 	public Board getBoardbyId(int boardId);
 

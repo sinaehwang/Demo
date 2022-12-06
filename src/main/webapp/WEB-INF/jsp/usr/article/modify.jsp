@@ -53,6 +53,7 @@ function ArticleModify__checkAndSubmit(form) {
   <div class="container mx-auto">
     <form onsubmit="ArticleModify__checkAndSubmit(this); return false;" action="../article/doModify" method="POST" enctype="multipart/form-data">
      <input type="hidden" name="id" value="${article.id}" />
+     <input type="hidden" name="loginedMemberId" value="${rq.loginedMember.id}" />
      <input type="hidden" name="body" />
       <div class="card bordered shadow-lg item-bt-1-not-last-child">
             <div class="card-title">
@@ -132,11 +133,7 @@ function ArticleModify__checkAndSubmit(form) {
                     <span>수정</span>
                 </button>
                 
-                <button onclick="history.back();" class="btn btn-primary btn-sm mb-1">
-                    <span><i class="fa-solid fa-rectangle-xmark"></i></span>
-                    &nbsp;
-                    <span>취소</span>
-                </button>    
+                <input onclick="history.back();" type="button" class="btn btn-primary btn-sm mb-1" value="취소">    
 
           </div>
           

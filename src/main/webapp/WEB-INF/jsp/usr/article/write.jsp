@@ -9,7 +9,6 @@
 
 <script>
 let ArticleWrite__submitFormDone = false;
-
 function ArticleWrite__submitForm(form) {
     if ( ArticleWrite__submitFormDone ) {
       alert('처리진행중입니다.');
@@ -128,21 +127,14 @@ function ArticleWrite__submitForm(form) {
                     <span>작성</span>
                 </button>
             
-            <a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="#"  class="btn btn-error btn-sm mb-1">
-              <span><i class="fas fa-trash"></i></span>
-              &nbsp;
-              <span>삭제</span>
-            </a>
-            <a href="#" class="btn btn-sm mb-1" title="자세히 보기">
+            <input onclick="history.back();" type="button" class="btn btn-primary btn-sm mb-1" value="취소"> 
+            
+            <a href="../article/list" class="btn btn-sm mb-1" title="자세히 보기">
               <span><i class="fas fa-list"></i></span>
               &nbsp;
               <span>리스트</span>
             </a>
-            <a href="#" class="btn btn-sm mb-1" title="자세히 보기">
-              <span><i class="fas fa-list"></i></span>
-              &nbsp;
-              <span>상세페이지</span>
-            </a>
+
           </div>
         </form>
       </div>

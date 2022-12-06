@@ -23,8 +23,10 @@ import com.hsn.exam.demo.util.Ut;
 import com.hsn.exam.demo.vo.Article;
 import com.hsn.exam.demo.vo.Board;
 import com.hsn.exam.demo.vo.GenFile;
+import com.hsn.exam.demo.vo.Member;
 import com.hsn.exam.demo.vo.Reply;
 import com.hsn.exam.demo.vo.ResultData;
+import com.hsn.exam.demo.vo.Rq;
 
 @Controller
 public class UsrArticleController {
@@ -331,16 +333,41 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doModify")
-	public String doModify(int id, String title, String body, HttpServletRequest req) {// return타입을 String과 Article
-																						// 둘다사용하기위해 Object로변경해줌
+	public String doModify(@RequestParam Map<String, Object>param, HttpServletRequest req,MultipartRequest multipartRequest) {//id,title,body,file정보를 담기위해 Map형태로변환
 
+		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
+		
+		int id = Ut.getAsInt(param.get("id"), 0);
+		
+		if(id==0) {
+			return Ut.msgAndBack(req,"id를 입력해주세요");
+		}
+		
+		if(Ut.isEmpty(param.get("title"))) {
+			return Ut.msgAndBack(req,"title를 입력해주세요");
+		}
+		
+		if(Ut.isEmpty(param.get("body"))) {
+			return Ut.msgAndBack(req,"body를 입력해주세요");
+		}
+		
 		ResultData Articlerd = articleService.getArticle(id);
 
 		if (Articlerd.isFail()) {
 			return Ut.msgAndBack(req, Articlerd.getMsg());
 		}
 
-		Article ModifyArticle = articleService.doModify(id, title, body);
+		Article ModifyArticle = articleService.doModify(param);
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+        for (String fileInputName : fileMap.keySet()) {
+            MultipartFile multipartFile = fileMap.get(fileInputName);
+
+            if ( multipartFile.isEmpty() == false ) {
+                genFileService.save(multipartFile, ModifyArticle.getId());
+            }
+        }
 
 		String redirectUri = "../article/detail?id=" + ModifyArticle.getId();
 

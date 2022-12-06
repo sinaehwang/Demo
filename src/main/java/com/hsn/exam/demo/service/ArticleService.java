@@ -72,13 +72,16 @@ public class ArticleService {
 		genFileService.deleteFiles("article", id);
 	}
 
-	public Article doModify(int id, String title, String body) {
+	public Article doModify(Map<String, Object>param) {
 
-		articleRepository.doModify(id, title, body);
+		articleRepository.doModify(param);
+		
+		int id = Ut.getAsInt(param.get("id"), 0);
 		
 		return getArticleById(id);//수정후의 data1을 넘겨줌
 		
 	}
+
 
 	public Board getBoardbyId(int boardId) {
 		

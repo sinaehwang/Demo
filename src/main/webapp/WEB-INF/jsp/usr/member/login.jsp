@@ -68,11 +68,17 @@ function MemberLogin__submitForm(form) {
 												<input type="password" name="loginPwInput" class="form-style" placeholder="Your Login Password" id="loginPwInput" autocomplete="off">
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
-											<button type="submit"  class="btn-1 mt-4"">
+                                            
+                                            <div class ="flex justify-center">
+											<button type="submit"  class="btn-1 mt-4">
                                                 <span><i class="fa-solid fa-user-check"></i></span>
                                                 &nbsp;
                                                 <span>submit</span>
                                             </button>
+                                            &nbsp;
+                                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=b6d266ed8e0ac2b0c97c846dc1bcc5bc&redirect_uri=http://localhost:8082/auth/kakao/calback&response_type=code" ><img class = "h-11 mt-4" src="/img/kakao_login_btn.png" alt="" /></a>
+                                            </div>
+
                             				<p class="mb-0 mt-4 text-center"><a href="../member/findLoginId"  type="submit" class="link">Forgot your id?</a></p>
                                             <p class="mb-0 mt-4 text-center"><a href="../member/findLoginPw" type="submit" class="link">Forgot your password?</a></p>
 				      					</div>

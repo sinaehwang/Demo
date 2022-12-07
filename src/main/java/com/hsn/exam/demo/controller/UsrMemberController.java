@@ -6,9 +6,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
@@ -306,6 +314,43 @@ public class UsrMemberController {
 		ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
 
 		return Ut.msgAndReplace(req, notifyTempLoginPwByEmailRs.getMsg(), redirectUri);
+	}
+	
+	
+	@RequestMapping("/auth/kakao/calback")//카카로API를 통해 로그인이 인증되어 인증코드를 받게됨
+	@ResponseBody
+	public String kakaocalback(@RequestParam String code) {
+		
+		//POST방식으로 key=value데이터를 카카오에 요청하기 위해 RestTemplate사용
+		
+		RestTemplate rt = new RestTemplate();
+		
+		//HttpHeaders 오브젝트생성
+		HttpHeaders headers = new HttpHeaders();
+		
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		//HttpBody 오브젝트생성
+		MultiValueMap<String, String>params = new LinkedMultiValueMap<>();
+		
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", "b6d266ed8e0ac2b0c97c846dc1bcc5bc");
+		params.add("redirect_uri", "http://localhost:8082/auth/kakao/calback");
+		params.add("code", code);
+		
+		////HttpHeaders와 HttpBody를 하나의 오브젝트에 담는다.
+		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
+		
+		//POST방식으로 http요청, response변수의 응답을 받음
+		ResponseEntity<String>response = rt.exchange(
+				"https://kauth.kakao.com/oauth/token",
+				HttpMethod.POST,
+				kakaoTokenRequest,
+				String.class
+				);
+		
+		return "카카오토큰요청완료:토큰요청에대한 응답"+ response;
+		
 	}
 
 }

@@ -181,10 +181,10 @@ public class UsrArticleController {
 		
 		req.setAttribute("board", board);
 		
-		if (article == null) {
-            return Ut.msgAndBack(req, id + "번 게시물이 존재하지 않습니다.");
-        }
-
+		/*
+		 * if (article == null) { return Ut.msgAndBack(req, id + "번 게시물이 존재하지 않습니다."); }
+		 */
+		
 		return "usr/article/detail";
 	}
 
@@ -321,10 +321,9 @@ public class UsrArticleController {
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
 
-		if (article == null) {
-			return Ut.msgAndBack(req, "존재하지 않는 게시물번호 입니다.");
-		}
-
+		/*
+		 * if (article == null) { return Ut.msgAndBack(req, "존재하지 않는 게시물번호 입니다."); }
+		 */
 		req.setAttribute("article", article);
 		req.setAttribute("board", board);
 

@@ -67,17 +67,17 @@ function ArticleModify__checkAndSubmit(form) {
                 <div class="px-4 py-8">
                     <div class="flex">
                         <span>
-                            <span>Comments:</span>
-                            <span class="text-gray-400 text-light">30</span>
+                            <span>댓글수:</span>
+                            <span class="text-gray-400 text-light">${repliesCount }</span>
                         </span>
                         <span class="ml-3">
-                            <span>Views:</span>
-                            <span class="text-gray-400 text-light">60k</span>
+                            <span>조회수:</span>
+                            <span class="text-gray-400 text-light">${article.hitCount }</span>
                         </span>
                         <div class="flex-grow"></div>
                         <span>
-                            <span>Likes:</span>
-                            <span class="text-gray-400 text-light">120k</span>
+                            <span>추천수:</span>
+                            <span class="text-gray-400 text-light">${article.goodReactionPoint }</span>
                         </span>
                     </div>
 

@@ -212,6 +212,8 @@
           value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />
         <c:set var="uriBase" value="?boardId=${board.id}" />
         <c:set var="uriBase"
+          value="${uriBase}&catergoryType=${param.catergoryType}" />
+        <c:set var="uriBase"
           value="${uriBase}&searchKeywordType=${param.searchKeywordType}" />
         <c:set var="uriBase"
           value="${uriBase}&searchKeyword=${param.searchKeyword}" />

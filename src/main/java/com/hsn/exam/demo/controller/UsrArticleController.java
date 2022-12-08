@@ -198,6 +198,11 @@ public class UsrArticleController {
 		if (Ut.empty(searchKeywordType)) {
 			searchKeywordType = "titleAndBody";
 		}
+		
+		 if (searchKeyword == null || searchKeyword.trim().length() == 0) {
+			 
+			 searchKeyword=null;
+		  }
 
 		if (board == null) {
 
@@ -211,9 +216,6 @@ public class UsrArticleController {
 		int totalItemsCount = articleService.getArticlesTotalCount(boardId, searchKeyword, searchKeywordType,
 				catergoryId);
 
-		if (searchKeyword == null || searchKeyword.trim().length() == 0) {
-
-		}
 
 		req.setAttribute("totalItemsCount", totalItemsCount);
 
@@ -261,7 +263,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/doDelete")
-	public String doDelete(int id, HttpSession httpSession, HttpServletRequest req, HttpSession session ) {
+	public String doDelete(int id, HttpServletRequest req, HttpSession session ) {
 		
 		int loginedMemberId = Ut.getAsInt(session.getAttribute("loginedMemberId"), 0);
 

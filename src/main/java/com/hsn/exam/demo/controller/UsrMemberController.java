@@ -211,8 +211,10 @@ public class UsrMemberController {
 
 			}
 		}
+		
+		String redirectUri = "/usr/member/login";
 
-		return Ut.msgAndReplace(req, joinRd.getMsg(), "/");
+		return Ut.msgAndReplace(req, joinRd.getMsg(), redirectUri);
 
 	}
 

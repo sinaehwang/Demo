@@ -128,7 +128,8 @@ public class MemberService {
 
 	public String genCheckPasswordAuthCode(int actorId) {
         String attrName = "member__" + actorId + "__extra__checkPasswordAuthCode";
-        String authCode = UUID.randomUUID().toString();
+        String authCode = UUID.randomUUID().toString().replaceAll("-", "");
+        authCode =  authCode.substring(0, 10);
         String expireDate = Ut.getDateStrLater(60 * 60);
 
         attrService.setValue(attrName, authCode, expireDate);

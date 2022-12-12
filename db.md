@@ -81,7 +81,7 @@ ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
 UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
 
-SELECT*FROM `member`;
+
 # 게시물 테이블에 회원번호 칼럼 추가
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateDate`;
 
@@ -134,14 +134,16 @@ updateDate = NOW(),
 #임시게시글갯수늘리기
 INSERT INTO article
 (
-regDate,updateDate,memberId,boardId,title,`body`
+regDate,updateDate,memberId,boardId,title,`body`,catergoryId
 )
-SELECT NOW(),NOW(),FLOOR(RAND()*2)+1,FLOOR(RAND()*2)+1,CONCAT('제목_',RAND()),CONCAT('내용_',RAND())
+SELECT NOW(),NOW(),FLOOR(RAND()*2)+1,FLOOR(RAND()*2)+1,CONCAT('제목_',RAND()),CONCAT('내용_',RAND()),1
 FROM article;
+
 SELECT FLOOR(RAND()*2)+1
 
 # 게시판 테이블에 boardId 칼럼 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
+SELECT*FROM article
 
 # 파일 테이블 추가
 CREATE TABLE genFile (
@@ -230,8 +232,6 @@ CREATE TABLE `reply` (
 ALTER TABLE `reply` ADD KEY (`relTypeCode`, `relId`);
 
 
-
-
 # 부가정보테이블(모든메인테이블에서 컬럼으로 추가하기 애매한 컬럼들을 모아두는곳)
 CREATE TABLE attr (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -256,8 +256,43 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
 
 
+# reationPoint 테이블생성
+CREATE TABLE reactionPoint  (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+	relId INT(10) UNSIGNED NOT NULL COMMENT '관련 데이터  번호',
+    `point` SMALLINT(2) NOT NULL
+);
 
 
+# 게시글에 goodReactionPoint,badReactionPoint컬럼추가하기
+ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+
+
+#게시글과 추천수 테이블에 둘다업데이트가 되기위해서 게시글을 UPDATE해줘야함(JOIN UPDATE사용)
+UPDATE article AS A
+INNER JOIN(
+    SELECT RP.relTypeCode, RP.relId, 
+    SUM(IF(RP.point>0, RP.point, 0)) AS goodReactionPoint,
+    SUM(IF(RP.point<0, RP.point*-1, 0)) AS badReactionPoint
+    FROM reactionPoint AS RP
+    GROUP BY RP.relTypeCode, RP.relId 
+) AS RP_SUM
+ON A.id = RP_SUM.relId
+SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
+ A.badReactionPoint = RP_SUM.badReactionPoint
+
+
+# 게시물 테이블에 조회수 칼럼 추가
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+
+SELECT*FROM reactionPoint
 SELECT*FROM category
 SELECT*FROM board
 SELECT*FROM genFile
@@ -268,13 +303,6 @@ SELECT*FROM attr
 
 
 
-
-
-		
-		
-
-		
-		
 
 ```
 
